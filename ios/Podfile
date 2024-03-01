@@ -57,7 +57,6 @@ end
 
 target 'Buzz' do
   config = use_native_modules!
-  pod 'FirebaseCore', :modular_headers => true
   # Flags change depending on the env values.
   flags = get_default_flags()
 
