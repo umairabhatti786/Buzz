@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* AssembleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AssembleTests.m */; };
+		00E356F31AD99517003FC87E /* BuzzTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BuzzTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1860CFB92B59023600DCAAF5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1860CFB82B59023600DCAAF5 /* GoogleService-Info.plist */; };
-		6F49B32661155A482C1E6544 /* libPods-Assemble-AssembleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B1F8D51B2F093DC220E9A6 /* libPods-Assemble-AssembleTests.a */; };
+		6F49B32661155A482C1E6544 /* libPods-Buzz-BuzzTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B1F8D51B2F093DC220E9A6 /* libPods-Buzz-BuzzTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		BA2F0C7322BE8ED86D878FF2 /* libPods-Assemble.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CF577EF06FFFDB8ABF743A /* libPods-Assemble.a */; };
+		BA2F0C7322BE8ED86D878FF2 /* libPods-Buzz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CF577EF06FFFDB8ABF743A /* libPods-Buzz.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,38 +23,38 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = Assemble;
+			remoteInfo = "Buzz";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* AssembleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AssembleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* BuzzTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BuzzTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* AssembleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssembleTests.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* BuzzTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "BuzzTests.m"; sourceTree = "<group>"; };
 		01C8371478E340B79154E72A /* SF-Compact-Text-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Text-Medium.ttf"; path = "../assets/fonts/SF-Compact-Text-Medium.ttf"; sourceTree = "<group>"; };
 		0393E03166AA4E1287F9E97E /* SF-Compact-Text-Ultralight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Text-Ultralight.ttf"; path = "../assets/fonts/SF-Compact-Text-Ultralight.ttf"; sourceTree = "<group>"; };
-		044A92BA2B2AF8060059743B /* Assemble.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Assemble.entitlements; path = Assemble/Assemble.entitlements; sourceTree = "<group>"; };
+		044A92BA2B2AF8060059743B /* Buzz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Buzz.entitlements; path = Buzz/Buzz.entitlements; sourceTree = "<group>"; };
 		1299511680E545DFBCAD142A /* SF-Compact-Text-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Text-Semibold.ttf"; path = "../assets/fonts/SF-Compact-Text-Semibold.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Assemble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assemble.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Assemble/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Assemble/AppDelegate.mm; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Assemble/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Assemble/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Assemble/main.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Buzz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Buzz.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "Buzz/AppDelegate.h"; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = "Buzz/AppDelegate.mm"; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Buzz/Images.xcassets"; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Buzz/Info.plist"; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Buzz/main.m"; sourceTree = "<group>"; };
 		1860CFB82B59023600DCAAF5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1FB7952E709348259F74767B /* SF-Compact-Text-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Text-Bold.ttf"; path = "../assets/fonts/SF-Compact-Text-Bold.ttf"; sourceTree = "<group>"; };
 		28466481216649C9AB8AE709 /* SF-Compact-Rounded-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Rounded-Black.ttf"; path = "../assets/fonts/SF-Compact-Rounded-Black.ttf"; sourceTree = "<group>"; };
 		3BE6CE31ABEA4D61BA7ADE45 /* SF-Compact-Text-HeavyItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Text-HeavyItalic.ttf"; path = "../assets/fonts/SF-Compact-Text-HeavyItalic.ttf"; sourceTree = "<group>"; };
-		41CF577EF06FFFDB8ABF743A /* libPods-Assemble.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Assemble.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C76DB4EDACE422C25A7531C /* Pods-Assemble.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Assemble.release.xcconfig"; path = "Target Support Files/Pods-Assemble/Pods-Assemble.release.xcconfig"; sourceTree = "<group>"; };
+		41CF577EF06FFFDB8ABF743A /* libPods-Buzz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Buzz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C76DB4EDACE422C25A7531C /* Pods-Buzz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buzz.release.xcconfig"; path = "Target Support Files/Pods-Buzz/Pods-Buzz.release.xcconfig"; sourceTree = "<group>"; };
 		582ED730E73F4D54BE12EBFA /* SF-Compact-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Italic.ttf"; path = "../assets/fonts/SF-Compact-Italic.ttf"; sourceTree = "<group>"; };
 		5B8A5FEF184A4601967C9FCB /* SF-Compact-Text-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Text-BlackItalic.ttf"; path = "../assets/fonts/SF-Compact-Text-BlackItalic.ttf"; sourceTree = "<group>"; };
 		5D3B55113179418A92EB98DC /* SF-Compact-Rounded-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Rounded-Thin.ttf"; path = "../assets/fonts/SF-Compact-Rounded-Thin.ttf"; sourceTree = "<group>"; };
 		5E4204AE56D74EECA31FE759 /* SF-Compact-Rounded-Ultralight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Rounded-Ultralight.ttf"; path = "../assets/fonts/SF-Compact-Rounded-Ultralight.ttf"; sourceTree = "<group>"; };
-		66B1F8D51B2F093DC220E9A6 /* libPods-Assemble-AssembleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Assemble-AssembleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		66B1F8D51B2F093DC220E9A6 /* libPods-Buzz-BuzzTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Buzz-BuzzTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B8626BF78354B1DBE288408 /* SF-Compact-Display-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Display-Semibold.ttf"; path = "../assets/fonts/SF-Compact-Display-Semibold.ttf"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Assemble/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		869A03E912EC152E7EBD2780 /* Pods-Assemble-AssembleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Assemble-AssembleTests.release.xcconfig"; path = "Target Support Files/Pods-Assemble-AssembleTests/Pods-Assemble-AssembleTests.release.xcconfig"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "Buzz/LaunchScreen.storyboard"; sourceTree = "<group>"; };
+		869A03E912EC152E7EBD2780 /* Pods-Buzz-BuzzTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buzz-BuzzTests.release.xcconfig"; path = "Target Support Files/Pods-Buzz-BuzzTests/Pods-Buzz-BuzzTests.release.xcconfig"; sourceTree = "<group>"; };
 		8A69B94C37F24948B4CEFF44 /* SF-Compact-Text-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Text-Light.ttf"; path = "../assets/fonts/SF-Compact-Text-Light.ttf"; sourceTree = "<group>"; };
 		8D38401FB32948DA9B6BE57E /* SF-Compact-Display-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Display-Regular.ttf"; path = "../assets/fonts/SF-Compact-Display-Regular.ttf"; sourceTree = "<group>"; };
 		90662D4D871043C9A71D1123 /* SF-Compact-Display-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Display-Medium.ttf"; path = "../assets/fonts/SF-Compact-Display-Medium.ttf"; sourceTree = "<group>"; };
@@ -63,7 +63,7 @@
 		9463E029700147D7A5EAC411 /* SF-Compact-Display-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Display-Bold.ttf"; path = "../assets/fonts/SF-Compact-Display-Bold.ttf"; sourceTree = "<group>"; };
 		9950186C40AE453B97418978 /* SF-Compact-Text-SemiboldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Text-SemiboldItalic.ttf"; path = "../assets/fonts/SF-Compact-Text-SemiboldItalic.ttf"; sourceTree = "<group>"; };
 		A5B1C43AFCD8451EB3F43EE7 /* SF-Compact-Text-UltralightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Text-UltralightItalic.ttf"; path = "../assets/fonts/SF-Compact-Text-UltralightItalic.ttf"; sourceTree = "<group>"; };
-		AE621D4D687B81420D47B8FB /* Pods-Assemble.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Assemble.debug.xcconfig"; path = "Target Support Files/Pods-Assemble/Pods-Assemble.debug.xcconfig"; sourceTree = "<group>"; };
+		AE621D4D687B81420D47B8FB /* Pods-Buzz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buzz.debug.xcconfig"; path = "Target Support Files/Pods-Buzz/Pods-Buzz.debug.xcconfig"; sourceTree = "<group>"; };
 		AFD52939085242589B21D1F4 /* SF-Compact-Display-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Display-Light.ttf"; path = "../assets/fonts/SF-Compact-Display-Light.ttf"; sourceTree = "<group>"; };
 		B2E66D1737EF4A7EA4059679 /* SF-Compact-Text-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Text-MediumItalic.ttf"; path = "../assets/fonts/SF-Compact-Text-MediumItalic.ttf"; sourceTree = "<group>"; };
 		B3AF6CB900F44ACA9009883E /* SF-Compact-Rounded-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Rounded-Semibold.ttf"; path = "../assets/fonts/SF-Compact-Rounded-Semibold.ttf"; sourceTree = "<group>"; };
@@ -81,7 +81,7 @@
 		E81F0A494EFD4FCE827DA0F6 /* SF-Compact-Display-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Display-Thin.ttf"; path = "../assets/fonts/SF-Compact-Display-Thin.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EFF99E484C204096884D03CC /* SF-Compact-Text-RegularItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Text-RegularItalic.ttf"; path = "../assets/fonts/SF-Compact-Text-RegularItalic.ttf"; sourceTree = "<group>"; };
-		F174ADCD068FC435571A36AC /* Pods-Assemble-AssembleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Assemble-AssembleTests.debug.xcconfig"; path = "Target Support Files/Pods-Assemble-AssembleTests/Pods-Assemble-AssembleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F174ADCD068FC435571A36AC /* Pods-Buzz-BuzzTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buzz-BuzzTests.debug.xcconfig"; path = "Target Support Files/Pods-Buzz-BuzzTests/Pods-Buzz-BuzzTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F2547BEE26C44BCBA855E3E2 /* SF-Compact-Text-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Text-Thin.ttf"; path = "../assets/fonts/SF-Compact-Text-Thin.ttf"; sourceTree = "<group>"; };
 		FB1C70FE94C94BBCB20B3269 /* SF-Compact-Text-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Text-ThinItalic.ttf"; path = "../assets/fonts/SF-Compact-Text-ThinItalic.ttf"; sourceTree = "<group>"; };
 		FB5A4A53EAF84D7AAA02AF78 /* SF-Compact-Rounded-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-Compact-Rounded-Bold.ttf"; path = "../assets/fonts/SF-Compact-Rounded-Bold.ttf"; sourceTree = "<group>"; };
@@ -92,7 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F49B32661155A482C1E6544 /* libPods-Assemble-AssembleTests.a in Frameworks */,
+				6F49B32661155A482C1E6544 /* libPods-Buzz-BuzzTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,20 +100,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA2F0C7322BE8ED86D878FF2 /* libPods-Assemble.a in Frameworks */,
+				BA2F0C7322BE8ED86D878FF2 /* libPods-Buzz.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* AssembleTests */ = {
+		00E356EF1AD99517003FC87E /* BuzzTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* AssembleTests.m */,
+				00E356F21AD99517003FC87E /* BuzzTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = AssembleTests;
+			path = "BuzzTests";
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -124,10 +124,10 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* Assemble */ = {
+		13B07FAE1A68108700A75B9A /* Buzz */ = {
 			isa = PBXGroup;
 			children = (
-				044A92BA2B2AF8060059743B /* Assemble.entitlements */,
+				044A92BA2B2AF8060059743B /* Buzz.entitlements */,
 				1860CFB82B59023600DCAAF5 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -136,15 +136,15 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = Assemble;
+			name = "Buzz";
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				41CF577EF06FFFDB8ABF743A /* libPods-Assemble.a */,
-				66B1F8D51B2F093DC220E9A6 /* libPods-Assemble-AssembleTests.a */,
+				41CF577EF06FFFDB8ABF743A /* libPods-Buzz.a */,
+				66B1F8D51B2F093DC220E9A6 /* libPods-Buzz-BuzzTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -159,9 +159,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* Assemble */,
+				13B07FAE1A68108700A75B9A /* Buzz */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* AssembleTests */,
+				00E356EF1AD99517003FC87E /* BuzzTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
@@ -175,8 +175,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Assemble.app */,
-				00E356EE1AD99517003FC87E /* AssembleTests.xctest */,
+				13B07F961A680F5B00A75B9A /* Buzz.app */,
+				00E356EE1AD99517003FC87E /* BuzzTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -184,10 +184,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				AE621D4D687B81420D47B8FB /* Pods-Assemble.debug.xcconfig */,
-				4C76DB4EDACE422C25A7531C /* Pods-Assemble.release.xcconfig */,
-				F174ADCD068FC435571A36AC /* Pods-Assemble-AssembleTests.debug.xcconfig */,
-				869A03E912EC152E7EBD2780 /* Pods-Assemble-AssembleTests.release.xcconfig */,
+				AE621D4D687B81420D47B8FB /* Pods-Buzz.debug.xcconfig */,
+				4C76DB4EDACE422C25A7531C /* Pods-Buzz.release.xcconfig */,
+				F174ADCD068FC435571A36AC /* Pods-Buzz-BuzzTests.debug.xcconfig */,
+				869A03E912EC152E7EBD2780 /* Pods-Buzz-BuzzTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -240,9 +240,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* AssembleTests */ = {
+		00E356ED1AD99517003FC87E /* BuzzTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AssembleTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "BuzzTests" */;
 			buildPhases = (
 				1F526721104FDF5CC1111F8C /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -256,14 +256,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = AssembleTests;
-			productName = AssembleTests;
-			productReference = 00E356EE1AD99517003FC87E /* AssembleTests.xctest */;
+			name = "BuzzTests";
+			productname = "BuzzTests";
+			productReference = 00E356EE1AD99517003FC87E /* BuzzTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* Assemble */ = {
+		13B07F861A680F5B00A75B9A /* Buzz */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Assemble" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Buzz" */;
 			buildPhases = (
 				23C2FFD3C235F965EBF2DC49 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -279,9 +279,9 @@
 			);
 			dependencies = (
 			);
-			name = Assemble;
-			productName = Assemble;
-			productReference = 13B07F961A680F5B00A75B9A /* Assemble.app */;
+			name = "Buzz";
+			productName = "Buzz";
+			productReference = 13B07F961A680F5B00A75B9A /* Buzz.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -302,7 +302,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Assemble" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Buzz" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -315,8 +315,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* Assemble */,
-				00E356ED1AD99517003FC87E /* AssembleTests */,
+				13B07F861A680F5B00A75B9A /* Buzz */,
+				00E356ED1AD99517003FC87E /* BuzzTests */,
 			);
 		};
 /* End PBXProject section */
@@ -373,7 +373,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Assemble-AssembleTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Buzz-BuzzTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -395,7 +395,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Assemble-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Buzz-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -408,15 +408,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Assemble/Pods-Assemble-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Buzz/Pods-Buzz-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Assemble/Pods-Assemble-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Buzz/Pods-Buzz-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Assemble/Pods-Assemble-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Buzz/Pods-Buzz-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9BF8F64A2B81C6C4CB063433 /* [CP-User] [RNFB] Core Configuration */ = {
@@ -438,15 +438,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Assemble-AssembleTests/Pods-Assemble-AssembleTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Buzz-BuzzTests/Pods-Buzz-BuzzTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Assemble-AssembleTests/Pods-Assemble-AssembleTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Buzz-BuzzTests/Pods-Buzz-BuzzTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Assemble-AssembleTests/Pods-Assemble-AssembleTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Buzz-BuzzTests/Pods-Buzz-BuzzTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C969D1BDEC22E355CDD079A5 /* [CP] Embed Pods Frameworks */ = {
@@ -455,15 +455,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Assemble-AssembleTests/Pods-Assemble-AssembleTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Buzz-BuzzTests/Pods-Buzz-BuzzTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Assemble-AssembleTests/Pods-Assemble-AssembleTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Buzz-BuzzTests/Pods-Buzz-BuzzTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Assemble-AssembleTests/Pods-Assemble-AssembleTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Buzz-BuzzTests/Pods-Buzz-BuzzTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -491,15 +491,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Assemble/Pods-Assemble-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Buzz/Pods-Buzz-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Assemble/Pods-Assemble-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Buzz/Pods-Buzz-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Assemble/Pods-Assemble-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Buzz/Pods-Buzz-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -509,7 +509,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* AssembleTests.m in Sources */,
+				00E356F31AD99517003FC87E /* BuzzTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,7 +527,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* Assemble */;
+			target = 13B07F861A680F5B00A75B9A /* Buzz */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -535,7 +535,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F174ADCD068FC435571A36AC /* Pods-Assemble-AssembleTests.debug.xcconfig */;
+			baseConfigurationReference = F174ADCD068FC435571A36AC /* Pods-Buzz-BuzzTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -543,7 +543,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = AssembleTests/Info.plist;
+				INFOPLIST_FILE = "BuzzTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -557,18 +557,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Assemble.app/Assemble";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Buzz.app/Buzz";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 869A03E912EC152E7EBD2780 /* Pods-Assemble-AssembleTests.release.xcconfig */;
+			baseConfigurationReference = 869A03E912EC152E7EBD2780 /* Pods-Buzz-BuzzTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = AssembleTests/Info.plist;
+				INFOPLIST_FILE = "BuzzTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -582,23 +582,24 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Assemble.app/Assemble";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Buzz.app/Buzz";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AE621D4D687B81420D47B8FB /* Pods-Assemble.debug.xcconfig */;
+			baseConfigurationReference = AE621D4D687B81420D47B8FB /* Pods-Buzz.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Assemble/Assemble.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Buzz/Buzz.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QKF5MUR6KK;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				INFOPLIST_FILE = Assemble/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Assemble;
+				INFOPLIST_FILE = "Buzz/Info.plist";
+             INFOPLIST_KEY_CFBundleDisplayName = "Buzz";
+				INFOPLIST_KEY_CFBundleDisplayName = Buzz;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -610,7 +611,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = assemble;
-				PRODUCT_NAME = Assemble;
+				PRODUCT_NAME = "Buzz";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -619,16 +620,17 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C76DB4EDACE422C25A7531C /* Pods-Assemble.release.xcconfig */;
+			baseConfigurationReference = 4C76DB4EDACE422C25A7531C /* Pods-Buzz.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Assemble/Assemble.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Buzz/Buzz.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QKF5MUR6KK;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				INFOPLIST_FILE = Assemble/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Assemble;
+				INFOPLIST_FILE = "Buzz/Info.plist";
+             INFOPLIST_KEY_CFBundleDisplayName = "Buzz";
+				INFOPLIST_KEY_CFBundleDisplayName = Buzz;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -640,7 +642,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = assemble;
-				PRODUCT_NAME = Assemble;
+				PRODUCT_NAME = "Buzz";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -867,7 +869,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AssembleTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "BuzzTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -876,7 +878,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Assemble" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Buzz" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -885,7 +887,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Assemble" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Buzz" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
