@@ -141,13 +141,18 @@ const CustomerHome = ({navigation}) => {
           </TouchableOpacity>
           <Spacer width={scale(15)} />
 
-          <TouchableOpacity>
+          <TouchableOpacity
+          activeOpacity={0.6}
+          onPress={()=>{navigation.navigate("CustomerConversation")}}
+          >
             <Image
               style={{ width: scale(22), height: scale(22) }}
               source={icon.message}
               resizeMode="contain"
             />
             <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={()=>{navigation.navigate("CustomerConversation")}}
               style={{
                 width: scale(22),
                 height: scale(22),

@@ -14,6 +14,9 @@ import MoveCategoryOne from "../../screens/main/Driver/MoveCategoryOne";
 import MoveCategoryTwo from "../../screens/main/Driver/MoveCategoryTwo";
 import SetPrice from "../../screens/main/Driver/SetPrice";
 import Addons from "../../screens/main/Driver/Addons";
+import CustomerConversation from "../../screens/main/Customer/CustomerConversation";
+import CustomerChat from "../../screens/main/Customer/CustomerChat";
+import NotificationSettings from "../../screens/main/Customer/NotificationSettings";
 
 const AppStack = () => {
   const Stack = createStackNavigator();
@@ -33,12 +36,15 @@ const AppStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {/* {splashState&&<Stack.Screen name={strings.splashScreen} component={SplashScreen} />} */}
-      <Stack.Screen name={"DriverSignup"} component={DriverSignup} />
+      {/* <Stack.Screen name={"DriverSignup"} component={DriverSignup} /> */}
 
-      {/* <Stack.Screen name={"CustomerSignup"} component={CustomerSignup} /> */}
-
+      <Stack.Screen name={"CustomerSignup"} component={CustomerSignup} />
+      <Stack.Screen name={"CustomerConversation"} component={CustomerConversation} />
+      <Stack.Screen name={"CustomerChat"} component={CustomerChat} />
       <Stack.Screen name={"CustomerTab"} component={CustomerBottomTabs} />
       <Stack.Screen name={"DriverHomeBottomTab"} component={DriverHomeBottomTab} />
+      <Stack.Screen name={"NotificationSettings"} component={NotificationSettings} />
+
 
       <Stack.Screen name={"DriverSearch"} component={DriverSearch} />
       <Stack.Screen name={"DriverService"} component={DriverService} />
