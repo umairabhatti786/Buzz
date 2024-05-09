@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import RootNavigator from "./src/routes";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 
 LogBox.ignoreLogs(["VirtualizedLists", "Warning:..."]);
@@ -16,7 +17,12 @@ const App = () => {
     <GestureHandlerRootView
     style={{flex:1}}
     >
-       <RootNavigator/>
+              <BottomSheetModalProvider>
+              <RootNavigator/>
+
+
+              </BottomSheetModalProvider>
+
 
       
     </GestureHandlerRootView>

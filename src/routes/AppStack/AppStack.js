@@ -17,21 +17,21 @@ import Addons from "../../screens/main/Driver/Addons";
 import CustomerConversation from "../../screens/main/Customer/CustomerConversation";
 import CustomerChat from "../../screens/main/Customer/CustomerChat";
 import NotificationSettings from "../../screens/main/Customer/NotificationSettings";
+import CustomerFilter from "../../screens/main/Customer/CustomerFilter";
 
 const AppStack = () => {
   const Stack = createStackNavigator();
-//   const [splashState,setSplashState]=useState(true)
+  //   const [splashState,setSplashState]=useState(true)
 
-//   useEffect(() => {
-//     let timeState = setTimeout(() => {
-//       // navigation.push('Onboarding01')
-//       setSplashState(false);
-//     }, 2000);
-//     return () => {
-//       clearTimeout(timeState);
-//     };
-//   }, []);
-  
+  //   useEffect(() => {
+  //     let timeState = setTimeout(() => {
+  //       // navigation.push('Onboarding01')
+  //       setSplashState(false);
+  //     }, 2000);
+  //     return () => {
+  //       clearTimeout(timeState);
+  //     };
+  //   }, []);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -39,12 +39,21 @@ const AppStack = () => {
       {/* <Stack.Screen name={"DriverSignup"} component={DriverSignup} /> */}
 
       <Stack.Screen name={"CustomerSignup"} component={CustomerSignup} />
-      <Stack.Screen name={"CustomerConversation"} component={CustomerConversation} />
+      <Stack.Screen
+        name={"CustomerConversation"}
+        component={CustomerConversation}
+      />
       <Stack.Screen name={"CustomerChat"} component={CustomerChat} />
       <Stack.Screen name={"CustomerTab"} component={CustomerBottomTabs} />
-      <Stack.Screen name={"DriverHomeBottomTab"} component={DriverHomeBottomTab} />
-      <Stack.Screen name={"NotificationSettings"} component={NotificationSettings} />
-
+      <Stack.Screen
+        name={"DriverHomeBottomTab"}
+        component={DriverHomeBottomTab}
+      />
+      <Stack.Screen
+        name={"NotificationSettings"}
+        component={NotificationSettings}
+      />
+      <Stack.Screen name={"CustomerFilter"} component={CustomerFilter} />
 
       <Stack.Screen name={"DriverSearch"} component={DriverSearch} />
       <Stack.Screen name={"DriverService"} component={DriverService} />
@@ -53,34 +62,13 @@ const AppStack = () => {
       <Stack.Screen name={"SetPrice"} component={SetPrice} />
       <Stack.Screen name={"Addons"} component={Addons} />
 
-
-
-
-
       <Stack.Screen name={"TrackOrder"} component={TrackOrder} />
       <Stack.Screen name={"CustomerSearch"} component={CustomerSearch} />
       <Stack.Screen name={"DeliveryManager"} component={DeliveryManager} />
-      <Stack.Screen name={"CustomerDriverSetting"} component={CustomerDriverSetting} />
-
-
-
-
-
-
-
-
-
-      
-      
-
-
-
-
-      
-
-
-
-
+      <Stack.Screen
+        name={"CustomerDriverSetting"}
+        component={CustomerDriverSetting}
+      />
     </Stack.Navigator>
   );
 };

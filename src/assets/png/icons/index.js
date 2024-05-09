@@ -20,6 +20,8 @@ export const icon={
     seen:require("../icons/seen.png"),
     send:require("../icons/send.png"),
     attach:require("../icons/attach.png"),
+    dots:require("../icons/dots.png"),
+
 
 
 
