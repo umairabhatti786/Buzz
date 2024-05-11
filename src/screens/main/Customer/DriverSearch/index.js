@@ -23,6 +23,7 @@ import { icon } from "../../../../assets/png/icons";
 import CustomerTicket from "../../../../components/CustomerTicket";
 import { image } from "../../../../assets/png/images";
 import * as Animatable from "react-native-animatable";
+import NewText from "../../../../components/NewText";
 
 
 const DriverSearch = ({ navigation }) => {
@@ -322,7 +323,10 @@ const DriverSearch = ({ navigation }) => {
             </TouchableOpacity>
 
             <View style={AppStyles.justifyRow}>
-              <View style={AppStyles.row}>
+              <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={()=>navigation.navigate("CustomerFilter")}
+               style={AppStyles.row}>
               <Image
                 style={{
                   width: scale(30),
@@ -333,23 +337,23 @@ const DriverSearch = ({ navigation }) => {
               />
                 <Spacer width={scale(10)} />
 
-                <CustomText
+                <NewText
                   text={"Customize/Filters"}
                   color={colors.black}
                   fontFam={Inter.bold}
                   fontWeight="700"
-                  size={15}
+                  size={17}
                 />
 
                
-              </View>
+              </TouchableOpacity>
               <View style={AppStyles.row}>
-                <CustomText
+                <NewText
                   text={"Clear All"}
                   color={colors.gray}
                   fontFam={Inter.medium}
                   // fontWeight="400"
-                  size={13}
+                  size={14}
                 />
                 
               </View>

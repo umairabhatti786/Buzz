@@ -27,12 +27,16 @@ import SettingContainer from "./SettingContainer";
 import ProfileCard from "../../../../components/ProfileCard";
 
 const CustomerDriverSetting = ({ navigation }) => {
-
-  const [userProfile,setUserProfile]=useState([
-    {user:"Customer",img:image.defimg700,isActive:true,buttonWidth:70},
-    {user:"Driver",img:image.defimg600,isActive:false,isRating:true,buttonWidth:55},
-
-  ])
+  const [userProfile, setUserProfile] = useState([
+    { user: "Customer", img: image.defimg700, isActive: true, buttonWidth: 70 },
+    {
+      user: "Driver",
+      img: image.defimg600,
+      isActive: false,
+      isRating: true,
+      buttonWidth: 55,
+    },
+  ]);
   const data = [
     {
       id: 1,
@@ -95,17 +99,15 @@ const CustomerDriverSetting = ({ navigation }) => {
     { title: "Withdraw", text: "Check" },
   ];
   const LearnData = [
-    { title: "News", },
-    { title: "Documentations",},
-    { title: "Promotions",},
+    { title: "News" },
+    { title: "Documentations" },
+    { title: "Promotions" },
     // { title: "Vouchers/Rewards",},
-
   ];
   const MoreData = [
-    { title: "Be a Partner", },
-    { title: "Privacy Policy",},
-    { title: "Terms & Conditions",},
-
+    { title: "Be a Partner" },
+    { title: "Privacy Policy" },
+    { title: "Terms & Conditions" },
   ];
 
   return (
@@ -113,23 +115,27 @@ const CustomerDriverSetting = ({ navigation }) => {
       height={40}
       backgroundColor={colors.white}
       // topBarColor={colors.primary}
-      barStyle={"dark-content"}>
+      barStyle={"dark-content"}
+    >
       <View
         style={{
           flex: 1,
 
           backgroundColor: colors.white,
-        }}>
+        }}
+      >
         <View
           style={{
             ...AppStyles.justifyRow,
             backgroundColor: colors.white,
             paddingVertical: verticalScale(5),
             paddingHorizontal: scale(15),
-          }}>
+          }}
+        >
           <TouchableOpacity
             style={{ flexDirection: "row", alignItems: "center" }}
-            onPress={() => navigation.goBack()}>
+            onPress={() => navigation.goBack()}
+          >
             <Image
               style={{ width: scale(15), height: scale(15) }}
               resizeMode="contain"
@@ -159,107 +165,95 @@ const CustomerDriverSetting = ({ navigation }) => {
           <View
             style={{
               paddingHorizontal: scale(15),
-            }}>
-                <View
-                
-                >
-                  {
-                    userProfile?.map((item,index)=>{
-                      return(
-                        <View>
+            }}
+          >
+            <View>
+              {userProfile?.map((item, index) => {
+                return (
+                  <View>
+                    <ProfileCard
+                      user={item.user}
+                      img={item.img}
+                      isRating={item.isRating}
+                      isActive={item.isActive}
+                      buttonWidth={item.buttonWidth}
+                      setIsActive={() => {
+                        let profileArray = [];
+                        let data = [...userProfile];
+                        profileArray = data.map((i) => {
+                          if (i.user == item.user) {
+                            i.isActive = true;
+                          } else {
+                            i.isActive = false;
+                          }
 
-<ProfileCard
-                user={item.user}
-                img={item.img}
-                isRating={item.isRating}
-                isActive={item.isActive}
-                buttonWidth={item.buttonWidth}
-                setIsActive={()=>{
-                 let profileArray=[]
-                  let data=[...userProfile]
-                  profileArray=data.map((i)=>{
-                    if(i.user==item.user)
-                    {
-                      i.isActive=true
-                    }
-                    else {
-                      i.isActive=false
+                          return { ...i };
+                        });
+                        // data[index].isActive=!item.isActive
+                        // data[index].isActive=!item.isActive
 
+                        // console.log("UserProfile",data)
+                        // let indexOfElement = userProfile.indexOf(item.user);
+                        // console.log("indexOfElement",indexOfElement)
+                        profileArray.sort((a, b) =>
+                          a.isActive === b.isActive ? 0 : a.isActive ? -1 : 1
+                        );
 
-                    }
-
-                    return {...i}
-
-
-                  })
-                  // data[index].isActive=!item.isActive
-                  // data[index].isActive=!item.isActive
-
-                  // console.log("UserProfile",data)
-                  // let indexOfElement = userProfile.indexOf(item.user);
-                  // console.log("indexOfElement",indexOfElement)
-                  profileArray.sort((a, b) => (a.isActive === b.isActive ? 0 : a.isActive ? -1 : 1));
-
-
-
-                  setUserProfile(profileArray)
-
-                }}
-
-
-
-                />
-                <Spacer height={verticalScale(10)} />
-                {/* <ProfileCard
+                        setUserProfile(profileArray);
+                      }}
+                    />
+                    <Spacer height={verticalScale(10)} />
+                    {/* <ProfileCard
                                 user={"Driver"}
                                 img={image.defimg600}
                                 isRating={true}
 
 
                 /> */}
+                  </View>
+                );
+              })}
 
-                        </View>
-                      )
-                    })
-                  }
-               
-
-<TouchableOpacity 
-activeOpacity={0.6}
-onPress={()=>{
-  let reversedArray = [...userProfile].reverse();
-  setUserProfile(reversedArray)
-
-
-}}
-style={{position:"absolute",top:"43%",width:scale(35),height:scale(35),right:"45%"}}>
-                  <Image
-                  style={{width:"100%",height:"100%"}}
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => {
+                  let reversedArray = [...userProfile].reverse();
+                  setUserProfile(reversedArray);
+                }}
+                style={{
+                  position: "absolute",
+                  top: "43%",
+                  width: scale(35),
+                  height: scale(35),
+                  right: "45%",
+                }}
+              >
+                <Image
+                  style={{ width: "100%", height: "100%" }}
                   source={image.updown}
                   resizeMode={"contain"}
-                  />
-
+                />
               </TouchableOpacity>
+            </View>
 
-                </View>
-
-                <View style={{...AppStyles.row,alignSelf:"flex-end",paddingVertical:verticalScale(15)}}>
-
-                <CustomText
-              color={colors.secondary}
-              size={13}
-              text={"Add Account"}
-            />
-            <Spacer width={scale(10)}/>
-            <Image
-            style={{width:scale(16),height:scale(16)}}
-            source={icon.add}
-            />
-
-
-                </View>
-
-               
+            <View
+              style={{
+                ...AppStyles.row,
+                alignSelf: "flex-end",
+                paddingVertical: verticalScale(15),
+              }}
+            >
+              <CustomText
+                color={colors.secondary}
+                size={13}
+                text={"Add Account"}
+              />
+              <Spacer width={scale(10)} />
+              <Image
+                style={{ width: scale(16), height: scale(16) }}
+                source={icon.add}
+              />
+            </View>
 
             <CustomText
               fontWeight="700"
@@ -391,33 +385,41 @@ style={{position:"absolute",top:"43%",width:scale(35),height:scale(35),right:"45
             </View>
 
             <TouchableOpacity
-            style={{...AppStyles.row,paddingHorizontal:scale(10),paddingVertical:verticalScale(5),width:scale(100),alignSelf:"flex-end",borderWidth:1,borderColor:"#FF0000",borderRadius:scale(8),marginTop:verticalScale(10),marginRight:scale(5),marginBottom:verticalScale(20)}}
-            >
-                 <CustomText
-            //   fontWeight="700"
-              color={"#FF0000"}
-            //   fontFam={Inter.bold}
-              size={13}
               style={{
-                marginRight: scale(15),
+                ...AppStyles.row,
+                paddingHorizontal: scale(10),
+                paddingVertical: verticalScale(5),
+                width: scale(100),
+                alignSelf: "flex-end",
+                borderWidth: 1,
+                borderColor: "#FF0000",
+                borderRadius: scale(8),
+                marginTop: verticalScale(10),
+                marginRight: scale(5),
+                marginBottom: verticalScale(20),
               }}
-              text={"Log Out"}
-            />
+            >
+              <CustomText
+                //   fontWeight="700"
+                color={"#FF0000"}
+                //   fontFam={Inter.bold}
+                size={13}
+                style={{
+                  marginRight: scale(15),
+                }}
+                text={"Log Out"}
+              />
 
-
-                 <Image
-            style={{
-              width: scale(18),
-              height: scale(18),
-              alignSelf:"flex-end"
-            }}
-            source={image.logout}
-            resizeMode="contain"
-          />
-
+              <Image
+                style={{
+                  width: scale(18),
+                  height: scale(18),
+                  alignSelf: "flex-end",
+                }}
+                source={image.logout}
+                resizeMode="contain"
+              />
             </TouchableOpacity>
-
-           
           </View>
         </ScrollView>
       </View>

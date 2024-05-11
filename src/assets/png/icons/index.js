@@ -12,6 +12,24 @@ export const icon={
     addicon:require("../icons/add-icon.png"),
     forward:require("../icons/forward.png"),
     backword:require("../icons/backword.png"),
+    setting:require("../icons/setting.png"),
+    bulb:require("../icons/bulb.png"),
+    infoIcon:require("../icons/info-icon.png"),
+    call:require("../icons/call.png"),
+    stargrayout:require("../icons/star-grayout.png"),
+    seen:require("../icons/seen.png"),
+    send:require("../icons/send.png"),
+    attach:require("../icons/attach.png"),
+    dots:require("../icons/dots.png"),
+
+
+
+
+
+
+
+
+
 
 
 

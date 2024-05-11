@@ -18,6 +18,8 @@ export const image={
     defimg101:require("../images/defimg101.png"),
     defimg102:require("../images/defimg102.png"),
     defimg103:require("../images/defimg103.png"),
+    file:require("../images/file.png"),
+    capture:require("../images/capture.png"),
     updown:require("../images/updown.png"),
     driver:require("../images/driver.png"),
     zoomroute:require("../images/zoom-route.png"),

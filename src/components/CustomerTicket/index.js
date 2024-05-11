@@ -13,6 +13,8 @@ import HorizontalContainer from "../HorizontalContainer";
 import DashedLine from 'react-native-dashed-line';
 import CustomButton from "../CustomButton";
 import Collapsible from 'react-native-collapsible';
+import NewText from "../NewText";
+import Button from "../Button";
 
 
 
@@ -79,10 +81,10 @@ const CustomerTicket = ({item,onPress,isNoShadow,backgroundColor,isWatchList,onW
                 paddingBottom: verticalScale(10),
               }}>
               <View style={{ ...AppStyles.row }}>
-                <CustomText
+                <NewText
                   text={item.name}
-                  size={13.5}
-                  fontWeight={"600"}
+                  size={15}
+                  fontWeight={"700"}
                   fontFam={Inter.bold}
                   color={colors.black}
                 />
@@ -99,9 +101,9 @@ const CustomerTicket = ({item,onPress,isNoShadow,backgroundColor,isWatchList,onW
                 />
                 <Spacer width={scale(5)} />
 
-                <CustomText
+                <NewText
                   text={item.active}
-                  size={10}
+                  size={12}
                   // fontWeight={"600"}
                   // fontFam={Inter.bold}
                   color={colors.gray}
@@ -110,15 +112,15 @@ const CustomerTicket = ({item,onPress,isNoShadow,backgroundColor,isWatchList,onW
               </View>
               <View style={AppStyles.row}>
                 <Image
-                  style={{ width: scale(15), height: scale(15) }}
+                  style={{ width: 10, height:14 }}
                   resizeMode={"contain"}
                   source={icon.star}
                 />
                 <Spacer width={scale(7)} />
 
-                <CustomText
+                <NewText
                   text={"4.9"}
-                  size={14}
+                  size={15}
                   fontWeight={"600"}
                   fontFam={Inter.semiBold}
                   color={colors.black}
@@ -129,8 +131,8 @@ const CustomerTicket = ({item,onPress,isNoShadow,backgroundColor,isWatchList,onW
                 >
                    <Image
                   style={{
-                    width: scale(18),
-                    height: scale(18),
+                    width: 16,
+                    height: 19,
                     tintColor:
                     watchListObject
                     ?.map(da=> da?.id)
@@ -160,7 +162,7 @@ const CustomerTicket = ({item,onPress,isNoShadow,backgroundColor,isWatchList,onW
 
                 <Spacer width={scale(5)} />
 
-                <CustomText text={item.distance} size={10} color={colors.gray} />
+                <NewText text={item.distance} size={12} color={colors.gray} />
                 <Spacer width={scale(7)} />
                 <Image
                   style={styles.iconContainer}
@@ -170,7 +172,7 @@ const CustomerTicket = ({item,onPress,isNoShadow,backgroundColor,isWatchList,onW
 
                 <Spacer width={scale(5)} />
 
-                <CustomText text={item.time} size={10} color={colors.gray} />
+                <NewText text={item.time} size={12} color={colors.gray} />
                 <Spacer width={scale(5)} />
                 <Image
                   style={styles.iconContainer}
@@ -180,7 +182,7 @@ const CustomerTicket = ({item,onPress,isNoShadow,backgroundColor,isWatchList,onW
 
                 <Spacer width={scale(7)} />
 
-                <CustomText text={item.vehicle} size={10} color={colors.gray} />
+                <NewText text={item.vehicle} size={12} color={colors.gray} />
                 <Spacer width={scale(5)} />
               </View>
 
@@ -245,17 +247,17 @@ const CustomerTicket = ({item,onPress,isNoShadow,backgroundColor,isWatchList,onW
        
 
             <View style={AppStyles.row}>
-            <CustomText
+            <NewText
                   text={"Cost:"}
-                  size={14}
+                  size={15}
                   fontWeight={"400"}
                   style={{marginRight:scale(5)}}
                 //   fontFam={Inter.bold}
                   color={colors.gray200}
                 />
-                 <CustomText
+                 <NewText
                   text={"$50"}
-                  size={14}
+                  size={15}
                   fontWeight={"700"}
                   fontFam={Inter.bold}
                   color={colors.black}
@@ -263,21 +265,23 @@ const CustomerTicket = ({item,onPress,isNoShadow,backgroundColor,isWatchList,onW
             </View>
 
              <View style={AppStyles.row}>
-                 <CustomButton
+                 <Button
                  text={"Counter Offer"}
-                 height={30}
+                 height={28}
                  bgColor={colors.white}
                  borderColor={colors.primary}
                  borderWidth={1}
                  size={14}
+                 borderRadius={7}
                  textColor={colors.primary}
                  width={scale(110)}
                  />
                  <Spacer width={scale(10)}/>
-                  <CustomButton
+                  <Button
                  text={"Book Now"}
-                 height={30}
-                 size={14}
+                 height={28}
+                 size={16}
+                 borderRadius={7}
 
                  borderColor={colors.primary}
                  borderWidth={1}
@@ -311,7 +315,7 @@ export default CustomerTicket;
 
 const styles = StyleSheet.create({
     iconContainer:{
-        width: scale(14), height: scale(14) 
+        width:14, height: 14 
 
     }
 
