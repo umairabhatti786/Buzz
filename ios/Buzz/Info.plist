@@ -61,20 +61,6 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Your message to user when the camera is accessed for the first time</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app requires access to the Location</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app requires access to the Location</string>
-	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
-	<string>This app requires access to the Location</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app requires access to the Location</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Your message to user when the photo library is accessed for the first time</string>
-	<key>NSRemoteNotificationUsageDescription</key>
-	<string>Stay informed about your pets' activities and events with push notifications from Pawspact.</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>This app requires access to the calendar</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-Compact-Display-Black.ttf</string>
