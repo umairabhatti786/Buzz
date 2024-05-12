@@ -18,6 +18,11 @@ import CustomerConversation from "../../screens/main/Customer/CustomerConversati
 import CustomerChat from "../../screens/main/Customer/CustomerChat";
 import NotificationSettings from "../../screens/main/Customer/NotificationSettings";
 import CustomerFilter from "../../screens/main/Customer/CustomerFilter";
+import CustomerProfile from "../../screens/main/Customer/CustomerProfile";
+import DedicatedService from "../../screens/main/Customer/DedicatedService/DedicatedService";
+import ManageOrders from "../../screens/main/Customer/ManageOrders";
+import ResolutionCenter from "../../screens/main/Customer/ResolutionCenter";
+import SupportTeamLiveChat from "../../screens/main/Customer/SupportTeamLiveChat";
 
 const AppStack = () => {
   const Stack = createStackNavigator();
@@ -61,8 +66,16 @@ const AppStack = () => {
       <Stack.Screen name={"MoveCategoryTwo"} component={MoveCategoryTwo} />
       <Stack.Screen name={"SetPrice"} component={SetPrice} />
       <Stack.Screen name={"Addons"} component={Addons} />
+      <Stack.Screen name={"ResolutionCenter"} component={ResolutionCenter} />
+      <Stack.Screen name={"SupportTeamLiveChat"} component={SupportTeamLiveChat} />
+
 
       <Stack.Screen name={"TrackOrder"} component={TrackOrder} />
+      <Stack.Screen name={"CustomerProfile"} component={CustomerProfile} />
+      <Stack.Screen name={"ManageOrders"} component={ManageOrders} />
+
+      <Stack.Screen name={"DedicatedService"} component={DedicatedService} />
+
       <Stack.Screen name={"CustomerSearch"} component={CustomerSearch} />
       <Stack.Screen name={"DeliveryManager"} component={DeliveryManager} />
       <Stack.Screen

@@ -26,8 +26,7 @@ import AttachmentModal from "./AttachmentModal";
 const CustomerChat = ({ navigation, route }) => {
   let data = route?.params?.data;
 
-
-const [isAttachModal,setIsAttachModal]=useState(false)
+  const [isAttachModal, setIsAttachModal] = useState(false);
   console.log("Dastscd", data);
   const chatList = [
     {
@@ -130,7 +129,7 @@ const [isAttachModal,setIsAttachModal]=useState(false)
   const renderChatList = ({ item, index }) => {
     return (
       <>
-        <View >
+        <View>
           {item.date && (
             <View style={{ ...AppStyles.justifyRow, paddingVertical: 15 }}>
               <CustomLine width={"35%"} />
@@ -182,32 +181,29 @@ const [isAttachModal,setIsAttachModal]=useState(false)
     );
   };
   return (
-
     <>
       <Screen
-      backgroundColor={colors.white}
-      topBarColor={colors.white}
-      statusBarColor={colors.white}
-      barStyle={"dark-content"}
-    >
-      <View style={{ backgroundColor: colors.white, flex: 1 }}>
-        <Header />
+        backgroundColor={colors.white}
+        topBarColor={colors.white}
+        statusBarColor={colors.white}
+        barStyle={"dark-content"}
+      >
+        <View style={{ backgroundColor: colors.white, flex: 1 }}>
+          <Header />
 
-        <View style={{ flex: 1 }}>
-          <FlatList
-            data={chatList}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item) => item}
-            contentContainerStyle={{ gap: 10, paddingHorizontal: 15 }}
-            renderItem={renderChatList}
-            ListHeaderComponent={<OrderDetailCon />}
-          />
-        </View>
-        <MessageSander
-        onAttach={()=>setIsAttachModal(true)}
-         />
+          <View style={{ flex: 1 }}>
+            <FlatList
+              data={chatList}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item) => item}
+              contentContainerStyle={{ gap: 10, paddingHorizontal: 15 }}
+              renderItem={renderChatList}
+              ListHeaderComponent={<OrderDetailCon />}
+            />
+          </View>
+          <MessageSander onAttach={() => setIsAttachModal(true)} />
 
-        {/* <FlatList
+          {/* <FlatList
           data={conversation}
           style={{ paddingTop: 30 }}
           showsVerticalScrollIndicator={false}
@@ -216,19 +212,15 @@ const [isAttachModal,setIsAttachModal]=useState(false)
           ListFooterComponent={<View style={{ height: 120 }} />}
           renderItem={renderConversation}
         /> */}
-      </View>
-    </Screen>
+        </View>
+      </Screen>
 
-    <AttachmentModal
-modalVisible={isAttachModal}
-title={"Attach a file to message"}
-setModalVisible={setIsAttachModal}
-
-/>
+      <AttachmentModal
+        modalVisible={isAttachModal}
+        title={"Attach a file to message"}
+        setModalVisible={setIsAttachModal}
+      />
     </>
-  
-
-
   );
 };
 

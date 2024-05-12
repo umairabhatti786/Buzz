@@ -3,6 +3,7 @@ import { scale, verticalScale } from "react-native-size-matters";
 import { colors } from "../../utils/colors";
 import { Inter } from "../../utils/Fonts";
 import CustomText from "../CustomText";
+import NewText from "../NewText";
 
 
 
@@ -30,10 +31,24 @@ const CustomInput = ({
   width,
   borderRadius,
   paddingHorizontal,
-  placeholderTextColor
+  placeholderTextColor,
+  heading,
+  rightImageWidth,
+  rightImageHeight,
+  fontWeight,
+  headingWeight,
+  headingSize
 }) => {
   return (
     <View style={{ ...props, }}>
+      {heading&&(
+          <NewText
+          size={headingSize||15}
+          style={{marginVertical:10}}
+          fontWeight={ headingWeight|| "700"}
+           text={heading} color={color.black} />
+
+      )}
       <View style={{ 
         flexDirection: "row" ,
         alignItems:"center",
@@ -56,6 +71,7 @@ const CustomInput = ({
                 style={{
                   width: imgWidth||  scale(16),
                   height: imgHeigth  ||scale(16),
+                  marginRight:10
                   
                 }}
               />
@@ -64,16 +80,16 @@ const CustomInput = ({
 
 
 
-          <View style={{ flex: 1,marginHorizontal:10 }}>
+          <View style={{ flex: 1,}}>
             <TextInput
               value={value}
               editable={editable}
               style={{
-                fontSize: verticalScale(13),
+                fontSize: verticalScale(12),
                 height: verticalScale(height|| 45),
                 color: color || colors.black,
                 fontFamily:Inter.medium,
-                fontWeight:"500",
+                fontWeight: fontWeight|| "500",
                 ...(isCenter && { alignSelf: "center" }),
               }}
               placeholder={placeholder}
@@ -97,8 +113,8 @@ const CustomInput = ({
                 source={rightImage}
                 resizeMode="contain"
                 style={{
-                  width: 18,
-                  height: 18,
+                  width:rightImageWidth || 18,
+                  height: rightImageHeight  ||18,
                 }}
               />
             </TouchableOpacity>

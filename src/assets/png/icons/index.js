@@ -21,6 +21,16 @@ export const icon={
     send:require("../icons/send.png"),
     attach:require("../icons/attach.png"),
     dots:require("../icons/dots.png"),
+    share:require("../icons/share.png"),
+    thumbup:require("../icons/thumbup.png"),
+    grayforward:require("../icons/grayforward.png"),
+    play:require("../icons/play.png"),
+
+
+
+
+    addclendar:require("../icons/add-clendar.png"),
+
 
 
 

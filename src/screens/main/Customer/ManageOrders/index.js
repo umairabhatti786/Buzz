@@ -5,104 +5,32 @@ import {
   TouchableOpacity,
   View,
   FlatList,
+  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import { Screen } from "../../../../utils/ui/Screen";
 import { colors } from "../../../../utils/colors";
 import { AppStyles } from "../../../../utils/AppStyle";
-import CustomText from "../../../../components/CustomText";
 import { Inter } from "../../../../utils/Fonts";
 import NewText from "../../../../components/NewText";
 import { scale, verticalScale } from "react-native-size-matters";
 import { icon } from "../../../../assets/png/icons";
 import { image } from "../../../../assets/png/images";
-import ConversationContainer from "../CustomerConversation/ConversationContainer";
-import NeedRide from "./NeedRide";
-import CategoryBottomTab from "../../../../components/CategoryBottomTab";
-import DeliveryServices from "./DeliveryServices";
+import CalendarPicker from "../../../../components/CalendarPicker";
+import CustomLine from "../../../../components/CustomLine/CustomLine";
+import Search from "../../../../components/Search";
+import Order from "./Order";
+import { Spacer } from "../../../../components/Spacer";
 
-const CustomerFilter = ({ navigation }) => {
-  const [selectedTab, setSelectedTab] = useState("Need a Ride");
-  const conversation = [
-    {
-      id: 1,
-      img: image.defimg600,
-      type: "referring",
-      name: "Advance Piano Mover",
-      date: "5h",
-      amount: "$35",
-      message: "Senectus sodales nulla ut viverra...",
-      online: true,
-    },
-    {
-      id: 2,
-      img: image.defimg700,
-      type: "review",
-      name: "John Doe",
-      date: "1d",
-      amount: "$35",
-      message: "Senectus sodales nulla ut viverra...",
-    },
-    {
-      id: 3,
-      img: image.defimg102,
-      type: "info",
-      name: "John Smith Plumbers",
-      date: "2d",
-      amount: "$35",
-      message: "Senectus sodales nulla ut viverra...",
-    },
-    {
-      id: 4,
-      img: image.defimg200,
-      type: "referring",
-      name: "Valerie E. [Username]",
-      date: "5d",
-      amount: "$35",
-      message: "Senectus sodales nulla ut viverra...",
-    },
-    {
-      id: 5,
-      img: image.defimg600,
-      type: "review",
-      name: "John Smith Plumbers",
-      date: "10d",
-      amount: "$35",
-      message: "Senectus sodales nulla ut viverra...",
-    },
-    {
-      id: 6,
-      img: image.defimg700,
-      type: "info",
-      name: "John Doe",
-      date: "15d",
-      amount: "$35",
-      message: "Senectus sodales nulla ut viverra...",
-    },
-    {
-      id: 7,
-      img: image.defimg900,
-      type: "referring",
-      name: "John Smith Plumbers",
-      date: "1mo",
-      amount: "$35",
-      message: "Senectus sodales nulla ut viverra...",
-    },
+const ManageOrders = ({ navigation }) => {
+  const [selectedTab, setSelectedTab] = useState("Upcoming");
+
+  const UpcomingOrders = [{ status: "Pending" }];
+  const ActiveOrders = [{ status: "Ongoing" }];
+  const CompletedOrders = [
+    { status: "Success", tip: "$10" },
+    { status: "Failed",tip: "$10" },
   ];
-
-  const renderConversation = ({ item, index }) => {
-    return (
-      <ConversationContainer
-        name={item?.name}
-        onPress={() => navigation.navigate("CustomerChat", { data: item })}
-        img={item?.img}
-        amount={item?.amount}
-        online={item?.online}
-        date={item?.date}
-        message={item?.message}
-      />
-    );
-  };
 
   const Header = () => {
     return (
@@ -119,7 +47,7 @@ const CustomerFilter = ({ navigation }) => {
           }}
         >
           <TouchableOpacity
-            style={{ width: "20%" }}
+            // style={{ width: "15%" }}
             onPress={() => navigation.goBack()}
           >
             <Image
@@ -133,15 +61,21 @@ const CustomerFilter = ({ navigation }) => {
             color={colors.black}
             fontFam={Inter.bold}
             size={17}
-            text={"Filter"}
+            style={{ marginLeft: 30 }}
+            text={"Manage Order"}
           />
-          <NewText
+          <Image
+            style={{ width: 40, height: 40 }}
+            source={image.man}
+            resizeMode={"contain"}
+          />
+          {/* <NewText
             fontWeight="700"
             color={colors.primary}
             fontFam={Inter.bold}
             size={17}
             text={"Search"}
-          />
+          /> */}
         </View>
 
         <View
@@ -157,7 +91,7 @@ const CustomerFilter = ({ navigation }) => {
             shadowRadius: 5,
           }}
         >
-          {["Need a Ride", "Delivery Service"]?.map((item, _index) => (
+          {["Upcoming", "Active", "Completed"]?.map((item, _index) => (
             <TouchableOpacity
               activeOpacity={0.6}
               key={_index.toString()}
@@ -204,26 +138,60 @@ const CustomerFilter = ({ navigation }) => {
         <View style={{ backgroundColor: colors.white }}>
           <Header />
 
-          {selectedTab == "Need a Ride" ? (
-            <NeedRide />
-          ) : (
-            <>
-              <DeliveryServices />
-            </>
-          )}
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingTop: 20, paddingBottom: 200 }}
+            style={{
+              backgroundColor: colors.white,
+              marginTop: 5,
+            }}
+          >
+            <View
+            style={{              paddingHorizontal: 15,
+            }}
+            >
+
+            <View style={{ ...AppStyles.justifyRow, marginBottom: 15 }}>
+              <CalendarPicker width={"45%"} text={"From"} />
+              <CustomLine width={20} backgroundColor={colors.black40} />
+
+              <CalendarPicker width={"45%"} />
+            </View>
+            <Search />
+
+            </View>
+
+            <Spacer height={30} />
+            <FlatList
+              data={
+                selectedTab =="Upcoming"
+                  ? UpcomingOrders
+                  : selectedTab =="Active"
+                  ? ActiveOrders
+                  : selectedTab =="Completed"
+                  ? CompletedOrders
+                  : UpcomingOrders
+              }
+              // style={{ paddingTop: 30 }}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ gap: 20 ,padding:15}}
+              keyExtractor={(item) => item}
+              renderItem={({item}) => {
+                return <Order
+                item={item}
+                onPress={()=>navigation.navigate("ResolutionCenter")}
+                 />;
+              }}
+            />
+
+            {/* <Order/> */}
+          </ScrollView>
         </View>
       </Screen>
-
-      <CategoryBottomTab
-        label1={"Save"}
-        label2={"Post"}
-        label3={"Clear All"}
-        color={colors.primary}
-      />
     </>
   );
 };
 
-export default CustomerFilter;
+export default ManageOrders;
 
 const styles = StyleSheet.create({});

@@ -5,7 +5,7 @@ import { colors } from '../../utils/colors';
 import { Inter } from '../../utils/Fonts';
 import CustomText from '../CustomText';
 
-const CustomRangeSlider = ({ minValue, maxValue }) => {
+const CustomRangeSlider = ({ minValue, maxValue,backgroundColor }) => {
   const [position, setPosition] = useState(0);
 
   const [value,setValue]=useState(0)
@@ -37,7 +37,7 @@ const CustomRangeSlider = ({ minValue, maxValue }) => {
   return (
     <View style={{  backgroundColor:"#D9D9D9",borderRadius:scale(30)}}>
       {/* Track */}
-      <View style={{ width: position, height: 4, backgroundColor:colors.secondary, borderRadius: 2 }} />
+      <View style={{ width: position, height: 3.4, backgroundColor: backgroundColor || colors.secondary, borderRadius: 999 }} />
 
       {/* <View style={{alignItems:"center",backgroundColor:"red"}}> */}
 
@@ -45,7 +45,7 @@ const CustomRangeSlider = ({ minValue, maxValue }) => {
         style={{
           width: 20,
           height: 20,
-          backgroundColor: colors.secondary,
+          backgroundColor:   backgroundColor ||colors.secondary,
           top:-8,
           borderRadius: 10,
           position: 'absolute',
@@ -53,7 +53,7 @@ const CustomRangeSlider = ({ minValue, maxValue }) => {
           transform: [{ translateX: -10 }],
           zIndex: 2,
           elevation: 5,
-          shadowColor: colors.secondary,
+          shadowColor:backgroundColor|| colors.secondary,
           shadowOffset: { width: 4, height: 4 },
           shadowOpacity: 0.4
         }}

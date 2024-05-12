@@ -306,19 +306,7 @@ const DriverService = ({ navigation }) => {
               placeholder={"$/day"}
               borderRadius={8}
             />
-            {/* <DropDown
-              placeholder={"From Home Base(Def..."}
-              dropWidth={scale(170)}
-              // paddingHorizontal={scale(30)}
-              //   data={data}
-              data={data.map((item, _index) => {
-                return {
-                  id: item?.id,
-                  label: item?.value,
-                  value: item?.value,
-                };
-              })}
-            /> */}
+        
           </View>
           <Spacer height={verticalScale(20)} />
 

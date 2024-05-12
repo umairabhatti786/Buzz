@@ -23,6 +23,7 @@ import { icon } from "../../assets/png/icons";
 import CustomLine from "../CustomLine/CustomLine";
 import DashedLine from "react-native-dashed-line";
 import { windowHeight } from "../../utils/Commons";
+import NewText from "../NewText";
 
 const DropDownModal = ({
   modalVisible,
@@ -34,7 +35,8 @@ const DropDownModal = ({
   data,
   selectedObject,
   setSelectedObject,
-  title
+  title,
+  mainColor
 }) => {
   const [isEnabled, setIsEnabled] = useState(true);
 
@@ -56,7 +58,7 @@ const DropDownModal = ({
         }}>
         {/* <Spacer height={10} /> */}
         <View style={{...AppStyles.justifyRow,padding:scale(15)}}>
-          <CustomText
+          <NewText
             color={colors.black}
             size={16}
             fontWeight={"700"}
@@ -82,9 +84,9 @@ const DropDownModal = ({
 
         <CustomLine/>
         <ScrollView>
-        <View style={{padding:scale(15),}}>
+        <View style={{padding:scale(20),}}>
           {
-            data.map((item,index)=>{
+            data?.map((item,index)=>{
               return(
                 <View style={{width:"100%",}}>
 
@@ -99,9 +101,9 @@ const DropDownModal = ({
                 }}
                 >
 
-<CustomText
-            color={ selectedObject==item?colors.secondary: colors.gray100}
-            size={14}
+<NewText
+            color={ selectedObject==item?  mainColor ||colors.secondary: colors.gray100}
+            size={15}
             // fontWeight={"700"}
             text={item}
           />
@@ -114,7 +116,7 @@ const DropDownModal = ({
               style={{
                 width: 16,
                 height: 16,
-                tintColor: colors.secondary,
+                tintColor: mainColor||colors.secondary,
               }}
             />
             )
