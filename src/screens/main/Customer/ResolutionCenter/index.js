@@ -174,7 +174,7 @@ const ResolutionCenter = ({ navigation, route }) => {
             >
               <QuickLearn text={"Quick Tips"} />
               <QuickLearn text={"Track Order"} />
-              <QuickLearn text={"Quick Tips"} />
+              <QuickLearn text={"Search Mover"} />
             </ScrollView>
 
           <Spacer height={30} />

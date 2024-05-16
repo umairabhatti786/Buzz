@@ -8,6 +8,7 @@ import CustomerNotification from "../../screens/main/Customer/CustomerNotificati
 import CustomerMenu from "../../screens/main/Customer/CustomerMenu";
 import { icon } from "../../assets/png/icons";
 import { scale, verticalScale } from "react-native-size-matters";
+import CustomerDriverSetting from "../../screens/main/Driver/CustomerDriverSetting";
 
 const Tab = createBottomTabNavigator();
 
@@ -131,7 +132,7 @@ function CustomerBottomTabs() {
       />
       <Tab.Screen
         name={"Menu"}
-        component={CustomerMenu}
+        component={CustomerDriverSetting}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
