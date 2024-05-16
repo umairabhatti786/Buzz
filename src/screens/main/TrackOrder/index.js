@@ -86,23 +86,23 @@ const TrackOrder = ({ navigation, route }) => {
     { name: "Leave Review" },
   ];
 
-  const renderCustomerUser = ({ item, index }) => {
-    return (
-      <>
-        <View
-          style={{
-            paddingHorizontal: scale(15),
-            paddingTop: verticalScale(10),
-          }}>
-          <CustomerTicket
-            backgroundColor={"#F7F7F7"}
-            isNoShadow={true}
-            item={orderData}
-          />
-        </View>
-      </>
-    );
-  };
+  // const renderCustomerUser = ({ item, index }) => {
+  //   return (
+  //     <>
+  //       <View
+  //         style={{
+  //           paddingHorizontal: scale(15),
+  //           paddingTop: verticalScale(10),
+  //         }}>
+  //         <CustomerTicket
+  //           backgroundColor={"#F7F7F7"}
+  //           isNoShadow={true}
+  //           item={orderData}
+  //         />
+  //       </View>
+  //     </>
+  //   );
+  // };
   return (
     <Screen
       height={40}

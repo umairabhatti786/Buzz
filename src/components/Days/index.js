@@ -5,7 +5,7 @@ import { Inter } from "../../utils/Fonts";
 import CustomText from "../CustomText";
 import NewText from "../NewText";
 
-const Days = ({ day, onPress, selectedDays }) => {
+const Days = ({ day, onPress, selectedDays,width,paddingVertical,size }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.6}
@@ -18,15 +18,15 @@ const Days = ({ day, onPress, selectedDays }) => {
           : colors.white,
         alignItems: "center",
         justifyContent: "center",
-        paddingVertical: 5,
-        width: 45,
+        paddingVertical:paddingVertical|| 5,
+        width:width || 45,
         borderRadius: 8,
       }}
     >
       <NewText
         color={selectedDays.includes(day) ? colors.white : colors.black40}
         text={day}
-        size={18}
+        size={size ||  18}
         fontWeight={"700"}
       />
     </TouchableOpacity>

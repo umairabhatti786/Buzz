@@ -55,7 +55,7 @@ const CategoryItem = ({ onPress, selectedCategory, index, img, name }) => {
         color={selectedCategory == index ? colors.white : colors.black}
         fontWeight={"400"}
         lineHeight={21}
-        style={{ textAlign: "center",width:scale(70) }}
+        style={{ textAlign: "center",width:scale(85) }}
         fontFam={Inter.medium}
         //   color={colors.primary}
       />

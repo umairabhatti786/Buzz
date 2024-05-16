@@ -29,7 +29,7 @@ const ManageOrders = ({ navigation }) => {
   const ActiveOrders = [{ status: "Ongoing" }];
   const CompletedOrders = [
     { status: "Success", tip: "$10" },
-    { status: "Failed",tip: "$10" },
+    { status: "Failed", tip: "$10" },
   ];
 
   const Header = () => {
@@ -64,11 +64,17 @@ const ManageOrders = ({ navigation }) => {
             style={{ marginLeft: 30 }}
             text={"Manage Order"}
           />
-          <Image
-            style={{ width: 40, height: 40 }}
-            source={image.man}
-            resizeMode={"contain"}
-          />
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ResolutionCenter")}
+            activeOpacity={0.6}
+          >
+            <Image
+              style={{ width: 40, height: 40 }}
+              source={image.man}
+              resizeMode={"contain"}
+            />
+          </TouchableOpacity>
+
           {/* <NewText
             fontWeight="700"
             color={colors.primary}
@@ -146,41 +152,47 @@ const ManageOrders = ({ navigation }) => {
               marginTop: 5,
             }}
           >
-            <View
-            style={{              paddingHorizontal: 15,
-            }}
-            >
+            <View style={{ paddingHorizontal: 15 }}>
+              <View style={{ ...AppStyles.justifyRow, marginBottom: 15 }}>
+                <CalendarPicker width={"45%"} text={"From"} />
+                <CustomLine width={20} backgroundColor={colors.black40} />
 
-            <View style={{ ...AppStyles.justifyRow, marginBottom: 15 }}>
-              <CalendarPicker width={"45%"} text={"From"} />
-              <CustomLine width={20} backgroundColor={colors.black40} />
-
-              <CalendarPicker width={"45%"} />
-            </View>
-            <Search />
-
+                <CalendarPicker width={"45%"} />
+              </View>
+              <Search />
             </View>
 
             <Spacer height={30} />
             <FlatList
               data={
-                selectedTab =="Upcoming"
+                selectedTab == "Upcoming"
                   ? UpcomingOrders
-                  : selectedTab =="Active"
+                  : selectedTab == "Active"
                   ? ActiveOrders
-                  : selectedTab =="Completed"
+                  : selectedTab == "Completed"
                   ? CompletedOrders
                   : UpcomingOrders
               }
               // style={{ paddingTop: 30 }}
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ gap: 20 ,padding:15}}
+              contentContainerStyle={{ gap: 20, padding: 15 }}
               keyExtractor={(item) => item}
-              renderItem={({item}) => {
-                return <Order
-                item={item}
-                onPress={()=>navigation.navigate("ResolutionCenter")}
-                 />;
+              renderItem={({ item }) => {
+                return (
+                  <Order
+                    item={item}
+                    onPress={() => navigation.navigate("TrackOrder",{orderData:{
+                        img: image.defimg900,
+                        name: "Will Smith",
+                        active: "Available",
+                        distance: "15 mil",
+                        time: "15 Min Away",
+                        vehicle: "Car",
+                        isOpen: true,
+                        id: 1,
+                      }})}
+                  />
+                );
               }}
             />
 

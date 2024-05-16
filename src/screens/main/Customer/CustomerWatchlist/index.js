@@ -100,20 +100,22 @@ const CustomerWatchlist = ({ navigation }) => {
         topBarColor={colors.white}
         barStyle={"dark-content"}
       >
+        <NewText
+              fontWeight="700"
+              color={colors.black}
+              fontFam={Inter.bold}
+              size={18}
+              style={{marginLeft:20}}
+              text={"Watch List"}
+            />
+            <Spacer height={10} />
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{ backgroundColor: colors.white }}
           contentContainerStyle={colors.white}
         >
           <View style={{ padding: 15 }}>
-            <NewText
-              fontWeight="700"
-              color={colors.black}
-              fontFam={Inter.bold}
-              size={18}
-              text={"Watch List"}
-            />
-            <Spacer height={20} />
+            
 
             <DropContainer />
 
@@ -184,7 +186,7 @@ const CustomerWatchlist = ({ navigation }) => {
                                   height={28}
                                   size={16}
                                   onPress={() =>
-                                    bottomSheetModalRef.current.present()
+                                    navigation.navigate("CustomerProfile",{data:item})
                                   }
                                   bgColor={colors.primary}
                                   borderRadius={7}
@@ -237,6 +239,9 @@ const CustomerWatchlist = ({ navigation }) => {
                   onPress={() => setShowLocalDelivery(!showLocalDelivery)}
                   fontWeight={"500"}
                   txt={"Ride"}
+                  onPress={() =>
+                    bottomSheetModalRef.current.present()
+                  }
                   isSetting
                 />
 
@@ -247,6 +252,9 @@ const CustomerWatchlist = ({ navigation }) => {
                 <DropContainer
                   size={15}
                   fontWeight={"500"}
+                  onPress={() =>
+                    bottomSheetModalRef.current.present()
+                  }
                   txt={"Furniture Deliver"}
                   isSetting
                 />
@@ -270,6 +278,9 @@ const CustomerWatchlist = ({ navigation }) => {
                   size={15}
                   onPress={() => setShowLocalDelivery(!showLocalDelivery)}
                   fontWeight={"500"}
+                  onPress={() =>
+                    bottomSheetModalRef.current.present()
+                  }
                   txt={"06 Mar 2024"}
                   isSetting
                 />
@@ -282,6 +293,9 @@ const CustomerWatchlist = ({ navigation }) => {
                   size={15}
                   fontWeight={"500"}
                   txt={"28 Feb 2024"}
+                  onPress={() =>
+                    bottomSheetModalRef.current.present()
+                  }
                   isSetting
                 />
 

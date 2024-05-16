@@ -36,28 +36,30 @@ const DropDownModal = ({
   selectedObject,
   setSelectedObject,
   title,
-  mainColor
+  mainColor,
 }) => {
   const [isEnabled, setIsEnabled] = useState(true);
 
-  console.log("selectedObject",selectedObject)
+  console.log("selectedObject", selectedObject);
 
   return (
     <Modal
       isVisible={modalVisible}
       onBackdropPress={handelModal}
-      style={{ flex: 1 }}>
+      style={{ flex: 1 }}
+    >
       <View
         style={{
           width: "95%",
           //   height: 450,
-          maxHeight:windowHeight/1.2,
+          maxHeight: windowHeight / 1.2,
           backgroundColor: colors.white,
           borderRadius: scale(15),
-          alignSelf:"center"
-        }}>
+          alignSelf: "center",
+        }}
+      >
         {/* <Spacer height={10} /> */}
-        <View style={{...AppStyles.justifyRow,padding:scale(15)}}>
+        <View style={{ ...AppStyles.justifyRow, padding: scale(15) }}>
           <NewText
             color={colors.black}
             size={16}
@@ -66,10 +68,11 @@ const DropDownModal = ({
           />
 
           <TouchableOpacity
-              onPress={()=>setModalVisible(false)}
+            onPress={() => setModalVisible(false)}
             activeOpacity={0.6}
             //   disabled={!onShowPassword}
-            style={{ justifyContent: "center", alignItems: "center" }}>
+            style={{ justifyContent: "center", alignItems: "center" }}
+          >
             <Image
               source={icon.cross}
               resizeMode="contain"
@@ -82,86 +85,60 @@ const DropDownModal = ({
           </TouchableOpacity>
         </View>
 
-        <CustomLine/>
+        <CustomLine />
         <ScrollView>
-        <View style={{padding:scale(20),}}>
-          {
-            data?.map((item,index)=>{
-              return(
-                <View style={{width:"100%",}}>
+          <View style={{ padding: scale(20) }}>
+            {data?.map((item, index) => {
+              return (
+                <View style={{ width: "100%" }}>
+                  <TouchableOpacity
+                    style={{ ...AppStyles.justifyRow, width: "100%" }}
+                    activeOpacity={0.6}
+                    onPress={() => {
+                      setSelectedObject(item);
 
-<TouchableOpacity
-                style={{...AppStyles.justifyRow,width:"100%"}}
-                activeOpacity={0.6}
-                onPress={()=>{
-                  setSelectedObject(item)
+                      setModalVisible(false);
+                    }}
+                  >
+                    <NewText
+                      color={
+                        selectedObject == item
+                          ? mainColor || colors.secondary
+                          : colors.gray100
+                      }
+                      size={15}
+                      // fontWeight={"700"}
+                      text={item}
+                    />
 
-                  setModalVisible(false)
+                    {selectedObject == item && (
+                      <Image
+                        source={icon.tick}
+                        resizeMode="contain"
+                        style={{
+                          width: 16,
+                          height: 16,
+                          tintColor: mainColor || colors.secondary,
+                        }}
+                      />
+                    )}
+                  </TouchableOpacity>
 
-                }}
-                >
-
-<NewText
-            color={ selectedObject==item?  mainColor ||colors.secondary: colors.gray100}
-            size={15}
-            // fontWeight={"700"}
-            text={item}
-          />
-
-{
-            selectedObject==item&&(
-              <Image
-              source={icon.tick}
-              resizeMode="contain"
-              style={{
-                width: 16,
-                height: 16,
-                tintColor: mainColor||colors.secondary,
-              }}
-            />
-            )
-          }
-      
-         
-       
-
-                </TouchableOpacity>
-
-                {
-            data.length-1!==index&&(
-              <View style={{paddingVertical:verticalScale(13)}}> 
-              <DashedLine
-                                dashLength={6}
-                                dashThickness={1}
-                                dashGap={5}
-                                dashColor={colors.gray}
-                              />
-    
-              </View>
-
-            )
-          }
-
-
-
+                  {data.length - 1 !== index && (
+                    <View style={{ paddingVertical: verticalScale(13) }}>
+                      <DashedLine
+                        dashLength={6}
+                        dashThickness={1}
+                        dashGap={5}
+                        dashColor={colors.gray}
+                      />
+                    </View>
+                  )}
                 </View>
-              
-
-              )
-            })
-          }
-
-       
-
-
-
-
-
-        </View>
-
+              );
+            })}
+          </View>
         </ScrollView>
-
-     
 
         {/* <View style={AppStyles.justifyRow}>
             <View style={AppStyles.row}>

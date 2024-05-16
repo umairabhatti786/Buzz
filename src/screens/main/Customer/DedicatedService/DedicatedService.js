@@ -25,10 +25,28 @@ import CustomInput from "../../../../components/CustomInput";
 import { windowWidth } from "../../../../utils/Commons";
 import Button from "../../../../components/Button";
 import Days from "../../../../components/Days";
+import DropDownModal from "../../../../components/DropDownModal";
+import DedicatedServiceOfferModal from "./DedicatedServiceOfferModal";
+import ThankyouModal from "./ThankyouModal";
+import RateExperienceModal from "./RateExperienceModal";
+import { Rating } from 'react-native-ratings';
+
 const DedicatedService = ({ navigation, route }) => {
   const [selectedDays, setSelectedDays] = useState([]);
+  const [paymentOptionsModal, setPaymentOptionsodal] = useState(false);
+  const [paymentOptions, setPaymentOptions] = useState("Pay full now");
+
+  const [serviceOfferModal,setServiceOfferModal]=useState(false)
+  const [isThankyouModal,setIsThankyouModal]=useState(false)
+  const [isRateExperienceModal,setIsRateExperienceModal]=useState(false)
+
 
   console.log("selectedDays",selectedDays)
+
+  const paymentOptionsData=[
+    "Pay full now",
+    "Pay weekly"
+  ]
 
   return (
     <>
@@ -38,7 +56,7 @@ const DedicatedService = ({ navigation, route }) => {
         statusBarColor={colors.white}
         barStyle={"dark-content"}
       >
-        <CustomHeader label={"Profile View"} navigation={navigation} />
+        <CustomHeader label={"Dedicated Service"} navigation={navigation} />
         <ScrollView
           contentContainerStyle={{ paddingTop: 20, paddingBottom: 60 }}
           style={{
@@ -213,9 +231,9 @@ const DedicatedService = ({ navigation, route }) => {
               editable={false}
               heading={""}
               headingWeight={"500"}
-              // onShowPassword={() => setIsXLargeModal(true)}
+              onShowPassword={() => setPaymentOptionsodal(true)}
               rightImage={icon.down}
-              value={"Pay weekly"}
+              value={paymentOptions}
               fontWeight={"600"}
               paddingHorizontal={10}
               rightImageWidth={15}
@@ -255,6 +273,7 @@ const DedicatedService = ({ navigation, route }) => {
               weight1={"500"}
               text1={"$400"}
             />
+
           </View>
         </ScrollView>
 
@@ -309,7 +328,10 @@ const DedicatedService = ({ navigation, route }) => {
           <Button
             text={"Confirmed"}
             height={33}
-            onPress={()=>navigation.navigate("ManageOrders")}
+            // onPress={()=>navigation.navigate("ManageOrders")}
+            onPress={()=>{
+                setServiceOfferModal(true)
+            }}
             bgColor={colors.primary}
             borderColor={"transparent"}
             borderWidth={1}
@@ -320,6 +342,46 @@ const DedicatedService = ({ navigation, route }) => {
           />
         </View>
       </Screen>
+      <DropDownModal
+        mainColor={colors.primary}
+        modalVisible={paymentOptionsModal}
+        selectedObject={paymentOptions}
+        title={"Payment Options"}
+        setSelectedObject={setPaymentOptions}
+        setModalVisible={setPaymentOptionsodal}
+        data={paymentOptionsData}
+      />
+       <DedicatedServiceOfferModal
+        mainColor={colors.primary}
+        modalVisible={serviceOfferModal}
+        selectedObject={paymentOptions}
+        title={"Dedicated Service Offer"}
+        navigation={navigation}
+        setIsThankyouModal={setIsThankyouModal}
+        setSelectedObject={setPaymentOptions}
+        setModalVisible={setServiceOfferModal}
+        data={paymentOptionsData}
+      />
+
+<ThankyouModal
+        mainColor={colors.primary}
+        modalVisible={isThankyouModal}
+        selectedObject={paymentOptions}
+        title={"Dedicated Service Offer"}
+        navigation={navigation}
+        setIsRateExperienceModal={setIsRateExperienceModal}
+        setSelectedObject={setPaymentOptions}
+        setModalVisible={setIsThankyouModal}
+        data={paymentOptionsData}
+      />
+
+<RateExperienceModal
+        mainColor={colors.primary}
+        modalVisible={isRateExperienceModal}
+        navigation={navigation}
+        setSelectedObject={setPaymentOptions}
+        setModalVisible={setIsRateExperienceModal}
+      />
     </>
   );
 };
