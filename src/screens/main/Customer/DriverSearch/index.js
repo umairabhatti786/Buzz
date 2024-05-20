@@ -25,11 +25,24 @@ import { image } from "../../../../assets/png/images";
 import * as Animatable from "react-native-animatable";
 import NewText from "../../../../components/NewText";
 import CounterOfferModal from "./CounterOfferModal";
+import SortedModal from "./SortedModal";
+import ViewModal from "./ViewModal";
+import VehicleModal from "./VehicleModal";
+import TravelModel from "./TravelModel";
 
 const DriverSearch = ({ navigation }) => {
   const [isWatchList, setIsWatchList] = useState(false);
   const [watchListObject, setWatchListObject] = useState([]);
   const [isCounterOfferVisible, setIsCounterOfferVisible] = useState(false);
+  const [isSortedVisible, setIsSortedVisible] = useState(false);
+  const [sortedObject, setSortedObject] = useState("Default (Relevance)");
+  const [viewObject, setViewObject] = useState("List View");
+  const [vehicleObject, setVehicleObject] = useState("Vehicle Size");
+  const [isVehicleVisible, setIsVehicleVisible] = useState(false);
+  const [isTravelVisible, setIsTravelVisible] = useState(false);
+
+  const [isViewVisible, setIsViewVisible] = useState(false);
+
   const [saveText, setSaveText] = useState("");
   const data = [
     {
@@ -260,54 +273,61 @@ const DriverSearch = ({ navigation }) => {
               </View>
               <CustomLine />
               <Spacer height={verticalScale(15)} />
+
               <View style={AppStyles.justifyRow}>
                 <View style={AppStyles.row}>
-                  <CustomText
+                  <NewText
                     text={"Sort By"}
                     color={colors.black}
                     fontFam={Inter.medium}
                     // fontWeight="400"
-                    size={14}
+                    size={16}
                   />
                   <Spacer width={scale(10)} />
 
-                  <DropDown
-                    placeholder={"Default"}
-                    dropWidth={scale(90)}
-                    //   data={data}
-                    data={data.map((item, _index) => {
-                      return {
-                        id: item?.id,
-                        label: item?.value,
-                        value: item?.value,
-                      };
-                    })}
+                  <CustomInput
+                    height={29}
+                    color={colors.gray100}
+                    width={scale(90)}
+                    editable={false}
+                    value={sortedObject}
+                    onShowPassword={() => setIsSortedVisible(true)}
+                    rightImage={icon.down}
+                    fontWeight={"600"}
+                    paddingHorizontal={10}
+                    rightImageWidth={15}
+                    rightImageHeight={15}
+                    // placeholder={"$/day"}
+                    borderRadius={8}
                   />
                 </View>
                 <View style={AppStyles.row}>
-                  <CustomText
+                  <NewText
                     text={"View"}
                     color={colors.black}
                     fontFam={Inter.medium}
                     // fontWeight="400"
-                    size={14}
+                    size={16}
                   />
                   <Spacer width={scale(10)} />
-
-                  <DropDown
-                    placeholder={"List View"}
-                    dropWidth={scale(100)}
-                    //   data={data}
-                    data={data.map((item, _index) => {
-                      return {
-                        id: item?.id,
-                        label: item?.value,
-                        value: item?.value,
-                      };
-                    })}
+                  <CustomInput
+                    height={29}
+                    color={colors.gray100}
+                    width={scale(90)}
+                    editable={false}
+                    value={viewObject}
+                    onShowPassword={() => setIsViewVisible(true)}
+                    rightImage={icon.down}
+                    fontWeight={"600"}
+                    paddingHorizontal={10}
+                    rightImageWidth={15}
+                    rightImageHeight={15}
+                    // placeholder={"$/day"}
+                    borderRadius={8}
                   />
                 </View>
               </View>
+
               <Spacer height={scale(15)} />
               <CustomLine />
 
@@ -387,45 +407,54 @@ const DriverSearch = ({ navigation }) => {
             <View style={{ ...AppStyles.row, height: verticalScale(60) }}>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View style={{ marginRight: scale(10), marginLeft: scale(15) }}>
-                  <DropDown
-                    placeholder={"Category"}
-                    dropWidth={scale(100)}
-                    //   data={data}
-                    data={data.map((item, _index) => {
-                      return {
-                        id: item?.id,
-                        label: item?.value,
-                        value: item?.value,
-                      };
-                    })}
+                  <CustomInput
+                    height={29}
+                    color={colors.gray100}
+                    width={scale(110)}
+                    editable={false}
+                    value={viewObject}
+                    onShowPassword={() => setIsViewVisible(true)}
+                    rightImage={icon.down}
+                    fontWeight={"600"}
+                    paddingHorizontal={10}
+                    rightImageWidth={15}
+                    rightImageHeight={15}
+                    // placeholder={"$/day"}
+                    borderRadius={8}
                   />
                 </View>
                 <View style={{ marginRight: scale(10) }}>
-                  <DropDown
-                    placeholder={"Vehicle Size"}
-                    dropWidth={scale(120)}
-                    //   data={data}
-                    data={data.map((item, _index) => {
-                      return {
-                        id: item?.id,
-                        label: item?.value,
-                        value: item?.value,
-                      };
-                    })}
+                  <CustomInput
+                    height={29}
+                    color={colors.gray100}
+                    width={scale(110)}
+                    editable={false}
+                    value={vehicleObject}
+                    onShowPassword={() => setIsVehicleVisible(true)}
+                    rightImage={icon.down}
+                    fontWeight={"600"}
+                    paddingHorizontal={10}
+                    rightImageWidth={15}
+                    rightImageHeight={15}
+                    // placeholder={"$/day"}
+                    borderRadius={8}
                   />
                 </View>
                 <View style={{ marginRight: scale(10) }}>
-                  <DropDown
-                    placeholder={"Travel Distance"}
-                    dropWidth={scale(140)}
-                    //   data={data}
-                    data={data.map((item, _index) => {
-                      return {
-                        id: item?.id,
-                        label: item?.value,
-                        value: item?.value,
-                      };
-                    })}
+                  <CustomInput
+                    height={29}
+                    color={colors.gray100}
+                    width={scale(110)}
+                    editable={false}
+                    value={"Travel Distance"}
+                    onShowPassword={() => setIsTravelVisible(true)}
+                    rightImage={icon.down}
+                    fontWeight={"600"}
+                    paddingHorizontal={10}
+                    rightImageWidth={15}
+                    rightImageHeight={15}
+                    // placeholder={"$/day"}
+                    borderRadius={8}
                   />
                 </View>
               </ScrollView>
@@ -514,6 +543,32 @@ const DriverSearch = ({ navigation }) => {
         modalVisible={isCounterOfferVisible}
         title={"Offering Price"}
         setModalVisible={setIsCounterOfferVisible}
+      />
+      <SortedModal
+        modalVisible={isSortedVisible}
+        title={"Sort by"}
+        selectedObject={sortedObject}
+        setSelectedObject={setSortedObject}
+        setModalVisible={setIsSortedVisible}
+      />
+      <ViewModal
+        modalVisible={isViewVisible}
+        title={"View"}
+        selectedObject={viewObject}
+        setSelectedObject={setViewObject}
+        setModalVisible={setIsViewVisible}
+      />
+      <VehicleModal
+        modalVisible={isVehicleVisible}
+        title={"Vehicle Size"}
+        selectedObject={vehicleObject}
+        setSelectedObject={setVehicleObject}
+        setModalVisible={setIsVehicleVisible}
+      />
+      <TravelModel
+        modalVisible={isTravelVisible}
+        title={"Pickup Radius"}
+        setModalVisible={setIsTravelVisible}
       />
     </>
   );

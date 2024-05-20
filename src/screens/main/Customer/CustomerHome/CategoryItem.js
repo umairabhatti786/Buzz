@@ -34,19 +34,7 @@ const CategoryItem = ({ onPress, selectedCategory, index, img, name }) => {
           source={img}
           resizeMode="contain"
         />
-      {/* {index == 0 ? (
-        <Image
-          style={{
-            width: scale(25),
-            height: scale(25),
-            // tintColor: index > 0 ? colors.black : colors.white,
-          }}
-          source={img}
-          resizeMode="contain"
-        />
-      ) : (
-       
-      )} */}
+      
 
       <Spacer height={10} />
       <CustomText
@@ -57,7 +45,6 @@ const CategoryItem = ({ onPress, selectedCategory, index, img, name }) => {
         lineHeight={21}
         style={{ textAlign: "center",width:scale(85) }}
         fontFam={Inter.medium}
-        //   color={colors.primary}
       />
     </TouchableOpacity>
   );

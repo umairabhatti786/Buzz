@@ -25,7 +25,8 @@ const Button = ({
   isLoading,
   paddingHorizontal,
   fontWeight,
-  borderWidth
+  borderWidth,
+  alignItems
 }) => {
   return (
     <TouchableOpacity
@@ -38,7 +39,7 @@ const Button = ({
         height: verticalScale(height||48),
         backgroundColor: bgColor || colors.primary,
         justifyContent: "center",
-        alignItems: "center",
+        alignItems:alignItems || "center",
         paddingHorizontal:paddingHorizontal,
         borderRadius: scale(borderRadius || 8),
         borderWidth:borderWidth ,

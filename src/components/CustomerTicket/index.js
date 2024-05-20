@@ -23,6 +23,9 @@ import Collapsible from "react-native-collapsible";
 import NewText from "../NewText";
 import Button from "../Button";
 import CustomInput from "../CustomInput";
+import ServiceTypeModal from "../../screens/main/Customer/DriverSearch/ServiceTypeModal";
+import ServiceDescriptionModal from "../../screens/main/Customer/DriverSearch/ServiceDescriptionModal";
+import CategoryModal from "../../screens/main/Customer/DriverSearch/CategoryModal";
 
 const CustomerTicket = ({
   item,
@@ -38,10 +41,20 @@ const CustomerTicket = ({
   onCounterOffer,
 }) => {
   const [isCollapsible, setIsCollapsible] = useState(item.isOpen);
-  // const [isWatchList,setIsWatchList]=useState(false)
+  const [isServiceModal,setIsServiceModal]=useState(false)
+  const [selectedServiceType,setSelectedServiceType]=useState("Scheduled")
+
+  const [isCategoryodal,setIsCategoryModal]=useState(false)
+  const [selectedCategory,setSelectedCategory]=useState("Delivery")
+
+
+  const [isServiceDescriptionModal,setIsServiceDescriptionModal]=useState(false)
+  const [selectedService,setSelectedService]=useState("Moving")
 
   return (
-    <View
+    <>
+
+<View
       style={{
         elevation: 5,
         shadowColor: Platform.OS == "ios" ? colors.gray : colors.black,
@@ -226,8 +239,8 @@ const CustomerTicket = ({
                   color={colors.gray100}
                   width={scale(120)}
                   editable={false}
-                  value="Scheduled"
-                  // onShowPassword={()=>setIsVehicleTypeModal(true)}
+                  value={selectedServiceType}
+                  onShowPassword={()=>setIsServiceModal(true)}
                   rightImage={icon.down}
                   fontWeight={"600"}
                   paddingHorizontal={10}
@@ -253,8 +266,8 @@ const CustomerTicket = ({
                   color={colors.gray100}
                   width={scale(110)}
                   editable={false}
-                  value="Delivery"
-                  // onShowPassword={()=>setIsVehicleTypeModal(true)}
+                  value={selectedCategory}
+                  onShowPassword={()=>setIsCategoryModal(true)}
                   rightImage={icon.down}
                   fontWeight={"600"}
                   paddingHorizontal={10}
@@ -285,8 +298,8 @@ const CustomerTicket = ({
                   color={colors.gray100}
                   width={scale(140)}
                   editable={false}
-                  value="Local Delivery"
-                  // onShowPassword={()=>setIsVehicleTypeModal(true)}
+                  value={selectedService}
+                  onShowPassword={()=>setIsServiceDescriptionModal(true)}
                   rightImage={icon.down}
                   fontWeight={"600"}
                   paddingHorizontal={10}
@@ -380,6 +393,33 @@ const CustomerTicket = ({
         </Collapsible>
       </View>
     </View>
+
+<ServiceTypeModal
+        modalVisible={isServiceModal}
+        title={"Service Type"}
+        selectedObject={selectedServiceType}
+        setSelectedObject={setSelectedServiceType}
+        setModalVisible={setIsServiceModal}
+      />
+
+<ServiceDescriptionModal
+        modalVisible={isServiceDescriptionModal}
+        title={"Service Description"}
+        selectedObject={selectedService}
+        setSelectedObject={setSelectedService}
+        setModalVisible={setIsServiceDescriptionModal}
+      />
+
+
+<CategoryModal
+        modalVisible={isCategoryodal}
+        title={"Category"}
+        selectedObject={selectedCategory}
+        setSelectedObject={setSelectedCategory}
+        setModalVisible={setIsCategoryModal}
+      />
+    </>
+    
   );
 };
 
