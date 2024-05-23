@@ -1,24 +1,30 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import { colors } from "../../utils/colors";
-import CustomText from "../CustomText";
 import { Spacer } from "../Spacer";
 import { scale, verticalScale } from "react-native-size-matters";
 import { icon } from "../../assets/png/icons";
 import { AppStyles } from "../../utils/AppStyle";
 import CustomLine from "../CustomLine/CustomLine";
 import { Inter } from "../../utils/Fonts";
-import { image } from "../../assets/png/images";
-import CustomButton from "../CustomButton";
-import ToggleSwitch from "toggle-switch-react-native";
+import NewText from "../NewText";
+import Button from "../Button";
+import CustomToggle from "../CustomToggle";
 
-const ProfileCard = ({ img, user, buttonWidth, isRating,isActive,setIsActive }) => {
-  // const [isActive, setIsActive] = useState(true);
+const ProfileCard = ({
+  img,
+  user,
+  buttonWidth,
+  isRating,
+  isActive,
+  setIsActive,
+}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.6}
       // onPress={()=>navigation.navigate("CustomerDriverSetting")}
-      style={{ ...styles.box, paddingVertical: verticalScale(10) }}>
+      style={{ ...styles.box, paddingVertical: verticalScale(10) }}
+    >
       <View style={{ ...AppStyles.justifyRow, paddingLeft: scale(10) }}>
         <View style={AppStyles.row}>
           <Image
@@ -31,9 +37,10 @@ const ProfileCard = ({ img, user, buttonWidth, isRating,isActive,setIsActive }) 
             source={img}
           />
           <View
-            style={{ paddingLeft: scale(10), paddingTop: verticalScale(3) }}>
+            style={{ paddingLeft: scale(10), paddingTop: verticalScale(3) }}
+          >
             <View>
-              <CustomText
+              <NewText
                 text={"Will Smith"}
                 size={15}
                 fontWeight={"700"}
@@ -42,7 +49,7 @@ const ProfileCard = ({ img, user, buttonWidth, isRating,isActive,setIsActive }) 
                 color={colors.black}
               />
               <Spacer height={verticalScale(5)} />
-              <CustomButton
+              <Button
                 text={user}
                 height={25}
                 style={{ opacity: isActive ? 1 : 0.5 }}
@@ -52,7 +59,7 @@ const ProfileCard = ({ img, user, buttonWidth, isRating,isActive,setIsActive }) 
                 borderColor={colors.primary}
                 borderWidth={-1}
                 fontWeight={"400"}
-                size={10}
+                size={12}
                 width={scale(buttonWidth || 70)}
                 textColor={colors.black}
               />
@@ -66,8 +73,8 @@ const ProfileCard = ({ img, user, buttonWidth, isRating,isActive,setIsActive }) 
               <View style={AppStyles.row}>
                 <Image
                   style={{
-                    width: scale(16),
-                    height: scale(16),
+                    width: 18,
+                    height: 18,
                     opacity: isActive ? 1 : 0.5,
                   }}
                   resizeMode={"contain"}
@@ -75,9 +82,9 @@ const ProfileCard = ({ img, user, buttonWidth, isRating,isActive,setIsActive }) 
                 />
                 <Spacer width={verticalScale(5)} />
 
-                <CustomText
+                <NewText
                   text={"4.9"}
-                  size={14}
+                  size={16}
                   style={{ opacity: isActive ? 1 : 0.5 }}
                   //   fontFam={Inter.bold}
                   color={colors.black}
@@ -88,8 +95,8 @@ const ProfileCard = ({ img, user, buttonWidth, isRating,isActive,setIsActive }) 
             <>
               <Image
                 style={{
-                  width: scale(35),
-                  height: scale(35),
+                  width: 35,
+                  height: 35,
                   opacity: isActive ? 1 : 0.5,
                 }}
                 resizeMode={"contain"}
@@ -101,8 +108,8 @@ const ProfileCard = ({ img, user, buttonWidth, isRating,isActive,setIsActive }) 
           <Spacer width={verticalScale(15)} />
           <Image
             style={{
-              width: scale(18),
-              height: scale(18),
+              width: 18,
+              height: 18,
               opacity: isActive ? 1 : 0.5,
             }}
             resizeMode={"contain"}
@@ -120,9 +127,11 @@ const ProfileCard = ({ img, user, buttonWidth, isRating,isActive,setIsActive }) 
           ...AppStyles.justifyRow,
           paddingHorizontal: scale(10),
           //   paddingVertical: verticalScale(2),
-        }}>
+        }}
+      >
         <View style={AppStyles.row}>
-          <ToggleSwitch
+          <CustomToggle isActive={isActive} setIsActive={setIsActive} />
+          {/* <ToggleSwitch
             isOn={isActive}
             onColor={"#F2F2F2"}
             offColor={"#F2F2F2"}
@@ -143,12 +152,12 @@ const ProfileCard = ({ img, user, buttonWidth, isRating,isActive,setIsActive }) 
             }}
             trackOffStyle={{ width: 52, height: 30 }}
             trackOnStyle={{ width: 52, height: 30 }}
-          />
+          /> */}
           <Spacer width={scale(10)} />
 
-          <CustomText
+          <NewText
             text={isActive ? "Active" : "Inactive"}
-            size={12}
+            size={14}
             style={{ opacity: isActive ? 1 : 0.5 }}
             //   fontWeight={"700"}
             //   fontFam={Inter.bold}
@@ -157,7 +166,7 @@ const ProfileCard = ({ img, user, buttonWidth, isRating,isActive,setIsActive }) 
         </View>
 
         <View style={AppStyles.row}>
-          <CustomButton
+          <Button
             text={"Refer"}
             height={28}
             style={{ opacity: isActive ? 1 : 0.5 }}
@@ -166,13 +175,13 @@ const ProfileCard = ({ img, user, buttonWidth, isRating,isActive,setIsActive }) 
             borderColor={"#EEEEEE"}
             borderWidth={1}
             fontWeight={"600"}
-            size={13}
+            size={14}
             fontFam={Inter.semiBold}
             textColor={colors.gray}
           />
           <Spacer width={scale(10)} />
 
-          <CustomButton
+          <Button
             text={"Share"}
             height={28}
             style={{ opacity: isActive ? 1 : 0.5 }}
@@ -181,7 +190,7 @@ const ProfileCard = ({ img, user, buttonWidth, isRating,isActive,setIsActive }) 
             borderColor={"#EEEEEE"}
             borderWidth={1}
             fontWeight={"600"}
-            size={13}
+            size={14}
             fontFam={Inter.semiBold}
             textColor={colors.gray}
           />

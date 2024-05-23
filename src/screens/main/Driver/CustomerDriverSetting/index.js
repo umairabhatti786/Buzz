@@ -12,21 +12,28 @@ import React, { useState } from "react";
 import { Screen } from "../../../../utils/ui/Screen";
 import { colors } from "../../../../utils/colors";
 import { AppStyles } from "../../../../utils/AppStyle";
-import CustomText from "../../../../components/CustomText";
 import { scale, verticalScale } from "react-native-size-matters";
 import { Inter } from "../../../../utils/Fonts";
-import CustomInput from "../../../../components/CustomInput";
 import { Spacer } from "../../../../components/Spacer";
-import CustomLine from "../../../../components/CustomLine/CustomLine";
-import DropDown from "../../../../components/DropDown";
 import { icon } from "../../../../assets/png/icons";
-import CustomerTicket from "../../../../components/CustomerTicket";
 import { image } from "../../../../assets/png/images";
-import DriverCard from "../../../../components/DriverCard";
 import SettingContainer from "./SettingContainer";
 import ProfileCard from "../../../../components/ProfileCard";
+import NewText from "../../../../components/NewText";
+import PhoneNumberModal from "./PhoneNumberModal";
+import NumberVerificationModal from "./NumberVerificationModal";
+import TermAndCondationModal from "./TermAndCondationModal";
+import AddAccountModal from "./AddAccountModal";
 
 const CustomerDriverSetting = ({ navigation }) => {
+  const [isPhoneNumberVisible, setIsPhoneNumberVisible] = useState(false);
+  const [isNumberVerification, setIsNumberVerification] = useState(false);
+  const [accountActive, setAccountActive] = useState(false);
+  const [isTermAndConditionVisible, setIsTermAndConditionVisible] =
+    useState(false);
+
+    const [isAddAccountVisible,setIsAddAccountVisible]=useState(false)
+
   const [userProfile, setUserProfile] = useState([
     { user: "Customer", img: image.defimg700, isActive: true, buttonWidth: 70 },
     {
@@ -107,323 +114,402 @@ const CustomerDriverSetting = ({ navigation }) => {
   const MoreData = [
     { title: "Be a Partner" },
     { title: "Privacy Policy" },
-    { title: "Terms & Conditions" },
+    { title: "Terms & Conditions" ,onPress:()=>setIsTermAndConditionVisible(true)},
   ];
 
   return (
-    <Screen
-      height={40}
-      backgroundColor={colors.white}
-      // topBarColor={colors.primary}
-      barStyle={"dark-content"}
-    >
-      <View
-        style={{
-          flex: 1,
-
-          backgroundColor: colors.white,
-        }}
+    <>
+      <Screen
+        height={40}
+        backgroundColor={colors.white}
+        // topBarColor={colors.primary}
+        barStyle={"dark-content"}
       >
         <View
           style={{
-            ...AppStyles.justifyRow,
+            flex: 1,
+
             backgroundColor: colors.white,
-            paddingVertical: verticalScale(5),
-            paddingHorizontal: scale(15),
           }}
         >
-          <TouchableOpacity
-            style={{ flexDirection: "row", alignItems: "center" }}
-            onPress={() => navigation.goBack()}
-          >
-            <Image
-              style={{ width: scale(15), height: scale(15) }}
-              resizeMode="contain"
-              source={icon.back}
-            />
-            <Spacer width={scale(10)} />
-            <CustomText
-              fontWeight="700"
-              color={colors.black}
-              fontFam={Inter.bold}
-              size={14}
-              style={{ textAlign: "center" }}
-              text={"Your Profile"}
-            />
-          </TouchableOpacity>
-
-          <Image
-            style={{
-              width: scale(70),
-              height: scale(60),
-            }}
-            source={image.fqa}
-            resizeMode="contain"
-          />
-        </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={{
+              ...AppStyles.justifyRow,
+              backgroundColor: colors.white,
+              paddingVertical: verticalScale(5),
               paddingHorizontal: scale(15),
             }}
           >
-            <View>
-              {userProfile?.map((item, index) => {
-                return (
-                  <View>
-                    <ProfileCard
-                      user={item.user}
-                      img={item.img}
-                      isRating={item.isRating}
-                      isActive={item.isActive}
-                      buttonWidth={item.buttonWidth}
-                      setIsActive={() => {
-                        let profileArray = [];
-                        let data = [...userProfile];
-                        profileArray = data.map((i) => {
-                          if (i.user == item.user) {
-                            i.isActive = true;
-                          } else {
-                            i.isActive = false;
-                          }
+            <TouchableOpacity
+              style={{ flexDirection: "row", alignItems: "center" }}
+              onPress={() => navigation.goBack()}
+            >
+              <Image
+                style={{ width: scale(15), height: scale(15) }}
+                resizeMode="contain"
+                source={icon.back}
+              />
+              <Spacer width={scale(10)} />
+              <NewText
+                fontWeight="700"
+                color={colors.black}
+                fontFam={Inter.bold}
+                size={16}
+                style={{ textAlign: "center" }}
+                text={"Your Profile"}
+              />
+            </TouchableOpacity>
 
-                          return { ...i };
-                        });
-                        // data[index].isActive=!item.isActive
-                        // data[index].isActive=!item.isActive
+            <Image
+              style={{
+                width: scale(70),
+                height: scale(60),
+              }}
+              source={image.fqa}
+              resizeMode="contain"
+            />
+          </View>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View
+              style={{
+                paddingHorizontal: scale(15),
+              }}
+            >
+              <View>
+                {userProfile?.map((item, index) => {
+                  return (
+                    <View>
+                      <ProfileCard
+                        user={item.user}
+                        img={item.img}
+                        isRating={item.isRating}
+                        isActive={item.isActive}
+                        buttonWidth={item.buttonWidth}
+                        setIsActive={() => {
+                          let profileArray = [];
+                          let data = [...userProfile];
+                          profileArray = data.map((i) => {
+                            if (i.user == item.user) {
+                              i.isActive = true;
+                            } else {
+                              i.isActive = false;
+                            }
 
-                        // console.log("UserProfile",data)
-                        // let indexOfElement = userProfile.indexOf(item.user);
-                        // console.log("indexOfElement",indexOfElement)
-                        profileArray.sort((a, b) =>
-                          a.isActive === b.isActive ? 0 : a.isActive ? -1 : 1
-                        );
+                            return { ...i };
+                          });
 
-                        setUserProfile(profileArray);
-                      }}
-                    />
-                    <Spacer height={verticalScale(10)} />
-                    {/* <ProfileCard
-                                user={"Driver"}
-                                img={image.defimg600}
-                                isRating={true}
+                          profileArray.sort((a, b) =>
+                            a.isActive === b.isActive ? 0 : a.isActive ? -1 : 1
+                          );
 
+                          setUserProfile(profileArray);
+                        }}
+                      />
+                      <Spacer height={verticalScale(10)} />
+                    </View>
+                  );
+                })}
 
-                /> */}
-                  </View>
-                );
-              })}
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={() => {
+                    let reversedArray = [...userProfile].reverse();
+                    setUserProfile(reversedArray);
+                  }}
+                  style={{
+                    position: "absolute",
+                    top: "43%",
+                    width: scale(35),
+                    height: scale(35),
+                    right: "45%",
+                  }}
+                >
+                  <Image
+                    style={{ width: "100%", height: "100%" }}
+                    source={image.updown}
+                    resizeMode={"contain"}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={()=>setIsAddAccountVisible(true)}
+                style={{
+                  ...AppStyles.row,
+                  alignSelf: "flex-end",
+                  paddingVertical: verticalScale(15),
+                }}
+              >
+                <NewText
+                  color={colors.secondary}
+                  size={16}
+                  text={"Add Account"}
+                />
+                <Spacer width={scale(10)} />
+                <Image
+                  style={{ width: scale(16), height: scale(16) }}
+                  source={icon.add}
+                />
+              </TouchableOpacity>
+
+              <NewText
+                fontWeight="700"
+                color={colors.black}
+                fontFam={Inter.bold}
+                size={16}
+                style={{
+                  marginTop: verticalScale(10),
+                }}
+                text={"Account"}
+              />
 
               <TouchableOpacity
                 activeOpacity={0.6}
-                onPress={() => {
-                  let reversedArray = [...userProfile].reverse();
-                  setUserProfile(reversedArray);
-                }}
+                onPress={() => setIsPhoneNumberVisible(true)}
                 style={{
-                  position: "absolute",
-                  top: "43%",
-                  width: scale(35),
-                  height: scale(35),
-                  right: "45%",
+                  flexDirection: "row",
+                  // alignSelf: "flex-end",
+                  alignItems: accountActive ? "center" : "flex-start",
+                  marginVertical: 10,
+                  paddingVertical: 7,
+                  paddingHorizontal: 10,
+                  backgroundColor: accountActive
+                    ? "#00FF66" + "20"
+                    : colors.red + "20",
+                  borderRadius: 10,
                 }}
               >
+                {accountActive ? (
+                  <TouchableOpacity style={styles.activeContainer}>
+                    <Image
+                      style={{ width: 18, height: 18 }}
+                      resizeMode="contain"
+                      source={icon.tick}
+                    />
+                  </TouchableOpacity>
+                ) : (
+                  <Image
+                    style={{ width: 50, height: 50 }}
+                    source={image.alert}
+                  />
+                )}
+
+                <View
+                  style={{ gap: 5, marginHorizontal: 10, marginVertical: 5 }}
+                >
+                  {accountActive ? (
+                    <NewText
+                      color={colors.black}
+                      size={14}
+                      text={"Account Activated!"}
+                    />
+                  ) : (
+                    <>
+                      <NewText
+                        color={colors.black}
+                        size={13}
+                        text={"Required Action (1)"}
+                      />
+                      <NewText
+                        color={colors.red}
+                        size={13}
+                        text={"Click here to resolve"}
+                      />
+                    </>
+                  )}
+                </View>
+              </TouchableOpacity>
+              <View style={styles.box}>
+                <View style={{ paddingTop: verticalScale(15) }}>
+                  {AccountData.map((item, index) => {
+                    return (
+                      <SettingContainer
+                        text={item.title}
+                        data={AccountData}
+                        index={index}
+                        text1={item.text}
+                      />
+                    );
+                  })}
+                </View>
+              </View>
+
+              <NewText
+                fontWeight="700"
+                color={colors.black}
+                fontFam={Inter.bold}
+                size={16}
+                style={{
+                  marginTop: verticalScale(20),
+                  marginBottom: verticalScale(15),
+                }}
+                text={"Security"}
+              />
+              <View style={styles.box}>
+                <View style={{ paddingTop: verticalScale(15) }}>
+                  {SecurityData.map((item, index) => {
+                    return (
+                      <SettingContainer
+                        text={item.title}
+                        data={AccountData}
+                        index={index}
+                        text1={item.text}
+                      />
+                    );
+                  })}
+                </View>
+              </View>
+
+              <NewText
+                fontWeight="700"
+                color={colors.black}
+                fontFam={Inter.bold}
+                size={16}
+                style={{
+                  marginTop: verticalScale(20),
+                  marginBottom: verticalScale(15),
+                }}
+                text={"Payment"}
+              />
+              <View style={styles.box}>
+                <View style={{ paddingTop: verticalScale(15) }}>
+                  {PaymentData.map((item, index) => {
+                    return (
+                      <SettingContainer
+                        text={item.title}
+                        data={AccountData}
+                        index={index}
+                        text1={item.text}
+                      />
+                    );
+                  })}
+                </View>
+              </View>
+
+              <NewText
+                fontWeight="700"
+                color={colors.black}
+                fontFam={Inter.bold}
+                size={16}
+                style={{
+                  marginTop: verticalScale(20),
+                  marginBottom: verticalScale(15),
+                }}
+                text={"Learn"}
+              />
+              <View style={styles.box}>
+                <View style={{ paddingTop: verticalScale(15) }}>
+                  {LearnData.map((item, index) => {
+                    return (
+                      <SettingContainer
+                        text={item.title}
+                        data={AccountData}
+                        index={index}
+                        text1={item.text}
+                      />
+                    );
+                  })}
+                </View>
+              </View>
+              <NewText
+                fontWeight="700"
+                color={colors.black}
+                fontFam={Inter.bold}
+                size={16}
+                style={{
+                  marginTop: verticalScale(20),
+                  marginBottom: verticalScale(15),
+                }}
+                text={"More"}
+              />
+              <View style={styles.box}>
+                <View style={{ paddingTop: verticalScale(15) }}>
+                  {MoreData.map((item, index) => {
+                    return (
+                      <SettingContainer
+                      onPress={item.onPress}
+                        text={item.title}
+                        data={AccountData}
+                        index={index}
+                        text1={item.text}
+                      />
+                    );
+                  })}
+                </View>
+              </View>
+
+              <TouchableOpacity
+                style={{
+                  ...AppStyles.row,
+                  paddingHorizontal: scale(10),
+                  paddingVertical: verticalScale(5),
+                  width: scale(100),
+                  alignSelf: "flex-end",
+                  borderWidth: 1,
+                  borderColor: "#FF0000",
+                  borderRadius: scale(8),
+                  marginTop: verticalScale(10),
+                  marginRight: scale(5),
+                  marginBottom: verticalScale(20),
+                }}
+              >
+                <NewText
+                  //   fontWeight="700"
+                  color={"#FF0000"}
+                  //   fontFam={Inter.bold}
+                  size={14}
+                  style={{
+                    marginRight: scale(15),
+                  }}
+                  text={"Log Out"}
+                />
+
                 <Image
-                  style={{ width: "100%", height: "100%" }}
-                  source={image.updown}
-                  resizeMode={"contain"}
+                  style={{
+                    width: scale(18),
+                    height: scale(18),
+                    alignSelf: "flex-end",
+                  }}
+                  source={image.logout}
+                  resizeMode="contain"
                 />
               </TouchableOpacity>
             </View>
+          </ScrollView>
+        </View>
+      </Screen>
 
-            <View
-              style={{
-                ...AppStyles.row,
-                alignSelf: "flex-end",
-                paddingVertical: verticalScale(15),
-              }}
-            >
-              <CustomText
-                color={colors.secondary}
-                size={13}
-                text={"Add Account"}
-              />
-              <Spacer width={scale(10)} />
-              <Image
-                style={{ width: scale(16), height: scale(16) }}
-                source={icon.add}
-              />
-            </View>
+      <PhoneNumberModal
+        modalVisible={isPhoneNumberVisible}
+        setModalVisible={setIsPhoneNumberVisible}
+        onSubmit={() => {
+          setIsPhoneNumberVisible(false);
+          setTimeout(() => {
+            setIsNumberVerification(true);
+          }, 500);
+        }}
+      />
+      <NumberVerificationModal
+        modalVisible={isNumberVerification}
+        setModalVisible={setIsNumberVerification}
+        onSubmit={() => {
+          setIsNumberVerification(false);
+          setAccountActive(true);
+        }}
+      />
 
-            <CustomText
-              fontWeight="700"
-              color={colors.black}
-              fontFam={Inter.bold}
-              size={14}
-              style={{
-                marginTop: verticalScale(10),
-                marginBottom: verticalScale(15),
-              }}
-              text={"Account"}
-            />
-            <View style={styles.box}>
-              <View style={{ paddingTop: verticalScale(15) }}>
-                {AccountData.map((item, index) => {
-                  return (
-                    <SettingContainer
-                      text={item.title}
-                      data={AccountData}
-                      index={index}
-                      text1={item.text}
-                    />
-                  );
-                })}
-              </View>
-            </View>
-
-            <CustomText
-              fontWeight="700"
-              color={colors.black}
-              fontFam={Inter.bold}
-              size={14}
-              style={{
-                marginTop: verticalScale(20),
-                marginBottom: verticalScale(15),
-              }}
-              text={"Security"}
-            />
-            <View style={styles.box}>
-              <View style={{ paddingTop: verticalScale(15) }}>
-                {SecurityData.map((item, index) => {
-                  return (
-                    <SettingContainer
-                      text={item.title}
-                      data={AccountData}
-                      index={index}
-                      text1={item.text}
-                    />
-                  );
-                })}
-              </View>
-            </View>
-
-            <CustomText
-              fontWeight="700"
-              color={colors.black}
-              fontFam={Inter.bold}
-              size={14}
-              style={{
-                marginTop: verticalScale(20),
-                marginBottom: verticalScale(15),
-              }}
-              text={"Payment"}
-            />
-            <View style={styles.box}>
-              <View style={{ paddingTop: verticalScale(15) }}>
-                {PaymentData.map((item, index) => {
-                  return (
-                    <SettingContainer
-                      text={item.title}
-                      data={AccountData}
-                      index={index}
-                      text1={item.text}
-                    />
-                  );
-                })}
-              </View>
-            </View>
-
-            <CustomText
-              fontWeight="700"
-              color={colors.black}
-              fontFam={Inter.bold}
-              size={14}
-              style={{
-                marginTop: verticalScale(20),
-                marginBottom: verticalScale(15),
-              }}
-              text={"Learn"}
-            />
-            <View style={styles.box}>
-              <View style={{ paddingTop: verticalScale(15) }}>
-                {LearnData.map((item, index) => {
-                  return (
-                    <SettingContainer
-                      text={item.title}
-                      data={AccountData}
-                      index={index}
-                      text1={item.text}
-                    />
-                  );
-                })}
-              </View>
-            </View>
-            <CustomText
-              fontWeight="700"
-              color={colors.black}
-              fontFam={Inter.bold}
-              size={14}
-              style={{
-                marginTop: verticalScale(20),
-                marginBottom: verticalScale(15),
-              }}
-              text={"More"}
-            />
-            <View style={styles.box}>
-              <View style={{ paddingTop: verticalScale(15) }}>
-                {MoreData.map((item, index) => {
-                  return (
-                    <SettingContainer
-                      text={item.title}
-                      data={AccountData}
-                      index={index}
-                      text1={item.text}
-                    />
-                  );
-                })}
-              </View>
-            </View>
-
-            <TouchableOpacity
-              style={{
-                ...AppStyles.row,
-                paddingHorizontal: scale(10),
-                paddingVertical: verticalScale(5),
-                width: scale(100),
-                alignSelf: "flex-end",
-                borderWidth: 1,
-                borderColor: "#FF0000",
-                borderRadius: scale(8),
-                marginTop: verticalScale(10),
-                marginRight: scale(5),
-                marginBottom: verticalScale(20),
-              }}
-            >
-              <CustomText
-                //   fontWeight="700"
-                color={"#FF0000"}
-                //   fontFam={Inter.bold}
-                size={13}
-                style={{
-                  marginRight: scale(15),
-                }}
-                text={"Log Out"}
-              />
-
-              <Image
-                style={{
-                  width: scale(18),
-                  height: scale(18),
-                  alignSelf: "flex-end",
-                }}
-                source={image.logout}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </View>
-    </Screen>
+<AddAccountModal
+        modalVisible={isAddAccountVisible}
+        setModalVisible={setIsAddAccountVisible}
+        onSubmit={() => {
+          setIsPhoneNumberVisible(false);
+          setTimeout(() => {
+            setIsNumberVerification(true);
+          }, 500);
+        }}
+      />
+    </>
   );
 };
 
@@ -436,5 +522,14 @@ const styles = StyleSheet.create({
     borderColor: colors.black40,
     paddingHorizontal: scale(15),
     // paddingBottom:verticalScale(10)
+  },
+  activeContainer: {
+    width: 45,
+    height: 45,
+    borderRadius: 999,
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 10,
   },
 });

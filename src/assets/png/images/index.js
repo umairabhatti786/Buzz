@@ -38,6 +38,11 @@ facebook:require("../images/facebook.png"),
     office:require("../images/office.png"),
     autoparts:require("../images/auto-parts.png"),
     point:require("../images/point.png"),
+    home:require("../images/home.png"),
+    creditCard:require("../images/credit-card.png"),
+    alert:require("../images/alert.png"),
+
+
 
 
 

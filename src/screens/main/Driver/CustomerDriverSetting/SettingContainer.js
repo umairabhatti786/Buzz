@@ -7,25 +7,29 @@ import { icon } from "../../../../assets/png/icons";
 import { Spacer } from "../../../../components/Spacer";
 import CustomText from "../../../../components/CustomText";
 import DashedLine from "react-native-dashed-line";
+import NewText from "../../../../components/NewText";
 
-const SettingContainer = ({ text1, text ,data,index}) => {
+const SettingContainer = ({ text1, text ,data,index,onPress}) => {
 
   return (
 
     <View >
-    <TouchableOpacity activeOpacity={0.6} style={{...AppStyles.justifyRow,}}>
-    <CustomText color={colors.black} text={text} size={13} />
+    <TouchableOpacity 
+  onPress={onPress}
+    activeOpacity={0.6} style={{...AppStyles.justifyRow,}}>
+    <NewText color={colors.black} text={text} size={14} />
     <View style={AppStyles.row}>
-    <CustomText color={"#666666"} text={text1} 
+    <NewText
+     color={"#666666"} text={text1} 
     fontWeight={"400"}
-    size={13} />
+    size={14} />
     <Spacer width={scale(7)}/>
 
 
     <Image
             style={{
-              width: scale(15),
-              height: scale(15),
+              width:15,
+              height:15,
             }}
             source={icon.nexticon}
             resizeMode="contain"

@@ -25,10 +25,15 @@ import CustomTicket from "../../../../components/CustomTicket";
 import DashedLine from "react-native-dashed-line";
 import Button from "../../../../components/Button";
 import BottomSheet from "../../../../components/BottomSheet";
+import DeleteModal from "./DeleteModal";
+import SuccessModal from "./SuccessModal";
 
 const CustomerWatchlist = ({ navigation }) => {
   const [showLocalDelivery, setShowLocalDelivery] = useState(true);
   const bottomSheetModalRef = useRef(null);
+
+  const [isDeleteModal, setIsDeleteModal] = useState(false);
+  const [isSuccessModal, setIsSuccessModal] = useState(false);
 
   const customerTicketData = [
     {
@@ -101,22 +106,20 @@ const CustomerWatchlist = ({ navigation }) => {
         barStyle={"dark-content"}
       >
         <NewText
-              fontWeight="700"
-              color={colors.black}
-              fontFam={Inter.bold}
-              size={18}
-              style={{marginLeft:20}}
-              text={"Watch List"}
-            />
-            <Spacer height={10} />
+          fontWeight="700"
+          color={colors.black}
+          fontFam={Inter.bold}
+          size={18}
+          style={{ marginLeft: 20 }}
+          text={"Watch List"}
+        />
+        <Spacer height={10} />
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{ backgroundColor: colors.white }}
           contentContainerStyle={colors.white}
         >
           <View style={{ padding: 15 }}>
-            
-
             <DropContainer />
 
             <View
@@ -186,7 +189,9 @@ const CustomerWatchlist = ({ navigation }) => {
                                   height={28}
                                   size={16}
                                   onPress={() =>
-                                    navigation.navigate("CustomerProfile",{data:item})
+                                    navigation.navigate("CustomerProfile", {
+                                      data: item,
+                                    })
                                   }
                                   bgColor={colors.primary}
                                   borderRadius={7}
@@ -236,12 +241,10 @@ const CustomerWatchlist = ({ navigation }) => {
               >
                 <DropContainer
                   size={15}
-                  onPress={() => setShowLocalDelivery(!showLocalDelivery)}
+                  // onPress={() => setShowLocalDelivery(!showLocalDelivery)}
                   fontWeight={"500"}
                   txt={"Ride"}
-                  onPress={() =>
-                    bottomSheetModalRef.current.present()
-                  }
+                  onPress={() => bottomSheetModalRef.current.present()}
                   isSetting
                 />
 
@@ -252,9 +255,7 @@ const CustomerWatchlist = ({ navigation }) => {
                 <DropContainer
                   size={15}
                   fontWeight={"500"}
-                  onPress={() =>
-                    bottomSheetModalRef.current.present()
-                  }
+                  onPress={() => bottomSheetModalRef.current.present()}
                   txt={"Furniture Deliver"}
                   isSetting
                 />
@@ -276,11 +277,9 @@ const CustomerWatchlist = ({ navigation }) => {
               >
                 <DropContainer
                   size={15}
-                  onPress={() => setShowLocalDelivery(!showLocalDelivery)}
+                  // onPress={() => setShowLocalDelivery(!showLocalDelivery)}
                   fontWeight={"500"}
-                  onPress={() =>
-                    bottomSheetModalRef.current.present()
-                  }
+                  onPress={() => bottomSheetModalRef.current.present()}
                   txt={"06 Mar 2024"}
                   isSetting
                 />
@@ -293,9 +292,7 @@ const CustomerWatchlist = ({ navigation }) => {
                   size={15}
                   fontWeight={"500"}
                   txt={"28 Feb 2024"}
-                  onPress={() =>
-                    bottomSheetModalRef.current.present()
-                  }
+                  onPress={() => bottomSheetModalRef.current.present()}
                   isSetting
                 />
 
@@ -364,17 +361,44 @@ const CustomerWatchlist = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity activeOpacity={0.6} style={{ paddingTop: 10 }}>
+          <TouchableOpacity
+            onPress={() => {
+              bottomSheetModalRef.current.dismiss();
+
+              setIsDeleteModal(true);
+            }}
+            activeOpacity={0.6}
+            style={{ paddingTop: 10 }}
+          >
             <NewText
               color={colors.red}
               style={{ textAlign: "center" }}
               size={16}
               text={"Delete"}
             />
-        
           </TouchableOpacity>
         </View>
       </BottomSheet>
+      <DeleteModal
+        modalVisible={isDeleteModal}
+        setModalVisible={setIsDeleteModal}
+        onYes={() => {
+          setIsDeleteModal(false);
+          setTimeout(() => {
+            setIsSuccessModal(true);
+          }, 500);
+        }}
+      />
+      <SuccessModal
+        modalVisible={isSuccessModal}
+        setModalVisible={setIsSuccessModal}
+        onReturnHome={() => {
+          setIsSuccessModal(false);
+          setTimeout(() => {
+            navigation.navigate("Home");
+          }, 500);
+        }}
+      />
     </>
   );
 };

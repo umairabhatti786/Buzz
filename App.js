@@ -17,11 +17,11 @@ const App = () => {
     <GestureHandlerRootView
     style={{flex:1}}
     >
-              {/* <BottomSheetModalProvider> */}
+              <BottomSheetModalProvider>
               <RootNavigator/>
 
 
-              {/* </BottomSheetModalProvider> */}
+              </BottomSheetModalProvider>
 
 
       

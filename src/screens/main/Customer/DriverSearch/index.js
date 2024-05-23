@@ -29,6 +29,10 @@ import SortedModal from "./SortedModal";
 import ViewModal from "./ViewModal";
 import VehicleModal from "./VehicleModal";
 import TravelModel from "./TravelModel";
+import PaymentMethodModal from "./PaymentMethodModal";
+import AddPaymentMethodModal from "./AddPaymentMethodModal";
+import ThankyouModal from "./ThankyouModal";
+import RateExperienceModal from "./RateExperienceModal";
 
 const DriverSearch = ({ navigation }) => {
   const [isWatchList, setIsWatchList] = useState(false);
@@ -40,22 +44,17 @@ const DriverSearch = ({ navigation }) => {
   const [vehicleObject, setVehicleObject] = useState("Vehicle Size");
   const [isVehicleVisible, setIsVehicleVisible] = useState(false);
   const [isTravelVisible, setIsTravelVisible] = useState(false);
+  const [isPaymentModal, setIsPaymentModal] = useState(false);
+  const [isRateExperienceModal,setIsRateExperienceModal]=useState(false)
 
   const [isViewVisible, setIsViewVisible] = useState(false);
+  const [isAddPaymentMethodVisible, steIsAddPaymentMethodVisible] =
+    useState(false);
+    const [isThankyouModal,setIsThankyouModal]=useState(false)
+
 
   const [saveText, setSaveText] = useState("");
-  const data = [
-    {
-      id: 1,
-      label: "task1",
-      value: "Andrede",
-    },
-    {
-      id: 2,
-      label: "task2",
-      value: "Herr",
-    },
-  ];
+ 
 
   const customerTicketData = [
     {
@@ -118,7 +117,8 @@ const DriverSearch = ({ navigation }) => {
           }}
         >
           <CustomerTicket
-            onBook={() => navigation.navigate("DedicatedService")}
+            onBook={() => setIsPaymentModal(true)}
+            // onBook={() => navigation.navigate("DedicatedService")}
             onPressProfile={() =>
               navigation.navigate("CustomerProfile", { data: item })
             }
@@ -569,6 +569,44 @@ const DriverSearch = ({ navigation }) => {
         modalVisible={isTravelVisible}
         title={"Pickup Radius"}
         setModalVisible={setIsTravelVisible}
+      />
+
+      <PaymentMethodModal
+        onPressCard={() => {
+          setIsPaymentModal(false);
+          setTimeout(() => {
+            steIsAddPaymentMethodVisible(true);
+          }, 1000);
+        }}
+        modalVisible={isPaymentModal}
+        setModalVisible={setIsPaymentModal}
+      />
+      <AddPaymentMethodModal
+        onPay={() => {
+          steIsAddPaymentMethodVisible(false);
+          setTimeout(() => {
+            setIsThankyouModal(true);
+          }, 1000);
+        }}
+        modalVisible={isAddPaymentMethodVisible}
+        setModalVisible={steIsAddPaymentMethodVisible}
+      />
+
+
+<ThankyouModal
+        mainColor={colors.primary}
+        modalVisible={isThankyouModal}
+        navigation={navigation}
+        setIsRateExperienceModal={setIsRateExperienceModal}
+        setModalVisible={setIsThankyouModal}
+      />
+
+
+      <RateExperienceModal
+        mainColor={colors.primary}
+        modalVisible={isRateExperienceModal}
+        navigation={navigation}
+        setModalVisible={setIsRateExperienceModal}
       />
     </>
   );
