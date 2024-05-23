@@ -16,9 +16,10 @@ import NewText from "../NewText";
 import { AppStyles } from "../../utils/AppStyle";
 import { icon } from "../../assets/png/icons";
 
-const CalendarPicker = ({ width, text }) => {
+const CalendarPicker = ({ width, text,onPress }) => {
   return (
-    <View
+    <TouchableOpacity
+    onPress={onPress}
       style={{
         ...AppStyles.justifyRow,
         ...styles.daysContainer,
@@ -37,7 +38,7 @@ const CalendarPicker = ({ width, text }) => {
         resizeMode="contain"
         source={icon.calendar}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 export default CalendarPicker;

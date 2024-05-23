@@ -25,6 +25,10 @@ export const icon={
     thumbup:require("../icons/thumbup.png"),
     grayforward:require("../icons/grayforward.png"),
     play:require("../icons/play.png"),
+    backIcon:require("../icons/back-icon.png"),
+    formardIcon:require("../icons/formard-icon.png"),
+
+
 
 
 
