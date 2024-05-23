@@ -24,7 +24,8 @@ const CustomModal = ({
   setModalVisible,
   title,
   children,
-  lineNotShow
+  lineNotShow,
+  width
 }) => {
   return (
     <Modal
@@ -34,7 +35,7 @@ const CustomModal = ({
     >
       <View
         style={{
-          width: "95%",
+          width: width||"95%",
           maxHeight: windowHeight / 1.3,
           backgroundColor: colors.white,
           borderRadius: scale(15),

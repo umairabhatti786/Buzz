@@ -21,9 +21,11 @@ import CustomLine from "../../../../components/CustomLine/CustomLine";
 import Search from "../../../../components/Search";
 import Order from "./Order";
 import { Spacer } from "../../../../components/Spacer";
+import CustomCalendar from "../../../../components/CustomCalendar";
 
 const ManageOrders = ({ navigation }) => {
   const [selectedTab, setSelectedTab] = useState("Upcoming");
+  const [isFromModalVisible,setIsFromModalVisible]=useState(false)
 
   const UpcomingOrders = [{ status: "Pending" }];
   const ActiveOrders = [{ status: "Ongoing" }];
@@ -154,7 +156,9 @@ const ManageOrders = ({ navigation }) => {
           >
             <View style={{ paddingHorizontal: 15 }}>
               <View style={{ ...AppStyles.justifyRow, marginBottom: 15 }}>
-                <CalendarPicker width={"45%"} text={"From"} />
+                <CalendarPicker width={"45%"} text={"From"}
+                onPress={()=>setIsFromModalVisible(true)}
+                 />
                 <CustomLine width={20} backgroundColor={colors.black40} />
 
                 <CalendarPicker width={"45%"} />
@@ -200,6 +204,11 @@ const ManageOrders = ({ navigation }) => {
           </ScrollView>
         </View>
       </Screen>
+
+      <CustomCalendar
+      modalVisible={isFromModalVisible}
+      setModalVisible={setIsFromModalVisible}
+      />
     </>
   );
 };
