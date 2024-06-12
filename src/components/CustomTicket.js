@@ -42,7 +42,7 @@ const CustomTicket = ({
       <View
         style={{
           backgroundColor: backgroundColor || colors.white,
-          elevation: 5,
+          elevation: !isNoShadow ?5:0,
           shadowColor: Platform.OS == "ios" ? colors.gray : colors.black,
           shadowOffset: { width: 4, height: 5 },
           shadowOpacity: !isNoShadow ? 0.2 : 0,

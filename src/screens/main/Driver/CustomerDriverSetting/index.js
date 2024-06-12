@@ -509,6 +509,11 @@ const CustomerDriverSetting = ({ navigation }) => {
           }, 500);
         }}
       />
+      <TermAndCondationModal
+        modalVisible={isTermAndConditionVisible}
+        setModalVisible={setIsTermAndConditionVisible}
+       
+      />
     </>
   );
 };

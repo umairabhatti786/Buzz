@@ -25,7 +25,7 @@ import NewText from "../../../../components/NewText";
                   fontWeight="400"
                 color={colors.gray200}
                 //   fontFam={Inter.bold}
-                size={16}
+                size={14}
                 lineHeight={22}
                 // style={{
                 //     marginRight: scale(30),
@@ -37,7 +37,7 @@ import NewText from "../../../../components/NewText";
                 color={"#12D1AF"}
                 textDecorationLine={"underline"}
                 //   fontFam={Inter.bold}
-                size={16}
+                size={14}
                 lineHeight={22}
                 // style={{
                 //     marginRight: scale(30),
@@ -55,7 +55,7 @@ import NewText from "../../../../components/NewText";
                   bgColor={colors.primary}
                   borderColor={"transparent"}
                   borderWidth={1}
-                  size={18}
+                  size={16}
                 //   onPress={onPay}
                   borderRadius={7}
                   textColor={colors.white}

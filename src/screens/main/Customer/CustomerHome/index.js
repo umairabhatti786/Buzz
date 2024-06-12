@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   SectionList,
+  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -23,6 +24,7 @@ import CategoryItem from "./CategoryItem";
 import ProductCard from "../../../../components/ProductCard";
 import ServicesModal from "./ServicesModal";
 import Button from "../../../../components/Button";
+import NewText from "../../../../components/NewText";
 const CustomerHome = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [isServiceModal,setIsServiceModal]=useState(false)
@@ -100,8 +102,9 @@ const CustomerHome = ({ navigation }) => {
     <>
       <Screen
         backgroundColor={colors.white}
+        statusBarColor={colors.primary}
         topBarColor={colors.primary}
-        barStyle={"light-content"}
+        barStyle={"dark-content"}
       >
         <View
           style={{
@@ -112,7 +115,7 @@ const CustomerHome = ({ navigation }) => {
             paddingLeft: scale(20),
             paddingRight: scale(30),
 
-            paddingTop: verticalScale(10),
+            paddingTop: Platform.OS=="ios"?10:30,
             paddingBottom: verticalScale(60),
           }}
         >
@@ -178,7 +181,7 @@ const CustomerHome = ({ navigation }) => {
             flex: 1,
             borderTopLeftRadius: scale(30),
             borderTopEndRadius: scale(30),
-            marginTop: verticalScale(-40),
+            marginTop: verticalScale(-30),
             paddingTop: verticalScale(30),
             backgroundColor: colors.white,
           }}
@@ -191,8 +194,8 @@ const CustomerHome = ({ navigation }) => {
                 paddingHorizontal: scale(15),
               }}
             >
-              <CustomText
-                text={"Featured Services"}
+              <NewText
+                text={"Category"}
                 size={16}
                 fontWeight={"600"}
                 fontFam={Inter.bold}
@@ -211,13 +214,7 @@ const CustomerHome = ({ navigation }) => {
                   textColor={colors.primary}
                   width={scale(110)}
                 />
-              {/* <CustomText
-                text={"See All"}
-                size={13}
-                fontWeight={"500"}
-                fontFam={Inter.medium}
-                color={colors.primary}
-              /> */}
+            
             </View>
             <View style={{ height: verticalScale(110) }}>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>

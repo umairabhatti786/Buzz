@@ -6750,10 +6750,10 @@ react-native-linear-gradient@^2.8.3:
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.8.3.tgz#9a116649f86d74747304ee13db325e20b21e564f"
   integrity sha512-KflAXZcEg54PXkLyflaSZQ3PJp4uC4whM7nT/Uot9m0e/qxFV3p6uor1983D1YOBJbJN7rrWdqIjq0T42jOJyA==
 
-react-native-maps@^1.9.0:
-  version "1.15.1"
-  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-1.15.1.tgz#2a038576085ff241864ae037cb0a96beab871251"
-  integrity sha512-xdU1Qoe9pvyYx/EQwkpBuubHenSUknODjvKPNlzYJF57CPhjieMIomZL/vCupxTHKqsat2wTCt7O6AdByea5wA==
+react-native-maps@^1.15.4:
+  version "1.15.4"
+  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-1.15.4.tgz#1691a80ffe7d96a9aff1315959de11302b155f0c"
+  integrity sha512-If6GCSvopxQ/80jjpi70d9Uvq6wcWCyPjh+8F3JPC5vq+vEMvAq7Phuine1tnZPKXmh6gEzdF2z+9857hGrsYg==
   dependencies:
     "@types/geojson" "^7946.0.13"
 
@@ -6875,6 +6875,11 @@ react-native-size-matters@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.4.2.tgz#4348bdd6fc47383f60326d58ad69870c998a5f9a"
   integrity sha512-DKE3f/sdcozd24oASgkP1iGg+YU3HoajRa5k3a4wkRzpiqREq8SGX12Y5zBgAt/8IivLQoTMYkyQu1/Giuy+zQ==
+
+react-native-splash-screen@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.3.0.tgz#3af71ed17afe50fee69590a45aec399d071ead02"
+  integrity sha512-rGjt6HkoSXxMqH4SQUJ1gnPQlPJV8+J47+4yhgTIan4bVvAwJhEeJH7wWt9hXSdH4+VfwTS0GTaflj1Tw83IhA==
 
 react-native-star-rating@^1.1.0:
   version "1.1.0"

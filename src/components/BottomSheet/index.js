@@ -9,8 +9,8 @@ import Animated, {
 } from "react-native-reanimated";
 
 const BottomSheet = (props) => {
-  const { bottomSheetModalRef, snapTo, onDismiss, children } = props;
-  const snapPoints = useMemo(() => snapTo || ["35%"], []);
+  const { bottomSheetModalRef, snapTo, onDismiss, children,marginHorizontal } = props;
+  const snapPoints = useMemo(() => [  snapTo||"37%"], []);
 
   useFocusEffect(
     useCallback(() => {
@@ -26,6 +26,7 @@ const BottomSheet = (props) => {
       pressBehavior="close"
       backdropComponent={(props) => <Backdrop {...props} bottomSheetModalRef={bottomSheetModalRef} />}
       snapPoints={snapPoints}
+      style={{marginHorizontal:marginHorizontal||0}}
       onDismiss={props?.onDismiss}
       children={() => (
         <SafeAreaView>

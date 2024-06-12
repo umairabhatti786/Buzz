@@ -15,6 +15,7 @@ import { Spacer } from "../../../../components/Spacer";
 import NewText from "../../../../components/NewText";
 import { icon } from "../../../../assets/png/icons";
 import { image } from "../../../../assets/png/images";
+import StarRating from "react-native-star-rating";
 
 const PorfileViewCard = ({
   item,
@@ -136,15 +137,22 @@ const PorfileViewCard = ({
             style={{ ...AppStyles.justifyRow }}
           >
             <View style={{ ...AppStyles.row }}>
-              <Image
-                style={{ width: 16, height: 16 }}
-                resizeMode={"contain"}
-                source={icon.star}
+              <StarRating
+                maxStars={5}
+                rating={4.5}
+                fullStarColor={"#FFCA28"}
+                emptyStarColor="#CCCCCC"
+                starSize={13}
+                halfStar={icon.halfStar}
+                fullStar={icon.star}
+                starStyle={{ marginHorizontal: 2 }} // Add margin between stars
+                emptyStar={icon.stargrayout} // Use the CustomStarIcon component as the custom icon renderer
               />
+
               <Spacer width={scale(7)} />
 
               <NewText
-                text={"4.9"}
+                text={"4.5"}
                 size={15}
                 fontWeight={"600"}
                 fontFam={Inter.semiBold}

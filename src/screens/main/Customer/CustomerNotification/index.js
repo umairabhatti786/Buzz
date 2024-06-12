@@ -108,7 +108,7 @@ const CustomerNotification = ({navigation}) => {
 
   const Header=()=>{
     return(
-      <View style={{ ...AppStyles.justifyRow,paddingHorizontal:15,paddingBottom:10 }}>
+      <View style={{ ...AppStyles.justifyRow,paddingHorizontal:15,paddingVertical:10 }}>
       <NewText
         text={"Notifications"}
         size={18}
@@ -140,6 +140,7 @@ const CustomerNotification = ({navigation}) => {
     <Screen
       backgroundColor={colors.white}
       topBarColor={colors.white}
+      statusBarColor={colors.white}
       barStyle={"dark-content"}
     >
       <View >

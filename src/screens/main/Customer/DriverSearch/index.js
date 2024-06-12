@@ -8,7 +8,7 @@ import {
   Platform,
   FlatList,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Screen } from "../../../../utils/ui/Screen";
 import { colors } from "../../../../utils/colors";
 import { AppStyles } from "../../../../utils/AppStyle";
@@ -33,6 +33,8 @@ import PaymentMethodModal from "./PaymentMethodModal";
 import AddPaymentMethodModal from "./AddPaymentMethodModal";
 import ThankyouModal from "./ThankyouModal";
 import RateExperienceModal from "./RateExperienceModal";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import DriverDetailSheet from "./DriverDetailSheet";
 
 const DriverSearch = ({ navigation }) => {
   const [isWatchList, setIsWatchList] = useState(false);
@@ -45,16 +47,28 @@ const DriverSearch = ({ navigation }) => {
   const [isVehicleVisible, setIsVehicleVisible] = useState(false);
   const [isTravelVisible, setIsTravelVisible] = useState(false);
   const [isPaymentModal, setIsPaymentModal] = useState(false);
-  const [isRateExperienceModal,setIsRateExperienceModal]=useState(false)
+  const [isRateExperienceModal, setIsRateExperienceModal] = useState(false);
+  const [mapType, setMapType] = useState("standard");
+  const [region, setRegion] = useState({
+    latitude: 32.3363,
+    longitude: 74.3675,
+    latitudeDelta: 0.039330183268125069,
+    longitudeDelta: 0.045962757229776571,
+  });
+  const mapRef = useRef(null);
+  let long = 74.3675;
+  let lat = 32.3363;
 
   const [isViewVisible, setIsViewVisible] = useState(false);
   const [isAddPaymentMethodVisible, steIsAddPaymentMethodVisible] =
     useState(false);
-    const [isThankyouModal,setIsThankyouModal]=useState(false)
-
+  const [isThankyouModal, setIsThankyouModal] = useState(false);
+  const [selectedDrivers, setSelectedDrivers] = useState([]);
+  const driverDetailSheetRef = useRef();
 
   const [saveText, setSaveText] = useState("");
- 
+
+  console.log("setSelectedDrivers", selectedDrivers);
 
   const customerTicketData = [
     {
@@ -65,7 +79,21 @@ const DriverSearch = ({ navigation }) => {
       time: "15 Min Away",
       vehicle: "Car",
       isOpen: true,
+      lat: 32.3463,
+      long: 74.3775,
       id: 1,
+    },
+    {
+      img: image.defimg900,
+      name: "Will Smith",
+      active: "Available",
+      distance: "15 mil",
+      time: "15 Min Away",
+      vehicle: "Car",
+      isOpen: true,
+      lat: 32.3663,
+      long: 74.3875,
+      id: 2,
     },
     {
       img: image.defimg600,
@@ -74,8 +102,10 @@ const DriverSearch = ({ navigation }) => {
       distance: "15 mil",
       time: "15 Min Away",
       vehicle: "Cargo-van",
-      isOpen: false,
-      id: 2,
+      isOpen: true,
+      lat: 32.3373,
+      long: 74.3685,
+      id: 3,
     },
     {
       img: image.defimg700,
@@ -85,7 +115,9 @@ const DriverSearch = ({ navigation }) => {
       time: "15 Min Away",
       vehicle: "Car",
       isOpen: true,
-      id: 3,
+      lat: 32.3393,
+      long: 74.3775,
+      id: 4,
     },
     {
       img: image.defimg700,
@@ -95,7 +127,22 @@ const DriverSearch = ({ navigation }) => {
       time: "15 Min Away",
       vehicle: "Car",
       isOpen: true,
-      id: 4,
+      lat: 32.3563,
+      long: 74.3695,
+      id: 5,
+    },
+
+    {
+      img: image.defimg700,
+      name: "Will Smith",
+      active: "On Schedule",
+      distance: "15 mil",
+      time: "15 Min Away",
+      vehicle: "Car",
+      isOpen: true,
+      lat: 32.3163,
+      long: 74.3695,
+      id: 6,
     },
   ];
 
@@ -154,11 +201,89 @@ const DriverSearch = ({ navigation }) => {
       </>
     );
   };
+
+  const renderMapViewDriver = ({ item, index }) => {
+    return (
+      <>
+        <View
+          style={{
+            paddingHorizontal: scale(15),
+            paddingTop: verticalScale(10),
+          }}
+        >
+          <CustomerTicket
+            onBook={() => setIsPaymentModal(true)}
+            // onBook={() => navigation.navigate("DedicatedService")}
+            onPressProfile={() =>
+              navigation.navigate("CustomerProfile", { data: item })
+            }
+            item={item}
+            onCounterOffer={() => setIsCounterOfferVisible(true)}
+            setIsWatchList={setIsWatchList}
+            setWatchListObject={setWatchListObject}
+            watchListObject={watchListObject}
+            // onWatchList={() => {
+            //   setSaveText("Saved, you can see your saved Driver in Watchlist");
+            //   setIsWatchList(true);
+            //   const findObject = watchListObject?.find((e) => e.id == item.id);
+            //   if (findObject) {
+            //     const dataContact1 = watchListObject.filter(
+            //       (f) => f.id != item.id
+            //     );
+
+            //     setWatchListObject(dataContact1);
+            //   } else {
+            //     const dataContact = [...watchListObject, item]; // Replace 'New Data' with your actual data
+            //     setWatchListObject(dataContact);
+            //   }
+            //   setTimeout(() => {
+            //     setIsWatchList(false);
+            //   }, 2000);
+            //   // setWatchListObject(item)
+            // }}
+            onPress={
+              () => driverDetailSheetRef.current.present()
+              // navigation.navigate("TrackOrder", { orderData: item })
+            }
+          />
+        </View>
+      </>
+    );
+  };
+
+  const updateMapCenter = (index) => {
+    try {
+      if (mapRef) {
+        mapRef.current.animateToRegion(
+          {
+            latitude: 32.3363,
+            longitude: 74.3675,
+            latitudeDelta: 0.039330183268125069,
+            longitudeDelta: 0.045962757229776571,
+          },
+
+          1000
+        );
+      }
+    } catch (error) {
+      console.log("updateMapCenter", error);
+    }
+  };
+
+  const zoomIn = () => {
+    setRegion({
+      ...region,
+      latitudeDelta: region.latitudeDelta / 2,
+      longitudeDelta: region.longitudeDelta / 2,
+    });
+  };
+
   return (
     <>
       <Screen
         height={40}
         backgroundColor={colors.white}
+        statusBarColor={colors.white}
         // topBarColor={colors.primary}
         barStyle={"dark-content"}
       >
@@ -288,13 +413,13 @@ const DriverSearch = ({ navigation }) => {
                   <CustomInput
                     height={29}
                     color={colors.gray100}
-                    width={scale(90)}
+                    width={scale(100)}
                     editable={false}
                     value={sortedObject}
                     onShowPassword={() => setIsSortedVisible(true)}
                     rightImage={icon.down}
                     fontWeight={"600"}
-                    paddingHorizontal={10}
+                    // paddingHorizontal={10}
                     rightImageWidth={15}
                     rightImageHeight={15}
                     // placeholder={"$/day"}
@@ -313,13 +438,13 @@ const DriverSearch = ({ navigation }) => {
                   <CustomInput
                     height={29}
                     color={colors.gray100}
-                    width={scale(90)}
+                    width={scale(100)}
                     editable={false}
                     value={viewObject}
                     onShowPassword={() => setIsViewVisible(true)}
                     rightImage={icon.down}
                     fontWeight={"600"}
-                    paddingHorizontal={10}
+                    // paddingHorizontal={10}
                     rightImageWidth={15}
                     rightImageHeight={15}
                     // placeholder={"$/day"}
@@ -412,11 +537,11 @@ const DriverSearch = ({ navigation }) => {
                     color={colors.gray100}
                     width={scale(110)}
                     editable={false}
-                    value={viewObject}
+                    value={"Category"}
                     onShowPassword={() => setIsViewVisible(true)}
                     rightImage={icon.down}
                     fontWeight={"600"}
-                    paddingHorizontal={10}
+                    // paddingHorizontal={10}
                     rightImageWidth={15}
                     rightImageHeight={15}
                     // placeholder={"$/day"}
@@ -433,7 +558,7 @@ const DriverSearch = ({ navigation }) => {
                     onShowPassword={() => setIsVehicleVisible(true)}
                     rightImage={icon.down}
                     fontWeight={"600"}
-                    paddingHorizontal={10}
+                    // paddingHorizontal={10}
                     rightImageWidth={15}
                     rightImageHeight={15}
                     // placeholder={"$/day"}
@@ -450,7 +575,7 @@ const DriverSearch = ({ navigation }) => {
                     onShowPassword={() => setIsTravelVisible(true)}
                     rightImage={icon.down}
                     fontWeight={"600"}
-                    paddingHorizontal={10}
+                    // paddingHorizontal={10}
                     rightImageWidth={15}
                     rightImageHeight={15}
                     // placeholder={"$/day"}
@@ -459,17 +584,180 @@ const DriverSearch = ({ navigation }) => {
                 </View>
               </ScrollView>
             </View>
-            <View
-            // style={{paddingHorizontal:scale(15)}}
-            >
-              <FlatList
-                data={customerTicketData}
-                style={{ paddingBottom: verticalScale(30) }}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ gap: verticalScale(5) }}
-                keyExtractor={(item) => item}
-                renderItem={renderCustomerUser}
-              />
+            <View style={{ paddingBottom: scale(15) }}>
+              {viewObject == "Map View" && (
+                <View
+                  style={{
+                    width: "100%",
+                    height: 400,
+                    alignSelf: "center",
+                    borderRadius: 20,
+                    overflow: "hidden",
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "90%",
+                      height: "90%",
+                      alignSelf: "center",
+                      borderRadius: 20,
+                    }}
+                  >
+                    <MapView.Animated
+                      zoomControlEnabled={false}
+                      ref={mapRef}
+                      mapType={mapType}
+                      showsBuildings={true}
+                      showsCompass={false}
+                      toolbarEnabled={false}
+                      // initialRegion={region}
+                      region={region}
+                      // provider={PROVIDER_GOOGLE}
+                      style={{
+                        height: "100%",
+                        width: "100%",
+                        marginTop: 5,
+                        borderRadius: 20,
+                        overflow: "hidden",
+                      }}
+                    >
+                      {customerTicketData.map((item, index) => {
+                        return (
+                          <Marker
+                            onPress={() => setSelectedDrivers([item])}
+                            key={index}
+                            coordinate={{
+                              latitude: item.lat,
+                              longitude: item.long,
+                            }}
+                            // identifier={index.toString()}
+                          >
+                            <TouchableOpacity
+                              style={{
+                                width:
+                                  selectedDrivers[0]?.id == item?.id ? 14 : 10,
+                                height:
+                                  selectedDrivers[0]?.id == item?.id ? 14 : 10,
+                                borderRadius: 999,
+                                backgroundColor:
+                                  item.active == "On Schedule"
+                                    ? colors.yellow
+                                    : item.active == "Busy"
+                                    ? colors.red
+                                    : item.active == "Inactive"
+                                    ? colors.gray
+                                    : item?.active == "Available"
+                                    ? colors.primary
+                                    : colors.gray,
+                              }}
+                            ></TouchableOpacity>
+                            {/* <StoreMarker /> */}
+                          </Marker>
+                        );
+                      })}
+                    </MapView.Animated>
+
+                    <View
+                      style={{
+                        position: "absolute",
+                        top: 10,
+                        left: 10,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 10,
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => {
+                          if (mapType == "standard") {
+                            setMapType("satellite");
+                          } else {
+                            setMapType("standard");
+                          }
+                        }}
+                        activeOpacity={0.6}
+                      >
+                        <Image
+                          style={styles.mapImgContainer}
+                          // resizeMode="contain"
+                          source={image.layers}
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity activeOpacity={0.6}>
+                        <Image
+                          style={styles.mapImgContainer}
+                          // resizeMode="contain"
+                          source={image.gesture}
+                        />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => updateMapCenter()}
+                      >
+                        <Image
+                          style={styles.mapImgContainer}
+                          // resizeMode="contain"
+                          source={image.routes}
+                        />
+                      </TouchableOpacity>
+                    </View>
+
+                    <View
+                      style={{
+                        position: "absolute",
+                        bottom: 80,
+                        right: 20,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 10,
+                      }}
+                    >
+                      <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => zoomIn()}
+                      >
+                        <Image
+                          style={styles.mapImgContainer}
+                          // resizeMode="contain"
+                          source={image.zoom}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+
+                  {viewObject == "Map View" && (
+                    <View style={{ position: "absolute", bottom: -15 }}>
+                      <FlatList
+                        data={selectedDrivers}
+                        style={{ paddingBottom: verticalScale(30) }}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{
+                          gap: verticalScale(5),
+                          paddingBottom: 10,
+                        }}
+                        keyExtractor={(item) => item}
+                        renderItem={renderMapViewDriver}
+                      />
+                    </View>
+                  )}
+                </View>
+              )}
+              {viewObject == "List View" && (
+                <>
+                  <FlatList
+                    data={customerTicketData}
+                    style={{ paddingBottom: verticalScale(30) }}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{
+                      gap: verticalScale(5),
+                      paddingBottom: 10,
+                    }}
+                    keyExtractor={(item) => item}
+                    renderItem={renderCustomerUser}
+                  />
+                </>
+              )}
             </View>
           </ScrollView>
         </View>
@@ -592,8 +880,7 @@ const DriverSearch = ({ navigation }) => {
         setModalVisible={steIsAddPaymentMethodVisible}
       />
 
-
-<ThankyouModal
+      <ThankyouModal
         mainColor={colors.primary}
         modalVisible={isThankyouModal}
         navigation={navigation}
@@ -601,12 +888,20 @@ const DriverSearch = ({ navigation }) => {
         setModalVisible={setIsThankyouModal}
       />
 
-
       <RateExperienceModal
         mainColor={colors.primary}
         modalVisible={isRateExperienceModal}
         navigation={navigation}
         setModalVisible={setIsRateExperienceModal}
+      />
+
+      <DriverDetailSheet
+        bottomSheetModalRef={driverDetailSheetRef}
+        selectedDrivers={selectedDrivers[0]}
+        watchListObject={watchListObject}
+        setIsWatchList={setIsWatchList}
+        setIsCounterOfferVisible={setIsCounterOfferVisible}
+        setWatchListObject={setWatchListObject}
       />
     </>
   );
@@ -614,4 +909,9 @@ const DriverSearch = ({ navigation }) => {
 
 export default DriverSearch;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  mapImgContainer: {
+    width: 32,
+    height: 32,
+  },
+});

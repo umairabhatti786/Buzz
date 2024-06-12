@@ -17,8 +17,8 @@ const NotificationContainer = ({title,date,img}) => {
          <View style={{ flexDirection: "row",paddingBottom:15}}>
       <View
         style={{
-          width: 52,
-          height: 52,
+          width: 50,
+          height: 50,
           borderRadius: 10,
           borderWidth: 1,
           borderColor: colors.black40,
@@ -28,23 +28,22 @@ const NotificationContainer = ({title,date,img}) => {
         }}
       >
         <Image
-          style={{ width: 25, height: 25 }}
+          style={{ width: 22, height: 22 }}
           resizeMode="contain"
           source={img}
         />
       </View>
-      <View style={{ width: "85%" }}>
+      <View style={{ width: "82%",gap:4 }}>
         <NewText
           text={title}
-          size={16}
+          size={15}
           fontWeight={"600"}
           fontFam={Inter.bold}
           color={colors.black}
         />
-        <Spacer height={10} />
         <NewText
           text={date}
-          size={15}
+          size={14}
           // fontWeight={"600"}
           color={colors.gray}
         />

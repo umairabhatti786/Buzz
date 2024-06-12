@@ -2,7 +2,6 @@ import { Image, Text,TouchableOpacity,View } from "react-native";
 import { AppStyles } from "../../utils/AppStyle";
 import { colors } from "../../utils/colors";
 import { Inter } from "../../utils/Fonts";
-import CustomText from "../CustomText";
 import NewText from "../NewText";
 
 

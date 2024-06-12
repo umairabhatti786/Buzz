@@ -22,6 +22,7 @@ import Button from "../../../../components/Button";
 import CustomRangeSlider from "../../../../components/RangeSlider";
 import DatePickerModal from "../../../../components/DatePickerModal";
 import DropDownModal from "../../../../components/DropDownModal";
+import CustomCalendar from "../../../../components/CustomCalendar";
 
 const NeedRide = ({ navigation }) => {
 
@@ -31,6 +32,9 @@ const NeedRide = ({ navigation }) => {
   const [isPickUpModel, setIsPickUpModel] = useState(false);
   const [time, setTime] = useState("pm");
   const [isTimeModal, setIsTimeModal] = useState(false);
+  const [pickupDateAndTime,setPickupDateAndTime]=useState("")
+  const [isDateAndTime,setIsDateAndTime]=useState("")
+
   const ServiceCoverage = [
     { name: "All (Default)", isActive: true },
     { name: "On Demand", isActive: false },
@@ -133,7 +137,7 @@ const NeedRide = ({ navigation }) => {
                     />
                     <TouchableOpacity 
                     activeOpacity={0.6}
-                    onPress={()=>setIsDatePickerModal(true)}
+                    onPress={()=>setIsDateAndTime(true)}
                     style={styles.pickupDateContainer}>
                       <NewText
                         fontWeight="600"
@@ -441,6 +445,18 @@ const NeedRide = ({ navigation }) => {
         setModalVisible={setIsPickUpModel}
         data={pickUpWithinData}
       />
+       <CustomCalendar
+      modalVisible={isDateAndTime}
+      date={pickupDateAndTime}
+      setDate={setPickupDateAndTime}
+      setModalVisible={setIsDateAndTime}
+      />
+         {/* <CustomCalendar
+      modalVisible={isToModalVisible}
+      date={toDate}
+      setDate={setToDate}
+      setModalVisible={setIsToModalVisible}
+      /> */}
     </>
   );
 };

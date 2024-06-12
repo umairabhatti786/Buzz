@@ -61,17 +61,17 @@ import {
           <View style={AppStyles.row}>
             <CustomToggle
               isActive={item.active}
-              //   setIsActive={() => {
-              //     const updates = [...data];
+                setIsActive={() => {
+                  // const updates = [...data];
   
-              //     // Toggle the 'active' property of the item at the specified index
-              //     updates[index] = {
-              //       ...updates[index],
-              //       active: !updates[index].active,
-              //     };
+                  // // Toggle the 'active' property of the item at the specified index
+                  // updates[index] = {
+                  //   ...updates[index],
+                  //   active: !updates[index].active,
+                  // };
   
-              //     setData(updates);
-              //   }}
+                  // setData(updates);
+                }}
             />
             <Spacer width={10} />
   

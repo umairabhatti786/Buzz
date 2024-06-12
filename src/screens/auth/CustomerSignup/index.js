@@ -28,6 +28,8 @@ const CustomerSignup = ({ navigation }) => {
 
   return (
     <>
+    <StatusBar barStyle={"light-content"} backgroundColor={colors.primary} />
+
       <Screen
         backgroundColor={colors.white}
         topBarColor={colors.primary}
@@ -39,7 +41,7 @@ const CustomerSignup = ({ navigation }) => {
             backgroundColor: colors.primary,
             justifyContent: "space-between",
             paddingLeft: scale(20),
-            paddingRight: "40%",
+            paddingRight: "38%",
 
             // paddingTop: verticalScale(10),
             paddingBottom: verticalScale(60),

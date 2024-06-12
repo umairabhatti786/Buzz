@@ -72,7 +72,7 @@ const ConversationContainer = ({ name, date, img, amount,message,online,onPress 
 
         <View style={{flex:1,justifyContent:"space-between"}}>
 
-        <NewText text={date} size={14} color={colors.gray} />
+        <NewText text={date} size={13} color={colors.gray} />
         {
             online&&(
                 <View

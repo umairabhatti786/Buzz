@@ -41,6 +41,12 @@ facebook:require("../images/facebook.png"),
     home:require("../images/home.png"),
     creditCard:require("../images/credit-card.png"),
     alert:require("../images/alert.png"),
+    layers:require("../images/layers.png"),
+    gesture:require("../images/gesture.png"),
+    routes:require("../images/routes.png"),
+
+
+
 
 
 

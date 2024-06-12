@@ -6,6 +6,7 @@ import {
   View,
   FlatList,
   ScrollView,
+  Platform,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import { Screen } from "../../../../utils/ui/Screen";
@@ -102,18 +103,20 @@ const CustomerWatchlist = ({ navigation }) => {
     <>
       <Screen
         backgroundColor={colors.white}
+        statusBarColor={colors.white}
         topBarColor={colors.white}
         barStyle={"dark-content"}
       >
+        <Spacer height={ Platform.OS=="ios"?10: 20}/>
         <NewText
           fontWeight="700"
           color={colors.black}
           fontFam={Inter.bold}
-          size={18}
-          style={{ marginLeft: 20 }}
+          size={20}
+          style={{ marginLeft: 15 }}
           text={"Watch List"}
         />
-        <Spacer height={10} />
+        <Spacer height={5} />
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{ backgroundColor: colors.white }}

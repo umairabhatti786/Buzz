@@ -48,6 +48,8 @@ export const icon={
 
 
 
+    
+halfStar:require("../icons/half-star.png"),
 
     star:require("../icons/star.png"),
     location:require("../icons/location.png"),

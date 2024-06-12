@@ -27,6 +27,7 @@ import OrderInvoice from "./OrderInvoice";
 import OrderRoute from "./OrderRoute";
 import CustomButton from "../../../components/CustomButton";
 import DashedLine from "react-native-dashed-line";
+import { CustomHeader } from "../../../components/CustomHeader";
 
 const TrackOrder = ({ navigation, route }) => {
   const orderData = route?.params.orderData;
@@ -115,36 +116,10 @@ const TrackOrder = ({ navigation, route }) => {
 
           backgroundColor: colors.white,
         }}>
-        <View
-          style={{
-            ...AppStyles.justifyRow,
-            backgroundColor: colors.white,
-            paddingVertical: verticalScale(13),
-            paddingHorizontal: scale(15),
-            elevation: 5,
-            shadowColor: Platform.OS == "ios" ? colors.gray : colors.black,
-            shadowOffset: { width: 4, height: 2 },
-            shadowOpacity: 0.2,
-            shadowRadius: 5,
-          }}>
-          <TouchableOpacity
-            style={{ width: "33%" }}
-            onPress={() => navigation.goBack()}>
-            <Image
-              style={{ width: scale(15), height: scale(15) }}
-              resizeMode="contain"
-              source={icon.back}
-            />
-          </TouchableOpacity>
-          <CustomText
-            fontWeight="700"
-            color={colors.black}
-            fontFam={Inter.bold}
-            size={14}
-            text={"Track Order"}
-          />
-          <View style={{ width: "33%" }} />
-        </View>
+      <CustomHeader
+      label={"Track Order"}
+      navigation={navigation}
+      />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={{

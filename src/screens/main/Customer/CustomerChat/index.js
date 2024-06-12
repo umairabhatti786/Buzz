@@ -22,6 +22,7 @@ import MessageContainer from "../../../../components/MessageContainer";
 import CustomLine from "../../../../components/CustomLine/CustomLine";
 import MessageSander from "../../../../components/MessageSander";
 import AttachmentModal from "./AttachmentModal";
+import { CustomHeader } from "../../../../components/CustomHeader";
 
 const CustomerChat = ({ navigation, route }) => {
   let data = route?.params?.data;
@@ -189,7 +190,11 @@ const CustomerChat = ({ navigation, route }) => {
         barStyle={"dark-content"}
       >
         <View style={{ backgroundColor: colors.white, flex: 1 }}>
-          <Header />
+          <CustomHeader
+          label={data?.name}
+          navigation={navigation}
+          />
+          {/* <Header /> */}
 
           <View style={{ flex: 1 }}>
             <FlatList

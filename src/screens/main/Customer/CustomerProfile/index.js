@@ -62,7 +62,7 @@ const CustomerProfile = ({ navigation, route }) => {
         <NewText
           fontWeight={fontWeight || "700"}
           color={colors.black}
-          fontFam={Inter.bold}
+          // fontFam={Inter.bold}
           text={txt}
           size={size || 16}
         />
@@ -283,7 +283,8 @@ const CustomerProfile = ({ navigation, route }) => {
           <View
             style={{
               ...AppStyles.justifyRow,
-              padding: 15,
+              // padding: 15,
+              paddingVertical:15
             }}
           >
             <NewText
@@ -295,7 +296,7 @@ const CustomerProfile = ({ navigation, route }) => {
             />
             <NewText
               text={"See All"}
-              size={16}
+              size={14}
               fontWeight={"500"}
               fontFam={Inter.medium}
               color={colors.primary}

@@ -20,9 +20,14 @@ import ConversationContainer from "../CustomerConversation/ConversationContainer
 import NeedRide from "./NeedRide";
 import CategoryBottomTab from "../../../../components/CategoryBottomTab";
 import DeliveryServices from "./DeliveryServices";
+import SuccessModal from "../../../../components/SuccessModal";
 
 const CustomerFilter = ({ navigation }) => {
   const [selectedTab, setSelectedTab] = useState("Need a Ride");
+  const [isPostedModal, setIsPostedModal] = useState(false);
+  const [isSavedModal, setIsSavedModal] = useState(false);
+
+
   const conversation = [
     {
       id: 1,
@@ -111,7 +116,10 @@ const CustomerFilter = ({ navigation }) => {
           style={{
             ...AppStyles.justifyRow,
             backgroundColor: colors.white,
-            marginTop: -20,
+            marginTop:Platform.OS=="ios"? -20:0,
+            // paddingVertical: verticalScale(13),
+            height:50,
+            // marginTop: -20,
             paddingVertical: verticalScale(13),
             paddingHorizontal: scale(15),
             borderBottomWidth: 1,
@@ -119,7 +127,7 @@ const CustomerFilter = ({ navigation }) => {
           }}
         >
           <TouchableOpacity
-            style={{ width: "20%" }}
+            style={{ width: "15%" }}
             onPress={() => navigation.goBack()}
           >
             <Image
@@ -214,8 +222,38 @@ const CustomerFilter = ({ navigation }) => {
         </View>
       </Screen>
 
+      <SuccessModal
+        modalVisible={isPostedModal}
+        title={"Posted!"}
+        descripation={"You can view your post in Watchlist"}
+        submitText={"See Watchlist"}
+        setModalVisible={setIsPostedModal}
+        onSubmit={() => {
+          setIsPostedModal(false);
+          setTimeout(() => {
+            navigation.navigate("Watchlist");
+          }, 500);
+        }}
+      />
+       <SuccessModal
+        modalVisible={isSavedModal}
+        title={"Saved!"}
+        descripation={"You can view Saved Search in Watchlist"}
+        submitText={"See Watchlist"}
+        setModalVisible={setIsSavedModal}
+        onSubmit={() => {
+          setIsSavedModal(false);
+          setTimeout(() => {
+            navigation.navigate("Watchlist");
+          }, 500);
+        }}
+      />
+
       <CategoryBottomTab
         label1={"Save"}
+        onLabel2={()=>setIsPostedModal(true)}
+        onLabel1={()=>setIsSavedModal(true)}
+
         label2={"Post"}
         label3={"Clear All"}
         color={colors.primary}

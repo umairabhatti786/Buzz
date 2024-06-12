@@ -18,6 +18,7 @@ import { image } from "../../../../assets/png/images";
 import CustomLine from "../../../../components/CustomLine/CustomLine";
 import { windowWidth } from "../../../../utils/Commons";
 import Collapsible from "react-native-collapsible";
+import StarRating from "react-native-star-rating";
 
 const CustomerReviewCard = ({
   item,
@@ -29,9 +30,10 @@ const CustomerReviewCard = ({
 
   isCollapsible,
   setIsCollapsible,
-  showDetail,
-  setShowDetail
+  // showDetail,
+  // setShowDetail,
 }) => {
+  const [showDetail,setShowDetail]=useState(true)
   return (
     <View
       style={{
@@ -42,14 +44,14 @@ const CustomerReviewCard = ({
         shadowRadius: 5,
         backgroundColor: colors.white,
         borderRadius: scale(13),
-        width:windowWidth/1.3
+        width: windowWidth / 1.3,
       }}
     >
       <TouchableOpacity
-      onPress={()=>setShowDetail(!showDetail)}
+        onPress={() => setShowDetail(!showDetail)}
         style={{
-          backgroundColor:colors.white,
-          zIndex:1000,
+          backgroundColor: colors.white,
+          zIndex: 1000,
           // elevation: 5,
           // shadowColor: Platform.OS == "ios" ? colors.gray : colors.black,
           // shadowOffset: { width: 4, height: 5 },
@@ -97,7 +99,7 @@ const CustomerReviewCard = ({
             >
               <View style={{ ...AppStyles.row, paddingBottom: 7 }}>
                 <NewText
-                  text={"username"}
+                  text={"Username"}
                   size={15}
                   fontWeight={"700"}
                   fontFam={Inter.bold}
@@ -138,20 +140,26 @@ const CustomerReviewCard = ({
 
             <TouchableOpacity
               activeOpacity={0.6}
-                onPress={() => setShowDetail(!showDetail)}
+              onPress={() => setShowDetail(!showDetail)}
               style={{ ...AppStyles.justifyRow, marginTop: 6 }}
             >
               <View style={{ ...AppStyles.row }}>
-                <Image
-                  style={{ width: 15, height: 15 }}
-                  resizeMode={"contain"}
-                  source={icon.star}
+                <StarRating
+                  maxStars={5}
+                  rating={5}
+                  fullStarColor={"#FFCA28"}
+                  emptyStarColor="#CCCCCC"
+                  starSize={13}
+                  fullStar={icon.star}
+                  starStyle={{ marginHorizontal: 2 }} // Add margin between stars
+                  emptyStar={icon.stargrayout} // Use the CustomStarIcon component as the custom icon renderer
                 />
+
                 <Spacer width={scale(7)} />
 
                 <NewText
                   text={"very fast"}
-                  size={14}
+                  size={13}
                   fontFam={Inter.semiBold}
                   color={colors.black}
                 />
@@ -164,117 +172,97 @@ const CustomerReviewCard = ({
                     height: 15,
                   }}
                   resizeMode={"contain"}
-                  source={showDetail?icon.down:icon.up}
+                  source={showDetail ? icon.down : icon.up}
                 />
               </TouchableOpacity>
             </TouchableOpacity>
           </View>
         </View>
       </TouchableOpacity>
-      <Collapsible
-      collapsed={showDetail}
-      >
-        <View>
-
-      <CustomLine />
-      <View>
-        <View style={{ padding: 15 }}>
-          <NewText
-            text={
-              "Smith is a great mover to trust moving for any of your local delivery, Responsive, punctual, courteous and professional. I recommend his service for your local errand, assembly etc. I would definitely use his service again."
-            }
-            size={13}
-            fontWeight={"400"}
-            lineHeight={20}
-            numberOfLines={5}
-            // fontFam={Inter.bold}
-            color={colors.gray}
-          />
-        </View>
-        <CustomLine />
-        <View style={{ ...AppStyles.justifyRow, padding: 15 }}>
-          <NewText
-            text={"Helpful?"}
-            size={15}
-            fontWeight={"600"}
-            fontFam={Inter.bold}
-            color={colors.black}
-          />
-
-          <View style={AppStyles.row}>
-            <TouchableOpacity>
-              <Image
-                style={{
-                  width: 18,
-                  height: 18,
-                }}
-                resizeMode={"contain"}
-                source={icon.thumbup}
+      <Collapsible collapsed={showDetail}>
+          <CustomLine />
+          <View>
+            <View style={{ padding: 15 }}>
+              <NewText
+                text={
+                  "Smith is a great mover to trust moving for any of your local delivery, Responsive, punctual, courteous and professional. I recommend his service for your local errand, assembly etc. I would definitely use his service again."
+                }
+                size={13}
+                fontWeight={"400"}
+                lineHeight={20}
+                numberOfLines={5}
+                // fontFam={Inter.bold}
+                color={colors.gray}
               />
-            </TouchableOpacity>
-
-            <NewText
-              text={"Yes?"}
-              size={15}
-              style={{ marginHorizontal: 10 }}
-              fontFam={Inter.bold}
-              color={colors.black}
-            />
-
-            <TouchableOpacity>
-              <Image
-                style={{
-                  width: 18,
-                  height: 18,
-                }}
-                resizeMode={"contain"}
-                source={icon.thumbup}
+            </View>
+            <CustomLine />
+            <View style={{ ...AppStyles.justifyRow, padding: 15 }}>
+              <NewText
+                text={"Helpful?"}
+                size={15}
+                fontWeight={"600"}
+                fontFam={Inter.bold}
+                color={colors.black}
               />
-            </TouchableOpacity>
 
-            <NewText
-              text={"No"}
-              size={15}
-              style={{ marginLeft: 10 }}
-              fontFam={Inter.bold}
-              color={colors.black}
-            />
+              <View style={{ ...AppStyles.row, gap: 10 }}>
+                <TouchableOpacity>
+                  <Image
+                    style={{
+                      width: 18,
+                      height: 18,
+                    }}
+                    resizeMode={"contain"}
+                    source={icon.thumbup}
+                  />
+                </TouchableOpacity>
+
+                <NewText text={"Yes?"} size={14} color={colors.black} />
+
+                <TouchableOpacity>
+                  <Image
+                    style={{
+                      width: 18,
+                      height: 18,
+                    }}
+                    resizeMode={"contain"}
+                    source={icon.thumbup}
+                  />
+                </TouchableOpacity>
+
+                <NewText text={"No"} size={14} color={colors.black} />
+              </View>
+            </View>
+
+            <CustomLine />
+
+            <View style={{ ...AppStyles.justifyRow, padding: 15 }}>
+              <NewText
+                text={"W. Smith Response"}
+                size={15}
+                fontWeight={"700"}
+                fontFam={Inter.bold}
+                color={colors.black}
+              />
+
+              <NewText
+                text={"Jan 10, 2024"}
+                size={12}
+                fontWeight={"500"}
+                color={colors.gray}
+              />
+            </View>
+            <View style={{ paddingHorizontal: 15 }}>
+              <NewText
+                text={"Thank you, Customer!"}
+                size={13}
+                fontWeight={"400"}
+                color={colors.gray}
+              />
+              <Spacer height={20} />
+            </View>
           </View>
-        </View>
-
-        <CustomLine />
-
-        <View style={{ ...AppStyles.justifyRow, padding: 15 }}>
-          <NewText
-            text={"W. Smith Response"}
-            size={15}
-            fontWeight={"700"}
-            fontFam={Inter.bold}
-            color={colors.black}
-          />
-
-          <NewText
-            text={"Jan 10, 2024"}
-            size={12}
-            fontWeight={"500"}
-            fontFam={Inter.bold}
-            color={colors.gray}
-          />
-        </View>
-        <View style={{ paddingHorizontal: 15 }}>
-          <NewText
-            text={"Thank you, Customer!"}
-            size={13}
-            fontWeight={"400"}
-            color={colors.gray}
-          />
-          <Spacer height={20} />
-        </View>
-      </View>
-
-        </View>
       </Collapsible>
-
     </View>
   );
 };

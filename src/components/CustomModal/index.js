@@ -55,7 +55,7 @@ const CustomModal = ({
             onPress={() => setModalVisible(false)}
             activeOpacity={0.6}
             //   disabled={!onShowPassword}
-            style={{ justifyContent: "center", alignItems: "center" }}
+            style={{ justifyContent: "center", alignItems: "center",height:30,width:30 }}
           >
             <Image
               source={icon.cross}

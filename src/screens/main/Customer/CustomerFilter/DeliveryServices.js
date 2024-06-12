@@ -22,6 +22,7 @@ import Button from "../../../../components/Button";
 import CustomRangeSlider from "../../../../components/RangeSlider";
 import { windowWidth } from "../../../../utils/Commons";
 import DropDownModal from "../../../../components/DropDownModal";
+import CustomCalendar from "../../../../components/CustomCalendar";
 
 const DeliveryServices = ({ navigation }) => {
   const [standardSize, setStandardSize] = useState("SUV");
@@ -41,6 +42,8 @@ const DeliveryServices = ({ navigation }) => {
   const [isPickUpModel, setIsPickUpModel] = useState(false);
   const [time, setTime] = useState("pm");
   const [isTimeModal, setIsTimeModal] = useState(false);
+  const [pickupDateAndTime,setPickupDateAndTime]=useState("")
+  const [isDateAndTime,setIsDateAndTime]=useState("")
 
   const pickUpWithinData = [
     "1 Hour",
@@ -91,6 +94,9 @@ const DeliveryServices = ({ navigation }) => {
     "Sprinter Van",
     "n/a",
   ];
+  const [pickupDateTimeData, setPickupDateTimeData] = useState([
+    { dateTime: "03-23-24", time: "3:24", format: "am", pichup: "6 Hours" },
+  ]);
 
   const xLargeSizeData = [
     "All",
@@ -202,91 +208,116 @@ const DeliveryServices = ({ navigation }) => {
           <View style={{ ...AppStyles.box, marginTop: 30 }}>
             <View style={{ paddingHorizontal: scale(15) }}>
               <Spacer height={verticalScale(15)} />
+              {pickupDateTimeData.map((item, index) => {
+                return (
+                  <View>
+                    <NewText
+                      fontWeight="700"
+                      color={colors.black}
+                      fontFam={Inter.bold}
+                      size={15}
+                      style={{ marginBottom: 15 }}
+                      text={"Pick Up Date and Time"}
+                    />
+                    <TouchableOpacity 
+                    activeOpacity={0.6}
+                    onPress={()=>setIsDateAndTime(true)}
+                    style={styles.pickupDateContainer}>
+                      <NewText
+                        fontWeight="600"
+                        color={colors.black}
+                        fontFam={Inter.bold}
+                        size={16}
+                        text={item.dateTime}
+                      />
 
-              <NewText
-                fontWeight="700"
-                color={colors.black}
-                fontFam={Inter.bold}
-                size={15}
-                style={{ marginBottom: 15 }}
-                text={"Pick Up Date and Time"}
-              />
-              <TouchableOpacity style={styles.pickupDateContainer}>
-                <NewText
-                  fontWeight="600"
-                  color={colors.black}
-                  fontFam={Inter.bold}
-                  size={16}
-                  text={"03-23-24"}
-                />
+                      <Image
+                        style={{
+                          width: 21,
+                          height: 21,
+                        }}
+                        source={icon.addclendar}
+                        resizeMode="contain"
+                      />
+                    </TouchableOpacity>
+                    <View style={AppStyles.justifyRow}>
+                      <CustomInput
+                        height={29}
+                        color={colors.gray100}
+                        width={scale(140)}
+                        // onShowPassword={()=>setIsVehicleTypeModal(true)}
+                        value={`Time: Ex ${item.time}`}
+                        fontWeight={"600"}
+                        rightImageWidth={15}
+                        rightImageHeight={15}
+                        // placeholder={"$/day"}
+                        borderRadius={8}
+                      />
 
-                <Image
-                  style={{
-                    width: 21,
-                    height: 21,
-                  }}
-                  source={icon.addclendar}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <View style={AppStyles.justifyRow}>
-                <CustomInput
-                  height={29}
-                  color={colors.gray100}
-                  width={scale(140)}
-                  // onShowPassword={()=>setIsVehicleTypeModal(true)}
-                  value={"Time: Ex 3:24"}
-                  fontWeight={"600"}
-                  rightImageWidth={15}
-                  rightImageHeight={15}
-                  // placeholder={"$/day"}
-                  borderRadius={8}
-                />
+                      <CustomInput
+                        height={29}
+                        color={colors.gray100}
+                        width={scale(140)}
+                        editable={false}
+                        onShowPassword={() => setIsTimeModal(true)}
 
-                <CustomInput
-                  height={29}
-                  color={colors.gray100}
-                  width={scale(140)}
-                  editable={false}
-                  onShowPassword={() => setIsTimeModal(true)}
-                  rightImage={icon.down}
-                  value={time}
-                  fontWeight={"600"}
-                  paddingHorizontal={10}
-                  rightImageWidth={15}
-                  rightImageHeight={15}
-                  // placeholder={"$/day"}
-                  borderRadius={8}
-                />
-              </View>
+                        // onShowPassword={()=>setIsVehicleTypeModal(true)}
+                        rightImage={icon.down}
+                        value={item.format}
+                        fontWeight={"600"}
+                        paddingHorizontal={10}
+                        rightImageWidth={15}
+                        rightImageHeight={15}
+                        // placeholder={"$/day"}
+                        borderRadius={8}
+                      />
+                    </View>
 
-              <Spacer height={verticalScale(10)} />
+                    <Spacer height={verticalScale(10)} />
 
-              <CustomInput
-                height={29}
-                color={colors.gray100}
-                editable={false}
-                heading={"Pick Up within"}
-                onShowPassword={() => setIsPickUpModel(true)}
-                fontWeight={"600"}
-                rightImage={icon.down}
-                value={pickUpWithin}
-                paddingHorizontal={10}
-                rightImageWidth={15}
-                rightImageHeight={15}
-                // placeholder={"$/day"}
-                borderRadius={8}
-              />
+                    <CustomInput
+                      height={29}
+                      color={colors.gray100}
+                      editable={false}
+                      onShowPassword={() => setIsPickUpModel(true)}
 
-              <View style={{ marginVertical: verticalScale(18) }}>
-                <DashedLine
-                  dashLength={6}
-                  dashThickness={1}
-                  dashGap={5}
-                  dashColor={colors.gray}
-                />
-              </View>
-              <View
+                      heading={"Pick Up within"}
+                      // onShowPassword={()=>setIsVehicleTypeModal(true)}
+                      fontWeight={"600"}
+                      rightImage={icon.down}
+                      value={"6 Hours"}
+                      paddingHorizontal={10}
+                      rightImageWidth={15}
+                      rightImageHeight={15}
+                      // placeholder={"$/day"}
+                      borderRadius={8}
+                    />
+
+                    <View style={{ marginVertical: verticalScale(18) }}>
+                      <DashedLine
+                        dashLength={6}
+                        dashThickness={1}
+                        dashGap={5}
+                        dashColor={colors.gray}
+                      />
+                    </View>
+                  </View>
+                );
+              })}
+
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => {
+                  let data = [...pickupDateTimeData];
+                  data.push({
+                    dateTime: "03-23-24",
+                    time: "3:24",
+                    format: "am",
+                    pichup: "6 Hours",
+                  });
+
+                  setPickupDateTimeData(data);
+                }}
                 style={{
                   ...AppStyles.row,
                   alignSelf: "flex-end",
@@ -308,7 +339,7 @@ const DeliveryServices = ({ navigation }) => {
                   source={icon.addclendar}
                   resizeMode="contain"
                 />
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
           <View style={{ ...AppStyles.box, marginTop: 30 }}>
@@ -828,6 +859,12 @@ const DeliveryServices = ({ navigation }) => {
         setSelectedObject={setUnLaoding}
         setModalVisible={setUnLaodingDataModal}
         data={unLaodingArray}
+      />
+        <CustomCalendar
+      modalVisible={isDateAndTime}
+      date={pickupDateAndTime}
+      setDate={setPickupDateAndTime}
+      setModalVisible={setIsDateAndTime}
       />
     </>
   );

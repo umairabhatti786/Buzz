@@ -17,14 +17,17 @@ export const CustomHeader = ({navigation,label}) => {
         style={{
             ...AppStyles.justifyRow,
             backgroundColor: colors.white,
-            marginTop: -20,
-            paddingVertical: verticalScale(13),
+            marginTop:Platform.OS=="ios"? -20:0,
+            // paddingVertical: verticalScale(13),
+            height:50,
             paddingHorizontal: scale(15),
             elevation: 5,
             shadowColor: Platform.OS == "ios" ? colors.gray : colors.black,
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.2,
             shadowRadius: 5,
+            alignItems:"center",
+            // justifyContent:"center"
           }}
       >
         <TouchableOpacity

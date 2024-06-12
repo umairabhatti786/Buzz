@@ -39,8 +39,9 @@ const CustomerTicket = ({
   onPressProfile,
   onBook,
   onCounterOffer,
+  isOpen
 }) => {
-  const [isCollapsible, setIsCollapsible] = useState(item.isOpen);
+  const [isCollapsible, setIsCollapsible] = useState(isOpen|| item?.isOpen);
   const [isServiceModal,setIsServiceModal]=useState(false)
   const [selectedServiceType,setSelectedServiceType]=useState("Scheduled")
 
@@ -56,7 +57,7 @@ const CustomerTicket = ({
 
 <View
       style={{
-        elevation: 5,
+        elevation: 3,
         shadowColor: Platform.OS == "ios" ? colors.gray : colors.black,
         shadowOffset: { width: -4, height: -2 },
         shadowOpacity: !isNoShadow ? 0.2 : 0,
@@ -66,7 +67,7 @@ const CustomerTicket = ({
       <View
         style={{
           backgroundColor: backgroundColor || colors.white,
-          elevation: 5,
+          elevation: 3,
           shadowColor: Platform.OS == "ios" ? colors.gray : colors.black,
           shadowOffset: { width: 4, height: 5 },
           shadowOpacity: !isNoShadow ? 0.2 : 0,

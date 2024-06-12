@@ -18,6 +18,7 @@ import { icon } from "../../../../assets/png/icons";
 import NotificationContainer from "../CustomerNotification/NotificationContainer";
 import ConversationContainer from "./ConversationContainer";
 import { image } from "../../../../assets/png/images";
+import { CustomHeader } from "../../../../components/CustomHeader";
 
 const CustomerConversation = ({navigation}) => {
   const conversation = [
@@ -146,7 +147,11 @@ const CustomerConversation = ({navigation}) => {
       barStyle={"dark-content"}
     >
       <View style={{ backgroundColor: colors.white }}>
-        <Header />
+        {/* <Header /> */}
+        <CustomHeader
+        label="Messages"
+        navigation={navigation}
+        />
 
         <FlatList
           data={conversation}

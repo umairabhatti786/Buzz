@@ -26,6 +26,9 @@ import CustomCalendar from "../../../../components/CustomCalendar";
 const ManageOrders = ({ navigation }) => {
   const [selectedTab, setSelectedTab] = useState("Upcoming");
   const [isFromModalVisible,setIsFromModalVisible]=useState(false)
+  const [fromDate,setFormDate]=useState("From")
+  const [isToModalVisible,setIsToModalVisible]=useState(false)
+  const [toDate,setToDate]=useState("From")
 
   const UpcomingOrders = [{ status: "Pending" }];
   const ActiveOrders = [{ status: "Ongoing" }];
@@ -40,8 +43,10 @@ const ManageOrders = ({ navigation }) => {
         <View
           style={{
             ...AppStyles.justifyRow,
+            marginTop:Platform.OS=="ios"? -20:0,
+            // paddingVertical: verticalScale(13),
+            height:50,
             backgroundColor: colors.white,
-            marginTop: -20,
             paddingVertical: verticalScale(13),
             paddingHorizontal: scale(15),
             borderBottomWidth: 1,
@@ -156,12 +161,19 @@ const ManageOrders = ({ navigation }) => {
           >
             <View style={{ paddingHorizontal: 15 }}>
               <View style={{ ...AppStyles.justifyRow, marginBottom: 15 }}>
-                <CalendarPicker width={"45%"} text={"From"}
+                <CalendarPicker
+                 width={"45%"} text={fromDate}
                 onPress={()=>setIsFromModalVisible(true)}
                  />
-                <CustomLine width={20} backgroundColor={colors.black40} />
+                <CustomLine width={20}
+                
+                
+                 backgroundColor={colors.black40} />
 
-                <CalendarPicker width={"45%"} />
+                <CalendarPicker width={"45%"}
+                   onPress={() => setIsToModalVisible(true)}
+                   text={toDate}
+                 />
               </View>
               <Search />
             </View>
@@ -207,7 +219,15 @@ const ManageOrders = ({ navigation }) => {
 
       <CustomCalendar
       modalVisible={isFromModalVisible}
+      date={fromDate}
+      setDate={setFormDate}
       setModalVisible={setIsFromModalVisible}
+      />
+         <CustomCalendar
+      modalVisible={isToModalVisible}
+      date={toDate}
+      setDate={setToDate}
+      setModalVisible={setIsToModalVisible}
       />
     </>
   );

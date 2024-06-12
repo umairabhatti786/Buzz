@@ -1,4 +1,4 @@
-package com.assemble;
+package com.buzz;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
