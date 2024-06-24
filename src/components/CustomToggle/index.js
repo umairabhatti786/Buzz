@@ -11,7 +11,7 @@ const CustomToggle = ({ isActive,setIsActive}, ) => {
     onColor={"#F2F2F2"}
     offColor={"#F2F2F2"}
     size="small"
-    style={{ opacity: isActive ? 1 : 0.5 }}
+    // style={{ opacity: isActive ? 1 : 0.5 }}
     onToggle={setIsActive}
     thumbOnStyle={{
       width: 22,

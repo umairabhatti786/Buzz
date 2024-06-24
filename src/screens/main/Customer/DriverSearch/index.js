@@ -35,8 +35,10 @@ import ThankyouModal from "./ThankyouModal";
 import RateExperienceModal from "./RateExperienceModal";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import DriverDetailSheet from "./DriverDetailSheet";
+import CategoryModal from "./CategoryModal";
+import SuccessModal from "../../../../components/SuccessModal";
 
-const DriverSearch = ({ navigation }) => {
+const DriverSearch = ({ navigation, route }) => {
   const [isWatchList, setIsWatchList] = useState(false);
   const [watchListObject, setWatchListObject] = useState([]);
   const [isCounterOfferVisible, setIsCounterOfferVisible] = useState(false);
@@ -45,6 +47,14 @@ const DriverSearch = ({ navigation }) => {
   const [viewObject, setViewObject] = useState("List View");
   const [vehicleObject, setVehicleObject] = useState("Vehicle Size");
   const [isVehicleVisible, setIsVehicleVisible] = useState(false);
+  const [deliveryType, setDelivertype] = useState("Dedicated");
+  const [isSubmitModal, setIsSubmitModal] = useState(false);
+  const [mapHeight, setMapHeight] = useState(400);
+  const nearby = route?.params?.nearBy;
+  console.log("nearbynearby", nearby);
+
+  const [categoryObject, setCategoryObject] = useState("Delivery");
+  const [isCategoryVisible, setIsCategoryVisible] = useState(false);
   const [isTravelVisible, setIsTravelVisible] = useState(false);
   const [isPaymentModal, setIsPaymentModal] = useState(false);
   const [isRateExperienceModal, setIsRateExperienceModal] = useState(false);
@@ -164,7 +174,14 @@ const DriverSearch = ({ navigation }) => {
           }}
         >
           <CustomerTicket
-            onBook={() => setIsPaymentModal(true)}
+            setDelivertype={setDelivertype}
+            onBook={() => {
+              if (deliveryType != "Dedicated") {
+                setIsPaymentModal(true);
+              } else {
+                navigation.navigate("DedicatedService");
+              }
+            }}
             // onBook={() => navigation.navigate("DedicatedService")}
             onPressProfile={() =>
               navigation.navigate("CustomerProfile", { data: item })
@@ -193,9 +210,9 @@ const DriverSearch = ({ navigation }) => {
               }, 2000);
               // setWatchListObject(item)
             }}
-            onPress={() =>
-              navigation.navigate("TrackOrder", { orderData: item })
-            }
+            // onPress={() =>
+            //   navigation.navigate("TrackOrder", { orderData: item })
+            // }
           />
         </View>
       </>
@@ -212,16 +229,28 @@ const DriverSearch = ({ navigation }) => {
           }}
         >
           <CustomerTicket
-            onBook={() => setIsPaymentModal(true)}
+            // onBook={()s => setIsPaymentModal(true)}
             // onBook={() => navigation.navigate("DedicatedService")}
+            disableCollapsible={true}
             onPressProfile={() =>
               navigation.navigate("CustomerProfile", { data: item })
             }
             item={item}
-            onCounterOffer={() => setIsCounterOfferVisible(true)}
+            onCounterOffer={() => {
+              // driverDetailSheetRef.current.dismiss()
+
+              setIsCounterOfferVisible(true);
+            }}
             setIsWatchList={setIsWatchList}
             setWatchListObject={setWatchListObject}
             watchListObject={watchListObject}
+            onBook={() => {
+              if (deliveryType != "Dedicated") {
+                setIsPaymentModal(true);
+              } else {
+                navigation.navigate("DedicatedService");
+              }
+            }}
             // onWatchList={() => {
             //   setSaveText("Saved, you can see your saved Driver in Watchlist");
             //   setIsWatchList(true);
@@ -241,10 +270,9 @@ const DriverSearch = ({ navigation }) => {
             //   }, 2000);
             //   // setWatchListObject(item)
             // }}
-            onPress={
-              () => driverDetailSheetRef.current.present()
-              // navigation.navigate("TrackOrder", { orderData: item })
-            }
+            onPress={() => {
+              driverDetailSheetRef.current.present();
+            }}
           />
         </View>
       </>
@@ -335,7 +363,7 @@ const DriverSearch = ({ navigation }) => {
             >
               <CustomInput
                 leftImage={icon.location}
-                value="Town Hall, New York"
+                value={nearby ? nearby : "Town Hall, New York"}
               />
               <Spacer height={verticalScale(10)} />
               <CustomInput
@@ -412,6 +440,7 @@ const DriverSearch = ({ navigation }) => {
 
                   <CustomInput
                     height={29}
+                    dropDown={true}
                     color={colors.gray100}
                     width={scale(100)}
                     editable={false}
@@ -436,6 +465,7 @@ const DriverSearch = ({ navigation }) => {
                   />
                   <Spacer width={scale(10)} />
                   <CustomInput
+                    dropDown={true}
                     height={29}
                     color={colors.gray100}
                     width={scale(100)}
@@ -534,11 +564,12 @@ const DriverSearch = ({ navigation }) => {
                 <View style={{ marginRight: scale(10), marginLeft: scale(15) }}>
                   <CustomInput
                     height={29}
+                    dropDown={true}
                     color={colors.gray100}
                     width={scale(110)}
                     editable={false}
-                    value={"Category"}
-                    onShowPassword={() => setIsViewVisible(true)}
+                    value={categoryObject}
+                    onShowPassword={() => setIsCategoryVisible(true)}
                     rightImage={icon.down}
                     fontWeight={"600"}
                     // paddingHorizontal={10}
@@ -550,6 +581,7 @@ const DriverSearch = ({ navigation }) => {
                 </View>
                 <View style={{ marginRight: scale(10) }}>
                   <CustomInput
+                    dropDown={true}
                     height={29}
                     color={colors.gray100}
                     width={scale(110)}
@@ -568,6 +600,7 @@ const DriverSearch = ({ navigation }) => {
                 <View style={{ marginRight: scale(10) }}>
                   <CustomInput
                     height={29}
+                    dropDown={true}
                     color={colors.gray100}
                     width={scale(110)}
                     editable={false}
@@ -589,7 +622,7 @@ const DriverSearch = ({ navigation }) => {
                 <View
                   style={{
                     width: "100%",
-                    height: 400,
+                    height: mapHeight,
                     alignSelf: "center",
                     borderRadius: 20,
                     overflow: "hidden",
@@ -625,6 +658,8 @@ const DriverSearch = ({ navigation }) => {
                         return (
                           <Marker
                             onPress={() => setSelectedDrivers([item])}
+                            // style={{width:30,height:30,alignItems:"center",justifyContent:"center",}}
+
                             key={index}
                             coordinate={{
                               latitude: item.lat,
@@ -635,9 +670,9 @@ const DriverSearch = ({ navigation }) => {
                             <TouchableOpacity
                               style={{
                                 width:
-                                  selectedDrivers[0]?.id == item?.id ? 14 : 10,
+                                  selectedDrivers[0]?.id == item?.id ? 18 : 12,
                                 height:
-                                  selectedDrivers[0]?.id == item?.id ? 14 : 10,
+                                  selectedDrivers[0]?.id == item?.id ? 18 : 12,
                                 borderRadius: 999,
                                 backgroundColor:
                                   item.active == "On Schedule"
@@ -650,7 +685,9 @@ const DriverSearch = ({ navigation }) => {
                                     ? colors.primary
                                     : colors.gray,
                               }}
-                            ></TouchableOpacity>
+                            >
+                              
+                            </TouchableOpacity>
                             {/* <StoreMarker /> */}
                           </Marker>
                         );
@@ -703,27 +740,28 @@ const DriverSearch = ({ navigation }) => {
                       </TouchableOpacity>
                     </View>
 
-                    <View
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress={() => {
+                        if (mapHeight == 400) {
+                          setMapHeight(700);
+                        } else {
+                          setMapHeight(400);
+                        }
+                      }}
                       style={{
                         position: "absolute",
                         bottom: 80,
                         right: 20,
-                        flexDirection: "row",
-                        alignItems: "center",
                         gap: 10,
                       }}
                     >
-                      <TouchableOpacity
-                        activeOpacity={0.6}
-                        onPress={() => zoomIn()}
-                      >
-                        <Image
-                          style={styles.mapImgContainer}
-                          // resizeMode="contain"
-                          source={image.zoom}
-                        />
-                      </TouchableOpacity>
-                    </View>
+                      <Image
+                        style={styles.mapImgContainer}
+                        // resizeMode="contain"
+                        source={ mapHeight==400? image.zoom:icon.reduce}
+                      />
+                    </TouchableOpacity>
                   </View>
 
                   {viewObject == "Map View" && (
@@ -830,7 +868,26 @@ const DriverSearch = ({ navigation }) => {
       <CounterOfferModal
         modalVisible={isCounterOfferVisible}
         title={"Offering Price"}
+        onSubmit={() => {
+          setIsCounterOfferVisible(false);
+          setTimeout(() => {
+            setIsSubmitModal(true);
+          }, 500);
+        }}
         setModalVisible={setIsCounterOfferVisible}
+      />
+      <SuccessModal
+        modalVisible={isSubmitModal}
+        title={"Submitted"}
+        descripation={"You will receive a response soon."}
+        submitText={"Return to Home"}
+        setModalVisible={setIsSubmitModal}
+        onSubmit={() => {
+          setIsSubmitModal(false);
+          setTimeout(() => {
+            navigation.navigate("Home");
+          }, 500);
+        }}
       />
       <SortedModal
         modalVisible={isSortedVisible}
@@ -852,6 +909,13 @@ const DriverSearch = ({ navigation }) => {
         selectedObject={vehicleObject}
         setSelectedObject={setVehicleObject}
         setModalVisible={setIsVehicleVisible}
+      />
+      <CategoryModal
+        modalVisible={isCategoryVisible}
+        title={"Category"}
+        selectedObject={categoryObject}
+        setSelectedObject={setCategoryObject}
+        setModalVisible={setIsCategoryVisible}
       />
       <TravelModel
         modalVisible={isTravelVisible}
@@ -902,6 +966,19 @@ const DriverSearch = ({ navigation }) => {
         setIsWatchList={setIsWatchList}
         setIsCounterOfferVisible={setIsCounterOfferVisible}
         setWatchListObject={setWatchListObject}
+        onCounterOffer={() => {
+          driverDetailSheetRef.current.dismiss();
+
+          setIsCounterOfferVisible(true);
+        }}
+        onBook={() => {
+          driverDetailSheetRef.current.dismiss();
+          if (deliveryType != "Dedicated") {
+            setIsPaymentModal(true);
+          } else {
+            navigation.navigate("DedicatedService");
+          }
+        }}
       />
     </>
   );

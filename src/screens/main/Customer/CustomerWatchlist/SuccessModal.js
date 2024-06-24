@@ -94,7 +94,7 @@ import { Spacer } from "../../../../components/Spacer";
                 borderWidth={1}
                 paddingHorizontal={30}
                 size={14}
-                //   onPress={onCounterOffer}
+                  onPress={()=>setModalVisible(false)}
                 borderRadius={7}
                 textColor={colors.gray}
               />

@@ -25,6 +25,7 @@ import DashedLine from "react-native-dashed-line";
     selectedObject,
     setSelectedObject,
     title,
+    setDelivertype,
   }) => {
     const serviceData = [
      "On-Demand",
@@ -47,6 +48,7 @@ import DashedLine from "react-native-dashed-line";
                     style={{ ...AppStyles.justifyRow, width: "100%" }}
                     activeOpacity={0.6}
                     onPress={() => {
+                      setDelivertype?.(item)
                       setSelectedObject(item);
 
                       setModalVisible(false);

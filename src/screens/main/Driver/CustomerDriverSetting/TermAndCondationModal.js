@@ -56,7 +56,7 @@ import NewText from "../../../../components/NewText";
                   borderColor={"transparent"}
                   borderWidth={1}
                   size={16}
-                //   onPress={onPay}
+                  onPress={()=>setModalVisible(false)}
                   borderRadius={7}
                   textColor={colors.white}
                 />

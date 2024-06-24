@@ -28,10 +28,14 @@ import Button from "../../../../components/Button";
 import BottomSheet from "../../../../components/BottomSheet";
 import DeleteModal from "./DeleteModal";
 import SuccessModal from "./SuccessModal";
+import EditModal from "./EditModal";
+import RenameModal from "./RenameModal";
 
-const CustomerWatchlist = ({ navigation }) => {
+const CustomerWatchlist = ({ navigation, isActive }) => {
   const [showLocalDelivery, setShowLocalDelivery] = useState(true);
   const bottomSheetModalRef = useRef(null);
+  const [isEditModal, setIsEditModal] = useState(false);
+  const [isRenameModal, setIsRenameModal] = useState(false);
 
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [isSuccessModal, setIsSuccessModal] = useState(false);
@@ -61,7 +65,14 @@ const CustomerWatchlist = ({ navigation }) => {
     },
   ];
 
-  const DropContainer = ({ fontWeight, size, txt, onPress, isSetting }) => {
+  const DropContainer = ({
+    fontWeight,
+    size,
+    txt,
+    onPress,
+    isSetting,
+    isActive,
+  }) => {
     return (
       <TouchableOpacity
         onPress={onPress}
@@ -91,7 +102,7 @@ const CustomerWatchlist = ({ navigation }) => {
         ) : (
           <Image
             style={{ width: scale(13), height: scale(13) }}
-            source={icon.up}
+            source={isActive ? icon.up : icon.down}
             resizeMode={"contain"}
           />
         )}
@@ -107,7 +118,7 @@ const CustomerWatchlist = ({ navigation }) => {
         topBarColor={colors.white}
         barStyle={"dark-content"}
       >
-        <Spacer height={ Platform.OS=="ios"?10: 20}/>
+        <Spacer height={Platform.OS == "ios" ? 10 : 20} />
         <NewText
           fontWeight="700"
           color={colors.black}
@@ -123,7 +134,7 @@ const CustomerWatchlist = ({ navigation }) => {
           contentContainerStyle={colors.white}
         >
           <View style={{ padding: 15 }}>
-            <DropContainer />
+            <DropContainer isActive={true} />
 
             <View
               style={{
@@ -150,11 +161,14 @@ const CustomerWatchlist = ({ navigation }) => {
                   {customerTicketData.map((item, index) => {
                     return (
                       <>
-                        <CustomTicket
-                          backgroundColor={colors.white}
-                          isNoShadow={true}
-                          item={item}
-                        />
+                        <View style={{ paddingRight: 5 }}>
+                          <CustomTicket
+                            backgroundColor={colors.white}
+                            isNoShadow={true}
+                            item={item}
+                          />
+                        </View>
+
                         <View style={{ paddingVertical: 10 }}>
                           {customerTicketData.length - 1 !== index ? (
                             <CustomLine />
@@ -232,7 +246,7 @@ const CustomerWatchlist = ({ navigation }) => {
               <View style={{ paddingBottom: 10 }} />
             </View>
             <View style={{ marginTop: 20 }}>
-              <DropContainer txt={"Saved Search"} />
+              <DropContainer isActive={true} txt={"Saved Search"} />
 
               <View
                 style={{
@@ -268,7 +282,7 @@ const CustomerWatchlist = ({ navigation }) => {
             </View>
 
             <View style={{ marginTop: 20 }}>
-              <DropContainer txt={"Posts"} />
+              <DropContainer isActive={true} txt={"Posts"} />
 
               <View
                 style={{
@@ -312,7 +326,14 @@ const CustomerWatchlist = ({ navigation }) => {
         // onDismiss={() => setPause(false)}
       >
         <View style={{ paddingHorizontal: 15 }}>
-          <TouchableOpacity activeOpacity={0.6}>
+          <TouchableOpacity
+            onPress={() => {
+              bottomSheetModalRef.current.dismiss();
+
+              navigation.navigate("CustomerFilter");
+            }}
+            activeOpacity={0.6}
+          >
             <NewText
               color={colors.gray200}
               style={{ paddingBottom: 12, textAlign: "center" }}
@@ -329,7 +350,17 @@ const CustomerWatchlist = ({ navigation }) => {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.6} style={{ paddingVertical: 20 }}>
+          <TouchableOpacity
+            onPress={() => {
+              bottomSheetModalRef.current.dismiss();
+
+              setTimeout(() => {
+                setIsEditModal(true);
+              }, 800);
+            }}
+            activeOpacity={0.6}
+            style={{ paddingVertical: 20 }}
+          >
             <NewText
               color={colors.gray200}
               style={{ textAlign: "center" }}
@@ -346,7 +377,17 @@ const CustomerWatchlist = ({ navigation }) => {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.6} style={{ paddingBottom: 20 }}>
+          <TouchableOpacity
+            onPress={() => {
+              bottomSheetModalRef.current.dismiss();
+
+              setTimeout(() => {
+                setIsRenameModal(true);
+              }, 800);
+            }}
+            activeOpacity={0.6}
+            style={{ paddingBottom: 20 }}
+          >
             <NewText
               color={colors.gray200}
               style={{ textAlign: "center" }}
@@ -401,6 +442,37 @@ const CustomerWatchlist = ({ navigation }) => {
             navigation.navigate("Home");
           }, 500);
         }}
+      />
+
+      <EditModal
+        mainColor={colors.primary}
+        setModalVisible={setIsEditModal}
+        modalVisible={isEditModal}
+        title={"Edit"}
+        onSubmit={()=>{
+          setIsEditModal(false)
+          setTimeout(() => {
+            setIsSuccessModal(true)
+            
+          }, 500);
+
+        }}
+        navigation={navigation}
+      />
+      <RenameModal
+        mainColor={colors.primary}
+        setModalVisible={setIsRenameModal}
+        modalVisible={isRenameModal}
+        title={"Rename"}
+        onSubmit={()=>{
+          setIsRenameModal(false)
+          setTimeout(() => {
+            setIsSuccessModal(true)
+            
+          }, 500);
+
+        }}
+        navigation={navigation}
       />
     </>
   );

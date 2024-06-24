@@ -24,6 +24,7 @@ import CustomLine from "../../../../components/CustomLine/CustomLine";
 import CustomInput from "../../../../components/CustomInput";
 import HorizontalContainer from "../../../../components/HorizontalContainer";
 import Button from "../../../../components/Button";
+import CustomSheetModal from "../../../../components/CustomSheetModal";
   
   const DriverDetailSheet = ({
  
@@ -33,7 +34,9 @@ import Button from "../../../../components/Button";
     setIsCounterOfferVisible,
     setWatchListObject,
     navigation,
-    setIsWatchList
+    setIsWatchList,
+    onCounterOffer,
+    onBook
   }) => {
 
     const [isCollapsible, setIsCollapsible] = useState(true);
@@ -42,7 +45,8 @@ import Button from "../../../../components/Button";
   
     const [isCategoryodal,setIsCategoryModal]=useState(false)
     const [selectedCategory,setSelectedCategory]=useState("Delivery")
-  
+    const [isAddons,setIsAddons]=useState(true)
+
   
     const [isServiceDescriptionModal,setIsServiceDescriptionModal]=useState(false)
     const [selectedService,setSelectedService]=useState("Moving")
@@ -52,7 +56,7 @@ console.log("selectedDrivers",selectedDrivers?.time)
         <BottomSheet
         bottomSheetModalRef={bottomSheetModalRef}
         snapTo={"65%"}
-        marginHorizontal={15}
+        // marginHorizontal={15}
         // onDismiss={() => setPause(false)}
       >
         <View >
@@ -326,7 +330,7 @@ console.log("selectedDrivers",selectedDrivers?.time)
             <CustomLine />
 
             <TouchableOpacity
-              // onPress={() => setShowDelivery(!showDeliveryDetail)}
+              onPress={() => setIsAddons(!isAddons)}
               style={{
                 width: 35,
                 height: 35,
@@ -347,6 +351,32 @@ console.log("selectedDrivers",selectedDrivers?.time)
           </View>
 
             <Spacer height={verticalScale(5)} />
+
+            <Collapsible collapsed={isAddons} >
+          <View style={{paddingHorizontal:15}}>
+         
+
+              <HorizontalContainer text={"Loading fee"} text1={"$10/flight"} />
+              <View style={{ marginVertical: verticalScale(13) }}>
+                <DashedLine
+                  dashLength={6}
+                  dashThickness={1}
+                  dashGap={5}
+                  dashColor={colors.gray}
+                />
+              </View>
+              <HorizontalContainer text={"Unloading fee"} text1={"$10/flight"} />
+              <View style={{ marginVertical: verticalScale(13) }}>
+                <DashedLine
+                  dashLength={6}
+                  dashThickness={1}
+                  dashGap={5}
+                  dashColor={colors.gray}
+                />
+              </View>
+
+          </View>
+          </Collapsible>
 
             <View
               style={{ ...AppStyles.justifyRow, paddingHorizontal: scale(10) }}
@@ -369,7 +399,7 @@ console.log("selectedDrivers",selectedDrivers?.time)
                 />
               </View>
 
-              <View style={AppStyles.row}>
+              <View style={{...AppStyles.row,marginTop:10}}>
                 <Button
                   text={"Counter Offer"}
                   height={28}
@@ -377,14 +407,14 @@ console.log("selectedDrivers",selectedDrivers?.time)
                   borderColor={colors.primary}
                   borderWidth={1}
                   size={14}
-                //   onPress={onCounterOffer}
+                  onPress={onCounterOffer}
                   borderRadius={7}
                   textColor={colors.primary}
                   width={scale(110)}
                 />
                 <Spacer width={scale(10)} />
                 <Button
-                //   onPress={onBook}
+                  onPress={onBook}
                   text={"Book Now"}
                   height={28}
                   size={16}

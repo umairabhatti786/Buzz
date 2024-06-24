@@ -7,8 +7,9 @@ import {
   ScrollView,
   Platform,
   FlatList,
+  TextInput,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import CustomText from "../../../components/CustomText";
 import { icon } from "../../../assets/png/icons";
 import { colors } from "../../../utils/colors";
@@ -28,9 +29,14 @@ import OrderRoute from "./OrderRoute";
 import CustomButton from "../../../components/CustomButton";
 import DashedLine from "react-native-dashed-line";
 import { CustomHeader } from "../../../components/CustomHeader";
+import { windowWidth } from "../../../utils/Commons";
+import RateExperienceModal from "../Customer/DriverSearch/RateExperienceModal";
 
 const TrackOrder = ({ navigation, route }) => {
   const orderData = route?.params.orderData;
+  const [driverMessage, setDriverMessage] = useState("");
+  const [isRateExperienceModal, setIsRateExperienceModal] = useState(false);
+
   const data = [
     {
       id: 1,
@@ -84,7 +90,7 @@ const TrackOrder = ({ navigation, route }) => {
     { name: "Picked Up(1/1)", isCheck: true },
     { name: "En Route (0/1)" },
     { name: "Dropped Off" },
-    { name: "Leave Review" },
+    { name: "Leave Review",onPress:()=>setIsRateExperienceModal(true) },
   ];
 
   // const renderCustomerUser = ({ item, index }) => {
@@ -109,23 +115,23 @@ const TrackOrder = ({ navigation, route }) => {
       height={40}
       backgroundColor={colors.white}
       // topBarColor={colors.primary}
-      barStyle={"dark-content"}>
+      barStyle={"dark-content"}
+    >
       <View
         style={{
           flex: 1,
 
           backgroundColor: colors.white,
-        }}>
-      <CustomHeader
-      label={"Track Order"}
-      navigation={navigation}
-      />
+        }}
+      >
+        <CustomHeader label={"Track Order"} navigation={navigation} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={{
               paddingHorizontal: scale(15),
               paddingTop: verticalScale(15),
-            }}>
+            }}
+          >
             <View style={AppStyles.justifyRow}>
               <CustomText
                 text={"Order #7162533"}
@@ -134,15 +140,19 @@ const TrackOrder = ({ navigation, route }) => {
                 fontWeight="700"
                 size={15}
               />
-
-              <Image
-                style={{
-                  width: scale(35),
-                  height: scale(35),
-                }}
-                source={image.man}
-                resizeMode="contain"
-              />
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => navigation.navigate("ResolutionCenter")}
+              >
+                <Image
+                  style={{
+                    width: scale(35),
+                    height: scale(35),
+                  }}
+                  source={image.man}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
             </View>
             <Spacer height={verticalScale(10)} />
             <CustomerTicket
@@ -163,7 +173,8 @@ const TrackOrder = ({ navigation, route }) => {
                 paddingVertical: verticalScale(10),
                 marginVertical: verticalScale(20),
                 justifyContent: "space-between",
-              }}>
+              }}
+            >
               <View>
                 <CustomText
                   text={"Contact Driver"}
@@ -172,59 +183,74 @@ const TrackOrder = ({ navigation, route }) => {
                   fontWeight="700"
                   size={12}
                 />
-                <Spacer height={verticalScale(5)} />
-                <CustomText
+
+                <TextInput
+                  value={driverMessage}
+                  // editable={editable}
+                  style={{
+                    fontSize: 14,
+                    width: windowWidth / 1.7,
+                    alignItems: "flex-start",
+                    justifyContent: "flex-start",
+                    // paddingVertical:5,
+                    height: verticalScale(30),
+                    color: colors.black,
+                    fontFamily: Inter.medium,
+                    fontWeight: "500",
+                  }}
+                  placeholder={"Write Here"}
+                  placeholderTextColor={colors.gray100}
+                  onChangeText={(txt) => setDriverMessage(txt)}
+                  autoCapitalize="none"
+                />
+
+                {/* <CustomText
                   text={"Write Here"}
                   color={colors.gray100}
                   fontWeight="400"
                   size={15}
-                />
+                /> */}
               </View>
 
               <View style={AppStyles.row}>
-                <TouchableOpacity
-                activeOpacity={0.6}
-                >
-                <Image
-                  style={{
-                    width: scale(35),
-                    height: scale(35),
-                  }}
-                  resizeMode="contain"
-                  source={image.share}
-                />
-
+                <TouchableOpacity activeOpacity={0.6}>
+                  <Image
+                    style={{
+                      width: scale(35),
+                      height: scale(35),
+                    }}
+                    resizeMode="contain"
+                    source={image.share}
+                  />
                 </TouchableOpacity>
-              
+
                 <Spacer width={scale(10)} />
-                <TouchableOpacity
-                activeOpacity={0.6}
-                >
-                <Image
-                  style={{
-                    width: scale(35),
-                    height: scale(35),
-                  }}
-                  resizeMode="contain"
-                  source={image.phone}
-                />
-
+                <TouchableOpacity activeOpacity={0.6}>
+                  <Image
+                    style={{
+                      width: scale(35),
+                      height: scale(35),
+                    }}
+                    resizeMode="contain"
+                    source={image.phone}
+                  />
                 </TouchableOpacity>
-              
               </View>
             </View>
 
             <View
               style={{
                 ...styles.box,
-              }}>
+              }}
+            >
               <View>
                 <View
                   style={{
                     ...AppStyles.justifyRow,
                     paddingHorizontal: scale(15),
                     paddingVertical: verticalScale(10),
-                  }}>
+                  }}
+                >
                   <CustomText
                     text={"Current Status"}
                     color={colors.black}
@@ -251,72 +277,73 @@ const TrackOrder = ({ navigation, route }) => {
                 style={{
                   ...AppStyles.row,
                   paddingVertical: verticalScale(10),
-                  paddingLeft: scale(15),
-                }}>
+                  // paddingHorizontal: scale(15),
+                }}
+              >
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  <View style={{ ...AppStyles.row }}>
+                  <View
+                  activeOpacity={0.4}
+                   style={{ ...AppStyles.row,paddingHorizontal:scale(15) }}>
                     {orderStatus.map((item, index) => {
-                        count=index+1
+                      count = index + 1;
                       return (
-                        <View style={{ ...AppStyles.row }}>
-                            {item.isCheck?(
-                                  <View
-                                  style={{
-                                    ...styles.circleContainer,
-                                    backgroundColor: colors.green,
-                                  }}>
-                                   <Image
-                                   style={{
-                                     width: scale(10),
-                                     height: scale(10),
-                                   }}
-                                   resizeMode="contain"
-                                   source={icon.tick}
-                                 />
-                                </View>
-                                 
-
-                            ):
+                        <TouchableOpacity
+                        activeOpacity={0.4}
+                        onPress={item.onPress}
+                         style={{ ...AppStyles.row }}>
+                          {item.isCheck ? (
                             <View
-                            style={{
-                              ...styles.circleContainer,
-                              backgroundColor: colors.gray,
-                            }}>
-                            <CustomText
-                              text={"0"+count}
-                              color={colors.white}
-                              fontFam={Inter.medium}
-                              fontWeight="600"
-                              size={9}
-                            />
-                          </View>
-                            }
-                       
+                              style={{
+                                ...styles.circleContainer,
+                                backgroundColor: colors.green,
+                              }}
+                            >
+                              <Image
+                                style={{
+                                  width: scale(10),
+                                  height: scale(10),
+                                }}
+                                resizeMode="contain"
+                                source={icon.tick}
+                              />
+                            </View>
+                          ) : (
+                            <View
+                              style={{
+                                ...styles.circleContainer,
+                                backgroundColor: colors.gray,
+                              }}
+                            >
+                              <CustomText
+                                text={"0" + count}
+                                color={colors.white}
+                                fontFam={Inter.medium}
+                                fontWeight="600"
+                                size={9}
+                              />
+                            </View>
+                          )}
 
                           <Spacer width={scale(5)} />
                           <CustomText
                             text={item.name}
-                            color={item.isCheck?colors.green:colors.gray}
+                            color={item.isCheck ? colors.green : colors.gray}
                             fontFam={Inter.medium}
                             fontWeight="600"
                             size={10}
                           />
-                          {
-                              orderStatus.length-1!==index&&(
-                                <DashedLine
-                                style={{ width: 15 }}
-                                dashLength={3}
-                                dashThickness={1}
-                                dashGap={3}
-                                dashColor={colors.gray}
-                              />
-                              )
-                          }
-
-                        
+                          {orderStatus.length - 1 !== index && (
+                            <DashedLine
+                              style={{ width: 15 }}
+                              dashLength={3}
+                              dashThickness={1}
+                              dashGap={3}
+                              dashColor={colors.gray}
+                            />
+                          )}
 
                           {/* <DashedLine dashLength={6} dashThickness={1} dashGap={5} dashColor={colors.gray} /> */}
-                        </View>
+                        </TouchableOpacity>
                       );
                     })}
                   </View>
@@ -330,6 +357,13 @@ const TrackOrder = ({ navigation, route }) => {
           </View>
         </ScrollView>
       </View>
+
+      <RateExperienceModal
+        mainColor={colors.primary}
+        modalVisible={isRateExperienceModal}
+        navigation={navigation}
+        setModalVisible={setIsRateExperienceModal}
+      />
     </Screen>
   );
 };
@@ -349,4 +383,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  
 });

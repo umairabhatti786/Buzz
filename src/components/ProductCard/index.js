@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Platform } from "react-native";
+import { StyleSheet, Text, View, Image, Platform, TouchableOpacity } from "react-native";
 import React from "react";
 import { scale, verticalScale } from "react-native-size-matters";
 import { windowWidth } from "../../utils/Commons";
@@ -11,9 +11,11 @@ import { icon } from "../../assets/png/icons";
 import { Spacer } from "../Spacer";
 import CategoryItem from "../../screens/main/Customer/CustomerHome/CategoryItem";
 
-const ProductCard = ({item,ennPointColor}) => {
+const ProductCard = ({item,ennPointColor,onPress}) => {
   return (
-      <View
+      <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={onPress}
       style={{
         elevation: 5,
         shadowColor:Platform.OS=="ios"?  colors.gray:colors.black,
@@ -134,7 +136,7 @@ const ProductCard = ({item,ennPointColor}) => {
           }
     </View>
 
-      </View>
+      </TouchableOpacity>
   
   );
 };

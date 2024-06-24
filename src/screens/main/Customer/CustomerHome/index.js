@@ -48,6 +48,7 @@ const CustomerHome = ({ navigation }) => {
           des: "Discover nearby drivers ready to assist with your delivery needs.",
           img: image.defimg100,
           endPoint: "Discover",
+          isNearBy:true
         },
       ],
     },
@@ -231,7 +232,16 @@ const CustomerHome = ({ navigation }) => {
                         index={index}
                         img={item.img}
                         name={item.name}
-                        onPress={() => setSelectedCategory(index)}
+                        onPress={() => {
+                          setSelectedCategory(index)
+
+                          setTimeout(() => {
+                            navigation.navigate("DriverSearch")
+
+                            
+                          }, 300);
+
+                        }}
                       />
                     </View>
                   );
@@ -249,7 +259,19 @@ const CustomerHome = ({ navigation }) => {
                 keyExtractor={(item, index) => item + index}
                 renderItem={({ item }) => (
                   <View style={{ paddingHorizontal: scale(15) }}>
-                    <ProductCard item={item} />
+                    <ProductCard 
+                    onPress={()=>{
+                      if(item.isNearBy){
+                        navigation.navigate("DriverSearch",{nearBy:item.name})
+
+                      }
+                      else {
+                        navigation.navigate("DriverSearch",)
+
+                      }
+
+                    }}
+                    item={item} />
                   </View>
                 )}
                 renderSectionHeader={({ section: { title } }) => (

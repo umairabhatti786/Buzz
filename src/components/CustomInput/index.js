@@ -36,6 +36,7 @@ const CustomInput = ({
   fontWeight,
   headingWeight,
   headingSize,
+  dropDown
 }) => {
   return (
     <View style={{ ...props }}>
@@ -79,29 +80,51 @@ const CustomInput = ({
         )}
 
         <View style={{ flex: 1 }}>
-          <TextInput
-            value={value}
-            editable={editable}
-            style={{
-              fontSize: 14,
-              paddingVertical:5,
-              // height: verticalScale(height || 45),
-              color: color || colors.black,
-              fontFamily: Inter.medium,
-              fontWeight: fontWeight || "500",
-              // backgroundColor:"red",
-              alignItems:"center",
-              ...(isCenter && { alignSelf: "center" }),
-            }}
-            placeholder={placeholder}
-            placeholderTextColor={placeholderTextColor || colors.gray100}
-            keyboardType={keyboard}
-            maxLength={maxLength}
-            secureTextEntry={isPassword || false}
-            onChangeText={onChangeText}
-            onBlur={onBlur}
-            autoCapitalize="none"
-          />
+          {
+            dropDown?(
+
+              <NewText
+              size={14}
+              // style={{ marginVertical: 10 }}
+              numberOfLines={1}
+              fontFamily={"Inter-Medium"}
+              fontWeight={"700"}
+              text={value}
+              color={color || colors.gray}
+            />
+
+
+            ):(
+              <TextInput
+              value={value}
+              editable={editable}
+              style={{
+                fontSize: 14,
+                paddingVertical:5,
+                height: verticalScale(height || 45),
+                color: color || colors.black,
+                
+                fontFamily: Inter.medium,
+                fontWeight: fontWeight || "500",
+                // backgroundColor:"red",
+                alignItems:"center",
+                ...(isCenter && { alignSelf: "center" }),
+              }}
+              placeholder={placeholder}
+              placeholderTextColor={placeholderTextColor || colors.gray100}
+              keyboardType={keyboard}
+              maxLength={maxLength}
+              secureTextEntry={isPassword || false}
+              onChangeText={onChangeText}
+              onBlur={onBlur}
+              autoCapitalize="none"
+            /> 
+            )
+          }
+
+      
+          
+          
         </View>
         {rightImage && (
           <TouchableOpacity
@@ -112,7 +135,7 @@ const CustomInput = ({
               justifyContent: "center",
               alignItems: "flex-end",
               height: verticalScale(height || 45),
-              width: 30,
+              // width: 30,
             }}
           >
             <Image

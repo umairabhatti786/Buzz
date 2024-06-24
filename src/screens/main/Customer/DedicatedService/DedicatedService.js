@@ -27,15 +27,22 @@ import Button from "../../../../components/Button";
 import Days from "../../../../components/Days";
 import DropDownModal from "../../../../components/DropDownModal";
 import DedicatedServiceOfferModal from "./DedicatedServiceOfferModal";
+import DedicatedAgreementModal from "./DedicatedAgreementModal";
+import ThankyouModal from "../DriverSearch/ThankyouModal";
+import AddPaymentMethodModal from "../DriverSearch/AddPaymentMethodModal";
+import PaymentMethodModal from "../DriverSearch/PaymentMethodModal";
 
 const DedicatedService = ({ navigation, route }) => {
   const [selectedDays, setSelectedDays] = useState([]);
   const [paymentOptionsModal, setPaymentOptionsodal] = useState(false);
   const [paymentOptions, setPaymentOptions] = useState("Pay full now");
-
+  const [isAddPaymentMethodVisible, steIsAddPaymentMethodVisible] =
+    useState(false);
   const [serviceOfferModal, setServiceOfferModal] = useState(false);
   const [isThankyouModal, setIsThankyouModal] = useState(false);
   const [isRateExperienceModal, setIsRateExperienceModal] = useState(false);
+  const [isDedicatedAgreement,setIsDedicatedAgreement]=useState(false)
+  const [isPaymentModal, setIsPaymentModal] = useState(false);
 
   console.log("selectedDays", selectedDays);
 
@@ -321,7 +328,7 @@ const DedicatedService = ({ navigation, route }) => {
             height={33}
             // onPress={()=>navigation.navigate("ManageOrders")}
             onPress={() => {
-              setServiceOfferModal(true);
+              setIsDedicatedAgreement(true);
             }}
             bgColor={colors.primary}
             borderColor={"transparent"}
@@ -352,6 +359,47 @@ const DedicatedService = ({ navigation, route }) => {
         setSelectedObject={setPaymentOptions}
         setModalVisible={setServiceOfferModal}
         data={paymentOptionsData}
+      />
+
+<DedicatedAgreementModal
+        onBook={() => {
+          setIsDedicatedAgreement(false);
+          setTimeout(() => {
+            setIsPaymentModal(true);
+          }, 1000);
+        }}
+        modalVisible={isDedicatedAgreement}
+        setModalVisible={setIsDedicatedAgreement}
+      />
+
+<PaymentMethodModal
+        onPressCard={() => {
+          setIsPaymentModal(false);
+          setTimeout(() => {
+            steIsAddPaymentMethodVisible(true);
+          }, 1000);
+        }}
+        modalVisible={isPaymentModal}
+        setModalVisible={setIsPaymentModal}
+      />
+
+      <ThankyouModal
+        mainColor={colors.primary}
+        modalVisible={isThankyouModal}
+        navigation={navigation}
+        setIsRateExperienceModal={setIsRateExperienceModal}
+        setModalVisible={setIsThankyouModal}
+      />
+
+<AddPaymentMethodModal
+        onPay={() => {
+          steIsAddPaymentMethodVisible(false);
+          setTimeout(() => {
+            setIsThankyouModal(true);
+          }, 1000);
+        }}
+        modalVisible={isAddPaymentMethodVisible}
+        setModalVisible={steIsAddPaymentMethodVisible}
       />
     </>
   );

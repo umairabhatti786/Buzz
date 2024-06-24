@@ -71,8 +71,6 @@ const CustomModal = ({
         {
           !lineNotShow&&(
             <CustomLine />
-
-
           )
         }
 

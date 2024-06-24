@@ -42,8 +42,8 @@ const DeliveryServices = ({ navigation }) => {
   const [isPickUpModel, setIsPickUpModel] = useState(false);
   const [time, setTime] = useState("pm");
   const [isTimeModal, setIsTimeModal] = useState(false);
-  const [pickupDateAndTime,setPickupDateAndTime]=useState("")
-  const [isDateAndTime,setIsDateAndTime]=useState("")
+  const [pickupDateAndTime, setPickupDateAndTime] = useState("");
+  const [isDateAndTime, setIsDateAndTime] = useState("");
 
   const pickUpWithinData = [
     "1 Hour",
@@ -106,59 +106,59 @@ const DeliveryServices = ({ navigation }) => {
     "26 ft Box Truck",
     "n/a",
   ];
-  const ServiceCoverage = [
+  const [ServiceCoverage, setServiceCoverage] = useState([
     { name: "All (Default)", isActive: true },
     { name: "On Demand", isActive: false },
     { name: "Scheduled", isActive: false },
     { name: "Dedicated", isActive: false },
-  ];
+  ]);
 
   const MIN_DEFAULT = 10;
   const MAX_DEFAULT = 100;
   const [minValue, setMinValue] = useState(MIN_DEFAULT);
   const [maxValue, setMaxValue] = useState(MAX_DEFAULT);
 
-  const ServiceCoverage1 = [
+  const [ServiceCoverage1, setServiceCoverage1] = useState([
     { name: "All (Default)", isActive: true },
     { name: "Local", isActive: false },
     { name: "Intercity", isActive: false },
     { name: "Interstate", isActive: false },
-  ];
-  const LiftingCapacity = [
+  ]);
+  const [LiftingCapacity, setLiftingCapacity] = useState([
     { name: "Light Weight (<20lbs)", isActive: true },
     { name: "Medium Weight (20 - 100 lbs)", isActive: false },
     { name: "Heavy Weight (>100 lbs)", isActive: false },
-  ];
-  const SizeCapacity = [
+  ]);
+  const [SizeCapacity, setSizeCapacity] = useState([
     { name: "Few Things", isActive: true },
     { name: "Small (< 1000 sq ft)", isActive: false },
     { name: "Medium (1000-3000 sq ft)", isActive: false },
     { name: "large (> 3000 sq ft)", isActive: false },
-  ];
+  ]);
 
-  const HomeMovingCapacity = [
+  const [HomeMovingCapacity, setHomeMovingCapacity] = useState([
     { name: "Studio", isActive: true },
     { name: "1 Bedroom Home", isActive: false },
     { name: "2 Bedroom Home", isActive: false },
     { name: "3 Bedroom Home", isActive: false },
     { name: "4+ Bedroom Home", isActive: false },
-  ];
+  ]);
 
-  const HelpingHands = [
+  const [HelpingHands, setHelpingHands] = useState([
     { name: "Lifting/Loading/Unloading", isActive: true },
     { name: "Boxing/Unboxing", isActive: false },
     { name: "Assembling/Disassembling", isActive: false },
     { name: "Installation/Dismantling", isActive: false },
-  ];
+  ]);
 
-  const Equipment = [
+  const [Equipment, setEquipment] = useState([
     { name: "4-Wheel Dolly", isActive: true },
     { name: "Appliance Dolly", isActive: false },
     { name: "Hand Truck Dolly", isActive: false },
     { name: "Loading Ramp", isActive: false },
     { name: "Liftgate", isActive: false },
     { name: "Material Lift", isActive: false },
-  ];
+  ]);
 
   return (
     <>
@@ -185,7 +185,19 @@ const DeliveryServices = ({ navigation }) => {
                     <HorizontalContainerToggle
                       text={item.name}
                       isActive={item.isActive}
-                      setIsActive={() => {}}
+                      setIsActive={() => {
+                        const updates = [...ServiceCoverage];
+
+                        // Toggle the 'active' property of the item at the specified index
+                        updates[index] = {
+                          ...updates[index],
+                          isActive: !updates[index].isActive,
+                        };
+
+                        console.log("updates[index]", updates[index]);
+
+                        setServiceCoverage(updates);
+                      }}
                     />
                     {ServiceCoverage.length != index + 1 ? (
                       <View style={{ marginVertical: verticalScale(13) }}>
@@ -219,10 +231,11 @@ const DeliveryServices = ({ navigation }) => {
                       style={{ marginBottom: 15 }}
                       text={"Pick Up Date and Time"}
                     />
-                    <TouchableOpacity 
-                    activeOpacity={0.6}
-                    onPress={()=>setIsDateAndTime(true)}
-                    style={styles.pickupDateContainer}>
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress={() => setIsDateAndTime(true)}
+                      style={styles.pickupDateContainer}
+                    >
                       <NewText
                         fontWeight="600"
                         color={colors.black}
@@ -260,7 +273,6 @@ const DeliveryServices = ({ navigation }) => {
                         width={scale(140)}
                         editable={false}
                         onShowPassword={() => setIsTimeModal(true)}
-
                         // onShowPassword={()=>setIsVehicleTypeModal(true)}
                         rightImage={icon.down}
                         value={item.format}
@@ -280,7 +292,6 @@ const DeliveryServices = ({ navigation }) => {
                       color={colors.gray100}
                       editable={false}
                       onShowPassword={() => setIsPickUpModel(true)}
-
                       heading={"Pick Up within"}
                       // onShowPassword={()=>setIsVehicleTypeModal(true)}
                       fontWeight={"600"}
@@ -440,7 +451,19 @@ const DeliveryServices = ({ navigation }) => {
                     <HorizontalContainerToggle
                       text={item.name}
                       isActive={item.isActive}
-                      setIsActive={() => {}}
+                      setIsActive={() => {
+                        const updates = [...ServiceCoverage1];
+
+                        // Toggle the 'active' property of the item at the specified index
+                        updates[index] = {
+                          ...updates[index],
+                          isActive: !updates[index].isActive,
+                        };
+
+                        console.log("updates[index]", updates[index]);
+
+                        setServiceCoverage1(updates);
+                      }}
                     />
                     {ServiceCoverage1.length != index + 1 ? (
                       <View style={{ marginVertical: verticalScale(13) }}>
@@ -556,13 +579,25 @@ const DeliveryServices = ({ navigation }) => {
           <View style={{ ...AppStyles.box }}>
             <View style={{ paddingHorizontal: scale(15) }}>
               <Spacer height={verticalScale(15)} />
-              {LiftingCapacity.map((item, index) => {
+              {LiftingCapacity?.map((item, index) => {
                 return (
                   <>
                     <HorizontalContainerToggle
                       text={item.name}
                       isActive={item.isActive}
-                      setIsActive={() => {}}
+                      setIsActive={() => {
+                        const updates = [...LiftingCapacity];
+
+                        // Toggle the 'active' property of the item at the specified index
+                        updates[index] = {
+                          ...updates[index],
+                          isActive: !updates[index].isActive,
+                        };
+
+                        console.log("updates[index]", updates[index]);
+
+                        setLiftingCapacity(updates);
+                      }}
                     />
                     {LiftingCapacity.length != index + 1 ? (
                       <View style={{ marginVertical: verticalScale(13) }}>
@@ -598,7 +633,19 @@ const DeliveryServices = ({ navigation }) => {
                     <HorizontalContainerToggle
                       text={item.name}
                       isActive={item.isActive}
-                      setIsActive={() => {}}
+                      setIsActive={() => {
+                        const updates = [...SizeCapacity];
+
+                        // Toggle the 'active' property of the item at the specified index
+                        updates[index] = {
+                          ...updates[index],
+                          isActive: !updates[index].isActive,
+                        };
+
+                        console.log("updates[index]", updates[index]);
+
+                        setSizeCapacity(updates);
+                      }}
                     />
                     {SizeCapacity.length != index + 1 ? (
                       <View style={{ marginVertical: verticalScale(13) }}>
@@ -635,7 +682,19 @@ const DeliveryServices = ({ navigation }) => {
                     <HorizontalContainerToggle
                       text={item.name}
                       isActive={item.isActive}
-                      setIsActive={() => {}}
+                      setIsActive={() => {
+                        const updates = [...HomeMovingCapacity];
+
+                        // Toggle the 'active' property of the item at the specified index
+                        updates[index] = {
+                          ...updates[index],
+                          isActive: !updates[index].isActive,
+                        };
+
+                        console.log("updates[index]", updates[index]);
+
+                        setHomeMovingCapacity(updates);
+                      }}
                     />
                     {HomeMovingCapacity.length != index + 1 ? (
                       <View style={{ marginVertical: verticalScale(13) }}>
@@ -720,7 +779,19 @@ const DeliveryServices = ({ navigation }) => {
                     <HorizontalContainerToggle
                       text={item.name}
                       isActive={item.isActive}
-                      setIsActive={() => {}}
+                      setIsActive={() => {
+                        const updates = [...HelpingHands];
+
+                        // Toggle the 'active' property of the item at the specified index
+                        updates[index] = {
+                          ...updates[index],
+                          isActive: !updates[index].isActive,
+                        };
+
+                        console.log("updates[index]", updates[index]);
+
+                        setHelpingHands(updates);
+                      }}
                     />
                     {HelpingHands.length != index + 1 ? (
                       <View style={{ marginVertical: verticalScale(13) }}>
@@ -757,7 +828,20 @@ const DeliveryServices = ({ navigation }) => {
                     <HorizontalContainerToggle
                       text={item.name}
                       isActive={item.isActive}
-                      setIsActive={() => {}}
+                      setIsActive={() => {
+                        const updates = [...Equipment];
+
+                        // Toggle the 'active' property of the item at the specified index
+                        updates[index] = {
+                          ...updates[index],
+                          isActive: !updates[index].isActive,
+                        };
+
+                        console.log("updates[index]", updates[index]);
+
+                        setEquipment(updates);
+
+                      }}
                     />
                     {Equipment.length != index + 1 ? (
                       <View style={{ marginVertical: verticalScale(13) }}>
@@ -860,11 +944,11 @@ const DeliveryServices = ({ navigation }) => {
         setModalVisible={setUnLaodingDataModal}
         data={unLaodingArray}
       />
-        <CustomCalendar
-      modalVisible={isDateAndTime}
-      date={pickupDateAndTime}
-      setDate={setPickupDateAndTime}
-      setModalVisible={setIsDateAndTime}
+      <CustomCalendar
+        modalVisible={isDateAndTime}
+        date={pickupDateAndTime}
+        setDate={setPickupDateAndTime}
+        setModalVisible={setIsDateAndTime}
       />
     </>
   );

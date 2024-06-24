@@ -35,12 +35,12 @@ const NeedRide = ({ navigation }) => {
   const [pickupDateAndTime,setPickupDateAndTime]=useState("")
   const [isDateAndTime,setIsDateAndTime]=useState("")
 
-  const ServiceCoverage = [
+  const [ServiceCoverage,setServiceCoverage] = useState([
     { name: "All (Default)", isActive: true },
     { name: "On Demand", isActive: false },
     { name: "Scheduled", isActive: false },
     { name: "Dedicated", isActive: false },
-  ];
+  ])
   const pickUpWithinData = [
     "1 Hour",
     "2 Hours",
@@ -58,19 +58,19 @@ const NeedRide = ({ navigation }) => {
   const [minValue, setMinValue] = useState(MIN_DEFAULT);
   const [maxValue, setMaxValue] = useState(MAX_DEFAULT);
 
-  const ServiceCoverage1 = [
+  const [ServiceCoverage1,setServiceCoverage1] = useState([
     { name: "All (Default)", isActive: true },
     { name: "Local", isActive: false },
     { name: "Intercity", isActive: false },
     { name: "Interstate", isActive: false },
-  ];
-  const VehicleSize = [
+  ])
+  const [VehicleSize,setVehicleSize] = useState([
     { name: "Standard (2-4 seats)", isActive: true },
     { name: "Large (2-6 seats)", isActive: false },
     { name: "Large (2-6 seats)", isActive: false },
     { name: "+ Premium (Luxury)", isActive: false },
     { name: "Assisted Ride", isActive: false },
-  ];
+  ])
 
   const [pickupDateTimeData, setPickupDateTimeData] = useState([
     { dateTime: "03-23-24", time: "3:24", format: "am", pichup: "6 Hours" },
@@ -101,7 +101,20 @@ const NeedRide = ({ navigation }) => {
                     <HorizontalContainerToggle
                       text={item.name}
                       isActive={item.isActive}
-                      setIsActive={() => {}}
+                      setIsActive={() => {
+                        const updates = [...ServiceCoverage];
+
+                        // Toggle the 'active' property of the item at the specified index
+                        updates[index] = {
+                          ...updates[index],
+                          isActive: !updates[index].isActive,
+                        };
+          
+                        console.log("updates[index]", updates[index]);
+          
+                        setServiceCoverage(updates);
+
+                      }}
                     />
                     {ServiceCoverage.length != index + 1 ? (
                       <View style={{ marginVertical: verticalScale(13) }}>
@@ -356,7 +369,22 @@ const NeedRide = ({ navigation }) => {
                     <HorizontalContainerToggle
                       text={item.name}
                       isActive={item.isActive}
-                      setIsActive={() => {}}
+                      setIsActive={() => {
+                          const updates = [...ServiceCoverage1];
+  
+                          // Toggle the 'active' property of the item at the specified index
+                          updates[index] = {
+                            ...updates[index],
+                            isActive: !updates[index].isActive,
+                          };
+            
+                          console.log("updates[index]", updates[index]);
+            
+                          setServiceCoverage1(updates);
+  
+                        }}
+
+   
                     />
                     {ServiceCoverage1.length != index + 1 ? (
                       <View style={{ marginVertical: verticalScale(13) }}>
@@ -393,8 +421,20 @@ const NeedRide = ({ navigation }) => {
                     <HorizontalContainerToggle
                       text={item.name}
                       isActive={item.isActive}
-                      setIsActive={() => {}}
-                    />
+                      setIsActive={() => {
+                        const updates = [...VehicleSize];
+
+                        // Toggle the 'active' property of the item at the specified index
+                        updates[index] = {
+                          ...updates[index],
+                          isActive: !updates[index].isActive,
+                        };
+          
+                        console.log("updates[index]", updates[index]);
+          
+                        setVehicleSize(updates);
+
+                      }}                    />
                     {VehicleSize.length != index + 1 ? (
                       <View style={{ marginVertical: verticalScale(13) }}>
                         <DashedLine

@@ -21,6 +21,7 @@ import {
   import { Inter } from "../../../../utils/Fonts";
   import HorizontalContainer from "../../../../components/HorizontalContainer";
   import Button from "../../../../components/Button";
+import { useNavigation } from "@react-navigation/native";
   
   const ThankyouModal = ({
     modalVisible,
@@ -28,7 +29,7 @@ import {
     setModalVisible,
     setIsRateExperienceModal
   }) => {
-  
+  const navigation=useNavigation()
   
     return (
       <Modal
@@ -132,7 +133,6 @@ import {
               <NewText
                 text={"Enter gate code 0000"}
                 color={colors.gray}
-                style={{ marginBottom: 10 }}
                 fontWeight="400"
                 size={13}
               />
@@ -164,8 +164,8 @@ import {
                 onPress={() => {
                   setModalVisible(false);
                   setTimeout(() => {
-                      setIsRateExperienceModal(true)
-                  //   navigation.navigate("ManageOrders");
+                      // setIsRateExperienceModal(true)
+                    navigation.navigate("ManageOrders");
                   }, 500);
                 }}
                 bgColor={colors.primary}

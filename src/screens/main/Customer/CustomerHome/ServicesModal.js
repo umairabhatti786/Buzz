@@ -14,16 +14,16 @@ import CustomModal from "../../../../components/CustomModal";
 import { image } from "../../../../assets/png/images";
 import { scale, verticalScale } from "react-native-size-matters";
 import CategoryItem from "./CategoryItem";
+import { useNavigation } from "@react-navigation/native";
 
 const ServicesModal = ({
   modalVisible,
   handelModal,
   setModalVisible,
   selectedObject,
-  navigation,
   title,
 }) => {
-    const [selectedCategory,setSelectedCategory]=useState(0)
+  const [selectedCategory, setSelectedCategory] = useState(0);
   const categoryData = [
     { name: "Need a Ride", img: image.ride },
     { name: "Retail Store Delivery", img: image.retailstore },
@@ -33,19 +33,26 @@ const ServicesModal = ({
     { name: "Office Moving", img: image.office },
     { name: "Building Materials", img: image.materials },
   ];
+
+  const navigation = useNavigation();
   return (
     <CustomModal
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
       title={title}
     >
-      <View style={{ flexDirection: "row", flexWrap: "wrap",justifyContent:"center" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
+      >
         {categoryData.map((item, index) => {
           return (
             <View
               style={{
-                margin:10
-             
+                margin: 10,
               }}
             >
               <CategoryItem
@@ -53,7 +60,15 @@ const ServicesModal = ({
                 index={index}
                 img={item.img}
                 name={item.name}
-                onPress={() => setSelectedCategory(index)}
+                onPress={() => {
+                  setModalVisible(false);
+
+                  setTimeout(() => {
+                    navigation.navigate("DriverSearch");
+
+                    setSelectedCategory(index);
+                  }, 300);
+                }}
               />
             </View>
           );

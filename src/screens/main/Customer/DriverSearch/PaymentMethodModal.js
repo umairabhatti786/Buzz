@@ -78,6 +78,8 @@ const PaymentMethodModal = ({ modalVisible, setModalVisible,onPressCard }) => {
           descripation="Third Party transaction fee may applies"
           title={"Others"}
           img={image.home}
+          onPress={onPressCard}
+
         />
       </View>
     </CustomModal>

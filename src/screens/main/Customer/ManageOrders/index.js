@@ -23,12 +23,13 @@ import Order from "./Order";
 import { Spacer } from "../../../../components/Spacer";
 import CustomCalendar from "../../../../components/CustomCalendar";
 
-const ManageOrders = ({ navigation }) => {
-  const [selectedTab, setSelectedTab] = useState("Upcoming");
-  const [isFromModalVisible,setIsFromModalVisible]=useState(false)
-  const [fromDate,setFormDate]=useState("From")
-  const [isToModalVisible,setIsToModalVisible]=useState(false)
-  const [toDate,setToDate]=useState("From")
+const ManageOrders = ({ navigation,route }) => {
+  const tab=route?.params?.aciveTab
+  const [selectedTab, setSelectedTab] = useState(tab ||"Upcoming");
+  const [isFromModalVisible, setIsFromModalVisible] = useState(false);
+  const [fromDate, setFormDate] = useState("From");
+  const [isToModalVisible, setIsToModalVisible] = useState(false);
+  const [toDate, setToDate] = useState("From");
 
   const UpcomingOrders = [{ status: "Pending" }];
   const ActiveOrders = [{ status: "Ongoing" }];
@@ -43,9 +44,9 @@ const ManageOrders = ({ navigation }) => {
         <View
           style={{
             ...AppStyles.justifyRow,
-            marginTop:Platform.OS=="ios"? -20:0,
+            marginTop: Platform.OS == "ios" ? -20 : 0,
             // paddingVertical: verticalScale(13),
-            height:50,
+            height: 57,
             backgroundColor: colors.white,
             paddingVertical: verticalScale(13),
             paddingHorizontal: scale(15),
@@ -94,7 +95,7 @@ const ManageOrders = ({ navigation }) => {
         <View
           style={{
             flexDirection: "row",
-            height: 52,
+            height: 55,
             backgroundColor: colors.white,
 
             elevation: 5,
@@ -102,6 +103,7 @@ const ManageOrders = ({ navigation }) => {
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.2,
             shadowRadius: 5,
+            justifyContent: "space-between",
           }}
         >
           {["Upcoming", "Active", "Completed"]?.map((item, _index) => (
@@ -109,7 +111,7 @@ const ManageOrders = ({ navigation }) => {
               activeOpacity={0.6}
               key={_index.toString()}
               style={{
-                flex: 1,
+                width: "33%",
               }}
               onPress={() => {
                 setSelectedTab(item);
@@ -129,7 +131,7 @@ const ManageOrders = ({ navigation }) => {
               >
                 <NewText
                   size={17}
-                  fontWeight="600"
+                  fontWeight="bold"
                   color={selectedTab === item ? colors.primary : colors.black40}
                   text={item}
                 />
@@ -162,18 +164,17 @@ const ManageOrders = ({ navigation }) => {
             <View style={{ paddingHorizontal: 15 }}>
               <View style={{ ...AppStyles.justifyRow, marginBottom: 15 }}>
                 <CalendarPicker
-                 width={"45%"} text={fromDate}
-                onPress={()=>setIsFromModalVisible(true)}
-                 />
-                <CustomLine width={20}
-                
-                
-                 backgroundColor={colors.black40} />
+                  width={"45%"}
+                  text={fromDate}
+                  onPress={() => setIsFromModalVisible(true)}
+                />
+                <CustomLine width={20} backgroundColor={colors.black40} />
 
-                <CalendarPicker width={"45%"}
-                   onPress={() => setIsToModalVisible(true)}
-                   text={toDate}
-                 />
+                <CalendarPicker
+                  width={"45%"}
+                  onPress={() => setIsToModalVisible(true)}
+                  text={toDate}
+                />
               </View>
               <Search />
             </View>
@@ -197,16 +198,20 @@ const ManageOrders = ({ navigation }) => {
                 return (
                   <Order
                     item={item}
-                    onPress={() => navigation.navigate("TrackOrder",{orderData:{
-                        img: image.defimg900,
-                        name: "Will Smith",
-                        active: "Available",
-                        distance: "15 mil",
-                        time: "15 Min Away",
-                        vehicle: "Car",
-                        isOpen: true,
-                        id: 1,
-                      }})}
+                    onPress={() =>
+                      navigation.navigate("TrackOrder", {
+                        orderData: {
+                          img: image.defimg900,
+                          name: "Will Smith",
+                          active: "Available",
+                          distance: "15 mil",
+                          time: "15 Min Away",
+                          vehicle: "Car",
+                          isOpen: true,
+                          id: 1,
+                        },
+                      })
+                    }
                   />
                 );
               }}
@@ -218,16 +223,16 @@ const ManageOrders = ({ navigation }) => {
       </Screen>
 
       <CustomCalendar
-      modalVisible={isFromModalVisible}
-      date={fromDate}
-      setDate={setFormDate}
-      setModalVisible={setIsFromModalVisible}
+        modalVisible={isFromModalVisible}
+        date={fromDate}
+        setDate={setFormDate}
+        setModalVisible={setIsFromModalVisible}
       />
-         <CustomCalendar
-      modalVisible={isToModalVisible}
-      date={toDate}
-      setDate={setToDate}
-      setModalVisible={setIsToModalVisible}
+      <CustomCalendar
+        modalVisible={isToModalVisible}
+        date={toDate}
+        setDate={setToDate}
+        setModalVisible={setIsToModalVisible}
       />
     </>
   );

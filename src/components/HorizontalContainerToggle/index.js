@@ -25,6 +25,7 @@ const HorizontalContainerToggle = ({
   isActive,
   setIsActive,
   isNext,
+  fontWeight,
 }) => {
   return (
     <TouchableOpacity
@@ -32,7 +33,9 @@ const HorizontalContainerToggle = ({
       onPress={onPress}
       style={AppStyles.justifyRow}
     >
-      <NewText color={color || colors.black} text={text} size={size || 14} />
+      <NewText
+      fontWeight={fontWeight ||"500"}
+       color={color || colors.black} text={text} size={size || 14} />
       <View style={AppStyles.row}>
         <CustomToggle isActive={isActive} setIsActive={setIsActive} />
 

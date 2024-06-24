@@ -27,6 +27,10 @@ export const icon={
     play:require("../icons/play.png"),
     backIcon:require("../icons/back-icon.png"),
     formardIcon:require("../icons/formard-icon.png"),
+    infoCircle:require("../icons/info-circle.png"),
+    reduce:require("../icons/reduce.png"),
+
+
 
 
 

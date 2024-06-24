@@ -1,6 +1,6 @@
 import { SafeAreaView, View } from "react-native";
 import React, { useMemo, useCallback } from "react";
-import {  BottomSheetModal } from '@gorhom/bottom-sheet'
+import {  BottomSheetModal,BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { useFocusEffect } from "@react-navigation/native";
 import Animated, {
   Extrapolate,
@@ -10,8 +10,12 @@ import Animated, {
 
 const BottomSheet = (props) => {
   const { bottomSheetModalRef, snapTo, onDismiss, children,marginHorizontal } = props;
-  const snapPoints = useMemo(() => [  snapTo||"37%"], []);
+  const validSnapTo = snapTo && (typeof snapTo === 'string' || typeof snapTo === 'number') ? snapTo : '47%';
 
+  const snapPoints = useMemo(() => {
+    console.log('Snap Points:', validSnapTo);
+    return [validSnapTo];
+  }, [validSnapTo]);
   useFocusEffect(
     useCallback(() => {
       return () => {
@@ -29,9 +33,16 @@ const BottomSheet = (props) => {
       style={{marginHorizontal:marginHorizontal||0}}
       onDismiss={props?.onDismiss}
       children={() => (
-        <SafeAreaView>
+        <BottomSheetScrollView
+        showsVerticalScrollIndicator={false}
+
+        >
+            <SafeAreaView>
           <View style={{ paddingTop: 12, paddingBottom: 30 }}>{children}</View>
         </SafeAreaView>
+
+        </BottomSheetScrollView>
+      
       )}
       enablePanDownToClose={true}
       handleIndicatorStyle={{ backgroundColor: "#E7E7E7" }}

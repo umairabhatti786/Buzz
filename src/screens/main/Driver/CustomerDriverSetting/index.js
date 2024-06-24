@@ -8,7 +8,7 @@ import {
   Platform,
   FlatList,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Screen } from "../../../../utils/ui/Screen";
 import { colors } from "../../../../utils/colors";
 import { AppStyles } from "../../../../utils/AppStyle";
@@ -24,15 +24,26 @@ import PhoneNumberModal from "./PhoneNumberModal";
 import NumberVerificationModal from "./NumberVerificationModal";
 import TermAndCondationModal from "./TermAndCondationModal";
 import AddAccountModal from "./AddAccountModal";
+import PaymentHistoryModal from "./PaymentHistoryModal";
+import PaymentMethodModal from "../../Customer/DriverSearch/PaymentMethodModal";
+import AddPaymentMethodModal from "../../Customer/DriverSearch/AddPaymentMethodModal";
+import EmailVerificationBottomSheet from "./EmailVerificationBottomSheet";
+import NewPasswordBottomSheet from "./NewPasswordBottomSheet";
 
 const CustomerDriverSetting = ({ navigation }) => {
   const [isPhoneNumberVisible, setIsPhoneNumberVisible] = useState(false);
   const [isNumberVerification, setIsNumberVerification] = useState(false);
   const [accountActive, setAccountActive] = useState(false);
+  const [isAddPaymentMethodVisible, steIsAddPaymentMethodVisible] =
+    useState(false);
   const [isTermAndConditionVisible, setIsTermAndConditionVisible] =
     useState(false);
+  const [isPaymentHistoryModal, setIsPaymentHistoryModal] = useState(false);
+  const [isPaymentModal, setIsPaymentModal] = useState(false);
+  const emailVerificattionSheet = useRef(false);
+  const newPasswordSheet = useRef(false);
 
-    const [isAddAccountVisible,setIsAddAccountVisible]=useState(false)
+  const [isAddAccountVisible, setIsAddAccountVisible] = useState(false);
 
   const [userProfile, setUserProfile] = useState([
     { user: "Customer", img: image.defimg700, isActive: true, buttonWidth: 70 },
@@ -89,6 +100,26 @@ const CustomerDriverSetting = ({ navigation }) => {
       pass: icon.passp,
     },
   ];
+  const ManageOrdersData = [
+    {
+      title: "Upcoming",
+      text: "1",
+      onPress: () =>
+        navigation.navigate("ManageOrders", { aciveTab: "Upcoming" }),
+    },
+    {
+      title: "Active",
+      text: "1",
+      onPress: () =>
+        navigation.navigate("ManageOrders", { aciveTab: "Active" }),
+    },
+    {
+      title: "Completed",
+      text: "5",
+      onPress: () =>
+        navigation.navigate("ManageOrders", { aciveTab: "Completed" }),
+    },
+  ];
 
   const AccountData = [
     { title: "Legal Name", text: "John Blazer" },
@@ -96,14 +127,34 @@ const CustomerDriverSetting = ({ navigation }) => {
     { title: "Email", text: "Johnblazer1736@gmail.com" },
   ];
   const SecurityData = [
-    { title: "Password", text: "Click to change" },
+    {
+      title: "Password",
+      text: "Click to change",
+      onPress: () => emailVerificattionSheet.current.present(),
+    },
     { title: "MFA", text: "Activated" },
-    { title: "Notification", text: "Click to check settings" },
+    {
+      title: "Notification",
+      text: "Click to check settings",
+      onPress: () => navigation.navigate("NotificationSettings"),
+    },
   ];
   const PaymentData = [
-    { title: "Methods", text: "Click to check settings" },
-    { title: "Transaction History", text: "Check" },
-    { title: "Withdraw", text: "Check" },
+    {
+      title: "Methods",
+      text: "Click to check settings",
+      onPress: () => setIsPaymentModal(true),
+    },
+    {
+      title: "Transaction History",
+      text: "Check",
+      onPress: () => setIsPaymentHistoryModal(true),
+    },
+    {
+      title: "Withdraw",
+      text: "Check",
+      onPress: () => setIsPaymentHistoryModal(true),
+    },
   ];
   const LearnData = [
     { title: "News" },
@@ -113,8 +164,14 @@ const CustomerDriverSetting = ({ navigation }) => {
   ];
   const MoreData = [
     { title: "Be a Partner" },
-    { title: "Privacy Policy" },
-    { title: "Terms & Conditions" ,onPress:()=>setIsTermAndConditionVisible(true)},
+    {
+      title: "Privacy Policy",
+      onPress: () => setIsTermAndConditionVisible(true),
+    },
+    {
+      title: "Terms & Conditions",
+      onPress: () => setIsTermAndConditionVisible(true),
+    },
   ];
 
   return (
@@ -122,8 +179,9 @@ const CustomerDriverSetting = ({ navigation }) => {
       <Screen
         height={40}
         backgroundColor={colors.white}
-        // topBarColor={colors.primary}
+        // topBarColor={colors.white}
         barStyle={"dark-content"}
+        statusBarColor={colors.white}
       >
         <View
           style={{
@@ -159,15 +217,19 @@ const CustomerDriverSetting = ({ navigation }) => {
                 text={"Your Profile"}
               />
             </TouchableOpacity>
-
-            <Image
-              style={{
-                width: scale(70),
-                height: scale(60),
-              }}
-              source={image.fqa}
-              resizeMode="contain"
-            />
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => navigation.navigate("ResolutionCenter")}
+            >
+              <Image
+                style={{
+                  width: scale(70),
+                  height: scale(60),
+                }}
+                source={image.fqa}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View
@@ -233,8 +295,8 @@ const CustomerDriverSetting = ({ navigation }) => {
               </View>
 
               <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={()=>setIsAddAccountVisible(true)}
+                activeOpacity={0.6}
+                onPress={() => setIsAddAccountVisible(true)}
                 style={{
                   ...AppStyles.row,
                   alignSelf: "flex-end",
@@ -344,6 +406,34 @@ const CustomerDriverSetting = ({ navigation }) => {
                   marginTop: verticalScale(20),
                   marginBottom: verticalScale(15),
                 }}
+                text={"Manage Orders"}
+              />
+              <View style={styles.box}>
+                <View style={{ paddingTop: verticalScale(15) }}>
+                  {ManageOrdersData.map((item, index) => {
+                    return (
+                      <SettingContainer
+                        text={item.title}
+                        onPress={item.onPress}
+                        fontWeight={"bold"}
+                        data={AccountData}
+                        index={index}
+                        text1={item.text}
+                      />
+                    );
+                  })}
+                </View>
+              </View>
+
+              <NewText
+                fontWeight="700"
+                color={colors.black}
+                fontFam={Inter.bold}
+                size={16}
+                style={{
+                  marginTop: verticalScale(20),
+                  marginBottom: verticalScale(15),
+                }}
                 text={"Security"}
               />
               <View style={styles.box}>
@@ -351,6 +441,7 @@ const CustomerDriverSetting = ({ navigation }) => {
                   {SecurityData.map((item, index) => {
                     return (
                       <SettingContainer
+                        onPress={item.onPress}
                         text={item.title}
                         data={AccountData}
                         index={index}
@@ -378,6 +469,7 @@ const CustomerDriverSetting = ({ navigation }) => {
                     return (
                       <SettingContainer
                         text={item.title}
+                        onPress={item?.onPress}
                         data={AccountData}
                         index={index}
                         text1={item.text}
@@ -428,7 +520,7 @@ const CustomerDriverSetting = ({ navigation }) => {
                   {MoreData.map((item, index) => {
                     return (
                       <SettingContainer
-                      onPress={item.onPress}
+                        onPress={item.onPress}
                         text={item.title}
                         data={AccountData}
                         index={index}
@@ -440,28 +532,28 @@ const CustomerDriverSetting = ({ navigation }) => {
               </View>
 
               <TouchableOpacity
+                onPress={() => navigation.navigate("CustomerSignup")}
                 style={{
                   ...AppStyles.row,
-                  paddingHorizontal: scale(10),
+                  paddingHorizontal: scale(7),
                   paddingVertical: verticalScale(5),
-                  width: scale(100),
+                  // width: scale(100),
                   alignSelf: "flex-end",
-                  borderWidth: 1,
+                  borderWidth: 1.5,
                   borderColor: "#FF0000",
-                  borderRadius: scale(8),
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: scale(6),
                   marginTop: verticalScale(10),
-                  marginRight: scale(5),
                   marginBottom: verticalScale(20),
+                  gap: 5,
                 }}
               >
                 <NewText
-                  //   fontWeight="700"
+                  fontWeight="700"
                   color={"#FF0000"}
-                  //   fontFam={Inter.bold}
+                  fontFam={Inter.bold}
                   size={14}
-                  style={{
-                    marginRight: scale(15),
-                  }}
                   text={"Log Out"}
                 />
 
@@ -499,7 +591,7 @@ const CustomerDriverSetting = ({ navigation }) => {
         }}
       />
 
-<AddAccountModal
+      <AddAccountModal
         modalVisible={isAddAccountVisible}
         setModalVisible={setIsAddAccountVisible}
         onSubmit={() => {
@@ -512,7 +604,50 @@ const CustomerDriverSetting = ({ navigation }) => {
       <TermAndCondationModal
         modalVisible={isTermAndConditionVisible}
         setModalVisible={setIsTermAndConditionVisible}
-       
+      />
+      <PaymentHistoryModal
+        modalVisible={isPaymentHistoryModal}
+        setModalVisible={setIsPaymentHistoryModal}
+      />
+      <PaymentMethodModal
+        onPressCard={() => {
+          setIsPaymentModal(false);
+          setTimeout(() => {
+            steIsAddPaymentMethodVisible(true);
+          }, 1000);
+        }}
+        modalVisible={isPaymentModal}
+        setModalVisible={setIsPaymentModal}
+      />
+      <AddPaymentMethodModal
+        onPay={() => {
+          steIsAddPaymentMethodVisible(false);
+          setTimeout(() => {
+            navigation.navigate("Home");
+            // setIsThankyouModal(true);
+          }, 500);
+        }}
+        modalVisible={isAddPaymentMethodVisible}
+        setModalVisible={steIsAddPaymentMethodVisible}
+      />
+
+      <EmailVerificationBottomSheet
+        bottomSheetModalRef={emailVerificattionSheet}
+        onSubmit={() => {
+          emailVerificattionSheet.current.dismiss();
+          setTimeout(() => {
+            newPasswordSheet.current.present();
+          }, 500);
+        }}
+      />
+      <NewPasswordBottomSheet
+        bottomSheetModalRef={newPasswordSheet}
+        onSubmit={() => {
+          newPasswordSheet.current.dismiss();
+          setTimeout(() => {
+            navigation.navigate("Home");
+          }, 500);
+        }}
       />
     </>
   );

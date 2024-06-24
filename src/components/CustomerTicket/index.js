@@ -39,7 +39,9 @@ const CustomerTicket = ({
   onPressProfile,
   onBook,
   onCounterOffer,
-  isOpen
+  isOpen,
+  setDelivertype,
+  disableCollapsible
 }) => {
   const [isCollapsible, setIsCollapsible] = useState(isOpen|| item?.isOpen);
   const [isServiceModal,setIsServiceModal]=useState(false)
@@ -51,6 +53,7 @@ const CustomerTicket = ({
 
   const [isServiceDescriptionModal,setIsServiceDescriptionModal]=useState(false)
   const [selectedService,setSelectedService]=useState("Moving")
+  const [isAddons,setIsAddons]=useState(true)
 
   return (
     <>
@@ -97,7 +100,7 @@ const CustomerTicket = ({
             <Image
               style={{ width: "100%", height: "100%" }}
               resizeMode={"contain"}
-              source={item.img}
+              source={item?.img}
             />
           </TouchableOpacity>
           <View
@@ -117,7 +120,7 @@ const CustomerTicket = ({
               <View style={{ ...AppStyles.row }}>
                 <TouchableOpacity onPress={onPressProfile}>
                   <NewText
-                    text={item.name}
+                    text={item?.name}
                     size={15}
                     fontWeight={"700"}
                     fontFam={Inter.bold}
@@ -132,18 +135,18 @@ const CustomerTicket = ({
                     height: scale(6),
                     borderRadius: 999,
                     backgroundColor:
-                      item.active == "Available"
+                      item?.active == "Available"
                         ? colors.green
-                        : item.active == "Busy"
+                        : item?.active == "Busy"
                         ? colors.red
-                        : item.active == "On Schedule"
+                        : item?.active == "On Schedule"
                         ? colors.yellow
                         : colors.gray,
                   }}
                 />
                 <Spacer width={scale(5)} />
 
-                <NewText text={item.active} size={12} color={colors.gray} />
+                <NewText text={item?.active} size={12} color={colors.gray} />
                 <Spacer width={scale(5)} />
               </View>
               <View style={AppStyles.row}>
@@ -182,7 +185,7 @@ const CustomerTicket = ({
 
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => setIsCollapsible(!isCollapsible)}
+              onPress={() =>!disableCollapsible&& setIsCollapsible(!isCollapsible)}
               style={{ ...AppStyles.justifyRow }}
             >
               <View style={{ ...AppStyles.row }}>
@@ -194,7 +197,7 @@ const CustomerTicket = ({
 
                 <Spacer width={scale(5)} />
 
-                <NewText text={item.distance} size={12} color={colors.gray} />
+                <NewText text={item?.distance} size={12} color={colors.gray} />
                 <Spacer width={scale(7)} />
                 <Image
                   style={styles.iconContainer}
@@ -204,7 +207,7 @@ const CustomerTicket = ({
 
                 <Spacer width={scale(5)} />
 
-                <NewText text={item.time} size={12} color={colors.gray} />
+                <NewText text={item?.time} size={12} color={colors.gray} />
                 <Spacer width={scale(5)} />
                 <Image
                   style={styles.iconContainer}
@@ -239,6 +242,7 @@ const CustomerTicket = ({
                   height={29}
                   color={colors.gray100}
                   width={scale(120)}
+                  dropDown={true}
                   editable={false}
                   value={selectedServiceType}
                   onShowPassword={()=>setIsServiceModal(true)}
@@ -266,6 +270,7 @@ const CustomerTicket = ({
                   height={29}
                   color={colors.gray100}
                   width={scale(110)}
+                  dropDown={true}
                   editable={false}
                   value={selectedCategory}
                   onShowPassword={()=>setIsCategoryModal(true)}
@@ -300,6 +305,8 @@ const CustomerTicket = ({
                   width={scale(140)}
                   editable={false}
                   value={selectedService}
+                  dropDown={true}
+
                   onShowPassword={()=>setIsServiceDescriptionModal(true)}
                   rightImage={icon.down}
                   fontWeight={"600"}
@@ -334,14 +341,59 @@ const CustomerTicket = ({
               <HorizontalContainer text={"Mileage Price"} text1={"$10"} />
             </View>
 
-            <View style={{ paddingVertical: verticalScale(10) }}>
-              <CustomLine />
-            </View>
+            <View style={{ paddingVertical: verticalScale(13) }}>
+            <CustomLine />
+
+            <TouchableOpacity
+              onPress={() => setIsAddons(!isAddons)}
+              style={{
+                width: 35,
+                height: 35,
+                borderRadius: 999,
+                backgroundColor: "#EEEEEE",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "absolute",
+                left: "45%",
+              }}
+            >
+              <Image
+                style={{ width: scale(13), height: scale(13) }}
+                source={icon.down}
+                resizeMode={"contain"}
+              />
+            </TouchableOpacity>
+          </View>
+          <Collapsible collapsed={isAddons} >
+          <View style={{paddingHorizontal:15}}>
+         
+
+              <HorizontalContainer text={"Loading fee"} text1={"$10/flight"} />
+              <View style={{ marginVertical: verticalScale(13) }}>
+                <DashedLine
+                  dashLength={6}
+                  dashThickness={1}
+                  dashGap={5}
+                  dashColor={colors.gray}
+                />
+              </View>
+              <HorizontalContainer text={"Unloading fee"} text1={"$10/flight"} />
+              <View style={{ marginVertical: verticalScale(13) }}>
+                <DashedLine
+                  dashLength={6}
+                  dashThickness={1}
+                  dashGap={5}
+                  dashColor={colors.gray}
+                />
+              </View>
+
+          </View>
+          </Collapsible>
 
             <Spacer height={verticalScale(5)} />
 
             <View
-              style={{ ...AppStyles.justifyRow, paddingHorizontal: scale(10) }}
+              style={{ ...AppStyles.justifyRow, paddingHorizontal: scale(10),marginTop:5 }}
             >
               <View style={AppStyles.row}>
                 <NewText
@@ -398,6 +450,7 @@ const CustomerTicket = ({
 <ServiceTypeModal
         modalVisible={isServiceModal}
         title={"Service Type"}
+        setDelivertype={setDelivertype}
         selectedObject={selectedServiceType}
         setSelectedObject={setSelectedServiceType}
         setModalVisible={setIsServiceModal}

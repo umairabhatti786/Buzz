@@ -21,6 +21,7 @@ import NeedRide from "./NeedRide";
 import CategoryBottomTab from "../../../../components/CategoryBottomTab";
 import DeliveryServices from "./DeliveryServices";
 import SuccessModal from "../../../../components/SuccessModal";
+import { Spacer } from "../../../../components/Spacer";
 
 const CustomerFilter = ({ navigation }) => {
   const [selectedTab, setSelectedTab] = useState("Need a Ride");
@@ -111,7 +112,18 @@ const CustomerFilter = ({ navigation }) => {
 
   const Header = () => {
     return (
-      <View>
+      <View
+      style={{
+
+        elevation: 5,
+        shadowColor: Platform.OS == "ios" ? colors.gray : colors.black,
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        backgroundColor:colors.white
+
+      }}
+      >
         <View
           style={{
             ...AppStyles.justifyRow,
@@ -158,11 +170,6 @@ const CustomerFilter = ({ navigation }) => {
             height: 52,
             backgroundColor: colors.white,
 
-            elevation: 5,
-            shadowColor: Platform.OS == "ios" ? colors.gray : colors.black,
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.2,
-            shadowRadius: 5,
           }}
         >
           {["Need a Ride", "Delivery Service"]?.map((item, _index) => (
@@ -181,6 +188,7 @@ const CustomerFilter = ({ navigation }) => {
                   borderBottomWidth: 4,
                   padding: 15,
                   justifyContent: "center",
+                  backgroundColor:colors.white,
                   alignItems: "center",
                   borderBottomWidth: 3,
                   borderColor:
@@ -190,7 +198,7 @@ const CustomerFilter = ({ navigation }) => {
               >
                 <NewText
                   size={17}
-                  fontWeight="600"
+                  fontWeight="700"
                   color={selectedTab === item ? colors.primary : colors.black40}
                   text={item}
                 />
@@ -211,6 +219,7 @@ const CustomerFilter = ({ navigation }) => {
       >
         <View style={{ backgroundColor: colors.white }}>
           <Header />
+          <Spacer height={4} />
 
           {selectedTab == "Need a Ride" ? (
             <NeedRide />

@@ -171,7 +171,18 @@ const CustomerChat = ({ navigation, route }) => {
             color={colors.gray}
           />
         </View>
-        <TouchableOpacity activeOpacity={0.6} style={styles.viewDetailCon}>
+        <TouchableOpacity
+  onPress={() => navigation.navigate("TrackOrder",{orderData:{
+    img: image.defimg900,
+    name: "Will Smith",
+    active: "Available",
+    distance: "15 mil",
+    time: "15 Min Away",
+    vehicle: "Car",
+    isOpen: true,
+    id: 1,
+  }})}
+           activeOpacity={0.8} style={styles.viewDetailCon}>
           <NewText
             text={"View Order Details"}
             size={14}
@@ -233,7 +244,7 @@ export default CustomerChat;
 
 const styles = StyleSheet.create({
   viewDetailCon: {
-    borderRadius: 5,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: colors.primary,
     alignItems: "center",

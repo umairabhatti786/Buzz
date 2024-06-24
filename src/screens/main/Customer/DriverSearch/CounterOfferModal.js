@@ -32,6 +32,7 @@ import { Spacer } from "../../../../components/Spacer";
     setModalVisible,
     data,
     setData,
+    onSubmit,
   
     title,
   }) => {
@@ -117,6 +118,7 @@ import { Spacer } from "../../../../components/Spacer";
                   borderColor={"transparent"}
                   borderWidth={1}
                   size={14}
+                  onPress={()=>setModalVisible(false)}
                 //   onPress={onCounterOffer}
                   borderRadius={7}
                   textColor={colors.gray}
@@ -129,7 +131,7 @@ import { Spacer } from "../../../../components/Spacer";
                   borderColor={"transparent"}
                   borderWidth={1}
                   size={14}
-                //   onPress={onCounterOffer}
+                  onPress={onSubmit}
                   borderRadius={7}
                   textColor={colors.white}
                   width={scale(70)}

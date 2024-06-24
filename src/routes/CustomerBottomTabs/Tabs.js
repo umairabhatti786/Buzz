@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Image, TouchableOpacity } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { colors } from "../../utils/colors";
 import CustomerHome from "../../screens/main/Customer/CustomerHome";
 import CustomerAddPost from "../../screens/main/Customer/CustomerAddPost";
@@ -9,40 +9,43 @@ import CustomerMenu from "../../screens/main/Customer/CustomerMenu";
 import { icon } from "../../assets/png/icons";
 import { scale, verticalScale } from "react-native-size-matters";
 import CustomerDriverSetting from "../../screens/main/Driver/CustomerDriverSetting";
+import { useNavigation } from "@react-navigation/native";
 
-const Tab = createBottomTabNavigator();
-
-function CustomerBottomTabs() {
+const Tab = createBottomTabNavigator()
+const CustomerBottomTabs=()=> {
+  const navigation =useNavigation()
   return (
     <Tab.Navigator
-    tabBarOptions={{
-      activeTintColor: colors.black, // Set your desired active tab text color
-      inactiveTintColor: colors.gray,
-       // Set your desired inactive tab text color
-      //  style: {
-      //   elevation: 5, // Add elevation for Android shadow effect
-      //   shadowColor: colors.black, // Add shadow color for iOS
-      //   shadowOffset: { width: 0, height: -4 }, // Add shadow offset for iOS
-      //   shadowOpacity: 5, // Add shadow opacity for iOS
-      //   shadowRadius: 10, // Add shadow radius for iOS
-      //   backgroundColor:"white"
-      // },
-    }}
+      tabBarOptions={{
+        activeTintColor: colors.black, // Set your desired active tab text color
+        inactiveTintColor: colors.gray,
+        // Set your desired inactive tab text color
+        //  style: {
+        //   elevation: 5, // Add elevation for Android shadow effect
+        //   shadowColor: colors.black, // Add shadow color for iOS
+        //   shadowOffset: { width: 0, height: -4 }, // Add shadow offset for iOS
+        //   shadowOpacity: 5, // Add shadow opacity for iOS
+        //   shadowRadius: 10, // Add shadow radius for iOS
+        //   backgroundColor:"white"
+        // },
+      }}
       screenOptions={{
-        tabBarStyle: { backgroundColor: colors.white, borderTopWidth: 0.5
-           ,
-           paddingTop:verticalScale(5),
-           height:verticalScale(70),
-             activeTintColor: colors.black, // Set your desired active tab text color
-      inactiveTintColor: colors.gray,
-          
+        tabBarStyle: {
+          backgroundColor: colors.white,
+          borderTopWidth: 0.5,
+          paddingTop: verticalScale(5),
+          height: verticalScale(60),
+          activeTintColor: colors.black, // Set your desired active tab text color
+          inactiveTintColor: colors.gray,
+          paddingBottom:10
         },
         tabBarLabelStyle: {
           lineHeight: 18,
           fontWeight: "500",
           fontSize: verticalScale(9),
         },
-      }}>
+      }}
+    >
       <Tab.Screen
         name={"Home"}
         component={CustomerHome}
@@ -58,7 +61,6 @@ function CustomerBottomTabs() {
               source={icon.home}
             />
           ),
-       
         }}
       />
       <Tab.Screen
@@ -76,7 +78,6 @@ function CustomerBottomTabs() {
               }}
             />
           ),
-        
         }}
       />
       <Tab.Screen
@@ -86,30 +87,34 @@ function CustomerBottomTabs() {
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <TouchableOpacity
+            onPress={()=>{
+              navigation.navigate("CustomerFilter")
+              
+
+            }}
               style={{
                 width: scale(50),
                 height: scale(50),
-                borderRadius: 100,
+                borderRadius: 999,
                 backgroundColor: colors.primary,
                 marginBottom: 40,
                 alignItems: "center",
                 justifyContent: "center",
-              }}>
-                 <Image
-              source={icon.plus}
-              style={{
-                width: scale(20),
-                height: scale(20),
               }}
-            />
-
-              </TouchableOpacity>
+            >
+              <Image
+                source={icon.plus}
+                style={{
+                  width: scale(20),
+                  height: scale(20),
+                }}
+              />
+            </TouchableOpacity>
           ),
           // <Image  source={icon.home}
           // style={{width:20,height:20,tintColor:focused?"#000000":"#AAAAAA"}}
 
           //  />,
-         
         }}
       />
       <Tab.Screen
@@ -127,7 +132,6 @@ function CustomerBottomTabs() {
               }}
             />
           ),
-         
         }}
       />
       <Tab.Screen
@@ -145,7 +149,6 @@ function CustomerBottomTabs() {
               }}
             />
           ),
-        
         }}
       />
     </Tab.Navigator>
