@@ -32,6 +32,7 @@ const Order = ({
 
   isCollapsible,
   setIsCollapsible,
+  selectedTab
 }) => {
   const [showDetail, setShowDetail] = useState(false);
   return (
@@ -99,13 +100,35 @@ const Order = ({
               <Button
                 text={item?.status}
                 height={25}
-                bgColor={item.status=="Pending"?  "#EEEEEE":item.status=="Ongoing"?"transparent":item?.status=="Success"?colors.primary+"40":item?.status=="Failed"?colors.red+"40": "#EEEEEE"}
-                borderColor={item.status=="Ongoing"? colors.black40:"transparent"}
-                borderWidth={item.status=="Ongoing"? 1:-1}
+                bgColor={
+                  item.status == "Pending"
+                    ? "#EEEEEE"
+                    : item.status == "Ongoing"
+                    ? "transparent"
+                    : item?.status == "Success"
+                    ? colors.primary + "40"
+                    : item?.status == "Failed"
+                    ? colors.red + "40"
+                    : "#EEEEEE"
+                }
+                borderColor={
+                  item.status == "Ongoing" ? colors.black40 : "transparent"
+                }
+                borderWidth={item.status == "Ongoing" ? 1 : -1}
                 size={13}
                 fontWeight={"500"}
                 borderRadius={7}
-                textColor={item.status=="Pending"? colors.gray200:item.status=="Ongoing"?colors.black:item?.status=="Success"?colors.primary: item?.status=="Failed"?colors.red: "#EEEEEE"}
+                textColor={
+                  item.status == "Pending"
+                    ? colors.gray200
+                    : item.status == "Ongoing"
+                    ? colors.black
+                    : item?.status == "Success"
+                    ? colors.primary
+                    : item?.status == "Failed"
+                    ? colors.red
+                    : "#EEEEEE"
+                }
                 paddingHorizontal={10}
               />
             </View>
@@ -411,31 +434,28 @@ const Order = ({
                 />
                 <Spacer width={7} />
                 <NewText
-                  text={ item?.tip?item.tip: "$-"}
+                  text={item?.tip ? item.tip : "$-"}
                   size={15}
                   fontWeight={"600"}
                   color={colors.black}
                 />
               </View>
             </View>
-<View style={{marginVertical:20}}>
-<Button
-              text={"Track Order"}
-              height={33}
-              onPress={onPress}
-              bgColor={colors.primary}
-              borderColor={"transparent"}
-              borderWidth={1}
-              size={16}
-              borderRadius={10}
-              textColor={colors.white}
-              paddingHorizontal={20}
-            />
-
-</View>
-           
-
-          
+            <View style={{ marginVertical: 20 }}>
+              <Button
+                text={ selectedTab=="Completed"?"Download": "Track Order"}
+                height={33}
+                onPress={onPress}
+                disable={selectedTab=="Completed"}
+                bgColor={colors.primary}
+                borderColor={"transparent"}
+                borderWidth={1}
+                size={16}
+                borderRadius={10}
+                textColor={colors.white}
+                paddingHorizontal={20}
+              />
+            </View>
           </View>
         </View>
       </Collapsible>

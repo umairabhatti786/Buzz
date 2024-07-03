@@ -61,13 +61,10 @@ const ServicesModal = ({
                 img={item.img}
                 name={item.name}
                 onPress={() => {
+                  navigation.navigate("DriverSearch");
+                  setSelectedCategory(index);
                   setModalVisible(false);
 
-                  setTimeout(() => {
-                    navigation.navigate("DriverSearch");
-
-                    setSelectedCategory(index);
-                  }, 300);
                 }}
               />
             </View>

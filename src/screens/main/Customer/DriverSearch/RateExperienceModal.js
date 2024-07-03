@@ -45,7 +45,7 @@ const RateExperienceModal = ({
     { title: "Communication", active: false, rating: 0 },
     { title: "Accuracy", active: true, rating: 3 },
     { title: "Professionalism", active: false, rating: 0 },
-    { title: "Safely", active: false, rating: 0 },
+    { title: "Safety", active: false, rating: 0 },
   ]);
   //   const customStarImage =
   const CustomStarIcon = () => {
@@ -63,6 +63,7 @@ const onClear=()=>{
   const updatedCriteria = ratingCriteria.map(item => ({
     ...item,
     active: false,
+    rating:0
   }));
   setRatingCriteria(updatedCriteria);
   setReviewTitle("")
@@ -70,6 +71,27 @@ const onClear=()=>{
 
 
 }
+
+const updateRatingCriteria = (index, key, value) => {
+  setRatingCriteria((prev) => {
+    const updates = [...prev];
+    if (key === 'active') {
+      const activeItems = updates.filter(item => item.active).length;
+      if (updates[index].active || (!updates[index].active && activeItems < 3)) {
+        updates[index] = {
+          ...updates[index],
+          active: !updates[index].active,
+        };
+      }
+    } else {
+      updates[index] = {
+        ...updates[index],
+        [key]: value,
+      };
+    }
+    return updates;
+  });
+};
   const RatingBox = ({ item, index }) => {
     return (
       <View style={{ ...AppStyles.justifyRow, marginVertical: 8 }}>
@@ -77,17 +99,7 @@ const onClear=()=>{
           <CustomToggle
             isActive={item?.active}
             setIsActive={() => {
-              const updates = [...ratingCriteria];
-
-              // Toggle the 'active' property of the item at the specified index
-              updates[index] = {
-                ...updates[index],
-                active: !updates[index].active,
-              };
-
-              console.log("updates[index]", updates[index]);
-
-              setRatingCriteria(updates);
+              updateRatingCriteria(index, 'active');
             }}
           />
           <Spacer width={10} />
@@ -99,16 +111,29 @@ const onClear=()=>{
             text={item.title}
           />
         </View>
-        <StarRating
-          maxStars={5}
-          rating={item.rating}
-          fullStarColor={"#FFCA28"}
-          emptyStarColor="#CCCCCC"
-          starSize={15}
-          fullStar={icon.star}
-          starStyle={{ marginHorizontal: 2 }} // Add margin between stars
-          emptyStar={icon.stargrayout} // Use the CustomStarIcon component as the custom icon renderer
-        />
+        <View
+        style={{...AppStyles.row,gap:6}}
+        >
+        {
+          [1,2,3,4,5].map((it,i)=>{
+            console.log("ratngIndex",item.rating)
+            return(
+              <TouchableOpacity
+              disabled={!item?.active}
+              onPress={() => updateRatingCriteria(index, 'rating', it)}
+
+              >
+                <Image
+                style={{width:15,height:15}}
+                source={it <= item.rating ? icon.star : icon.stargrayout}
+                />
+              </TouchableOpacity>
+            )
+          })
+        }
+
+        </View>
+     
       </View>
     );
   };
@@ -138,7 +163,6 @@ const onClear=()=>{
           <TouchableOpacity
             onPress={() => setModalVisible(false)}
             activeOpacity={0.6}
-            //   disabled={!onShowPassword}
             style={{ justifyContent: "center", alignItems: "center" }}
           >
             <Image

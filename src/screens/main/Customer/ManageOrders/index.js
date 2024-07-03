@@ -198,6 +198,7 @@ const ManageOrders = ({ navigation,route }) => {
                 return (
                   <Order
                     item={item}
+                    selectedTab={selectedTab}
                     onPress={() =>
                       navigation.navigate("TrackOrder", {
                         orderData: {

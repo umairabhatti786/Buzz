@@ -14,6 +14,9 @@ import NewText from "./NewText";
 import { Spacer } from "./Spacer";
 import { Inter } from "../utils/Fonts";
 import { icon } from "../assets/png/icons";
+import Collapsible from "react-native-collapsible";
+import DashedLine from "react-native-dashed-line";
+import Button from "./Button";
 
 const CustomTicket = ({
   item,
@@ -22,11 +25,11 @@ const CustomTicket = ({
   backgroundColor,
   isWatchList,
   onWatchList,
+  navigation
 
-  isCollapsible,
-  setIsCollapsible,
+
 }) => {
-  // const [isCollapsible,setIsCollapsible]=useState(item.isOpen)
+  const [isCollapsible,setIsCollapsible]=useState(true)
   // const [isWatchList,setIsWatchList]=useState(false)
 
   return (
@@ -52,7 +55,7 @@ const CustomTicket = ({
       >
         <TouchableOpacity
           activeOpacity={0.6}
-          onPress={onPress}
+          onPress={() => setIsCollapsible(!isCollapsible)}
           style={{
             flexDirection: "row",
             flex: 1,
@@ -122,7 +125,9 @@ const CustomTicket = ({
                 />
                 <Spacer width={scale(5)} />
               </View>
-              <View style={AppStyles.row}>
+              <TouchableOpacity
+              onPress={()=>setIsCollapsible(!isCollapsible)}
+               style={AppStyles.row}>
                 <Image
                   style={{ width: 10, height: 14 }}
                   resizeMode={"contain"}
@@ -151,12 +156,12 @@ const CustomTicket = ({
                     source={icon.watchlist}
                   />
                 </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
             </View>
 
             <TouchableOpacity
               activeOpacity={0.6}
-              //   onPress={() => setIsCollapsible(!isCollapsible)}
+                onPress={() => setIsCollapsible(!isCollapsible)}
               style={{ ...AppStyles.justifyRow }}
             >
               <View style={{ ...AppStyles.row }}>
@@ -193,13 +198,66 @@ const CustomTicket = ({
               </View>
 
               <Image
-                style={styles.iconContainer}
+                style={{...styles.iconContainer,marginTop:4}}
                 resizeMode={"contain"}
                 source={isCollapsible == false ? icon.up : icon.down}
               />
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
+
+        <Collapsible
+        collapsed={isCollapsible}
+        >
+
+
+        <View>
+                              <DashedLine
+                                style={{ width: "100%" }}
+                                dashLength={3}
+                                dashThickness={1}
+                                dashGap={3}
+                                dashColor={colors.gray}
+                              />
+
+                              <View
+                                style={{
+                                  ...AppStyles.row,
+                                  alignSelf: "flex-end",
+                                  marginTop: 15,
+                                }}
+                              >
+                                <Button
+                                  text={"Share Profile"}
+                                  height={28}
+                                  bgColor={colors.white}
+                                  borderColor={colors.primary}
+                                  borderWidth={1}
+                                  size={16}
+                                  borderRadius={7}
+                                  textColor={colors.primary}
+                                  paddingHorizontal={15}
+                                />
+                                <Spacer width={scale(10)} />
+                                <Button
+                                  text={"View Profile"}
+                                  height={28}
+                                  size={16}
+                                  onPress={() =>
+                                    navigation.navigate("CustomerProfile", {
+                                      data: item,
+                                    })
+                                  }
+                                  bgColor={colors.primary}
+                                  borderRadius={7}
+                                  borderColor={colors.primary}
+                                  borderWidth={1}
+                                  paddingHorizontal={15}
+                                  //  width={scale(90)}
+                                />
+                              </View>
+                            </View>
+        </Collapsible>
       </View>
     </View>
   );
@@ -211,5 +269,6 @@ const styles = StyleSheet.create({
   iconContainer: {
     width: 14,
     height: 14,
+    // marginTop:
   },
 });

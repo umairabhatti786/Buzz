@@ -50,8 +50,12 @@ const DriverSearch = ({ navigation, route }) => {
   const [deliveryType, setDelivertype] = useState("Dedicated");
   const [isSubmitModal, setIsSubmitModal] = useState(false);
   const [mapHeight, setMapHeight] = useState(400);
+  // const [isPredictionList, setIsPredictionList] = useState(false);
+
   const nearby = route?.params?.nearBy;
   console.log("nearbynearby", nearby);
+  // const [predictionData, setPredictionData] = useState([]);
+
 
   const [categoryObject, setCategoryObject] = useState("Delivery");
   const [isCategoryVisible, setIsCategoryVisible] = useState(false);
@@ -77,8 +81,17 @@ const DriverSearch = ({ navigation, route }) => {
   const driverDetailSheetRef = useRef();
 
   const [saveText, setSaveText] = useState("");
+  const [watchlistDescription, setWatchlistDescription] =
+    useState("See Watchlist");
 
   console.log("setSelectedDrivers", selectedDrivers);
+  const [dropPoints, setdropPoints] = useState([
+    {
+      dropFromAddress: nearby ? nearby : "Town Hall, New York",
+      dropOffAddress: "",
+      dropOffPlaceHolder: "Drop Off Address",
+    },
+  ]);
 
   const customerTicketData = [
     {
@@ -201,13 +214,16 @@ const DriverSearch = ({ navigation, route }) => {
                 );
 
                 setWatchListObject(dataContact1);
+                setWatchlistDescription("Removed from Watchlist");
               } else {
+                setWatchlistDescription("See Watchlist");
+
                 const dataContact = [...watchListObject, item]; // Replace 'New Data' with your actual data
                 setWatchListObject(dataContact);
               }
               setTimeout(() => {
                 setIsWatchList(false);
-              }, 2000);
+              }, 4000);
               // setWatchListObject(item)
             }}
             // onPress={() =>
@@ -361,17 +377,37 @@ const DriverSearch = ({ navigation, route }) => {
                 paddingTop: verticalScale(15),
               }}
             >
-              <CustomInput
-                leftImage={icon.location}
-                value={nearby ? nearby : "Town Hall, New York"}
-              />
-              <Spacer height={verticalScale(10)} />
-              <CustomInput
-                leftImage={icon.location}
-                placeholder="Drop Off Address"
-              />
+              <View style={{ paddingTop: verticalScale(10) }}>
+                <CustomInput
+                  leftImage={icon.location}
+                  value={nearby ? nearby : "Town Hall, New York"}
+                />
+              </View>
+              {dropPoints.map((item, index) => {
+                return (
+                  <>
+                    <View style={{ paddingTop: verticalScale(10) }}>
+                                            <CustomInput
+                        leftImage={icon.location}
+                        placeholder={item.dropOffPlaceHolder}
+                        value={item.dropOffAddress}
+                      />
+                    </View>
+                  </>
+                );
+              })}
 
-              <View
+              <TouchableOpacity
+                activeOpacity={0.4}
+                onPress={() => {
+                  let data = [...dropPoints];
+                  data.push({
+                    dropOffPlaceHolder: "Drop  Off Address",
+                    dropOffAddress: "",
+                  });
+
+                  setdropPoints(data);
+                }}
                 style={{
                   ...AppStyles.row,
                   alignSelf: "flex-end",
@@ -395,7 +431,7 @@ const DriverSearch = ({ navigation, route }) => {
                   source={icon.addlocation}
                   resizeMode="contain"
                 />
-              </View>
+              </TouchableOpacity>
               <CustomText
                 text={"----------------------------------------------"}
                 color={colors.gray100}
@@ -517,7 +553,7 @@ const DriverSearch = ({ navigation, route }) => {
                   style={{
                     width: scale(19),
                     height: scale(19),
-                    tintColor: colors.primary,
+                    tintColor:  watchListObject?.find((e) => e.id)?colors.primary:  colors.gray100,
                   }}
                   source={icon.watchlist}
                   resizeMode="contain"
@@ -685,9 +721,7 @@ const DriverSearch = ({ navigation, route }) => {
                                     ? colors.primary
                                     : colors.gray,
                               }}
-                            >
-                              
-                            </TouchableOpacity>
+                            ></TouchableOpacity>
                             {/* <StoreMarker /> */}
                           </Marker>
                         );
@@ -759,7 +793,7 @@ const DriverSearch = ({ navigation, route }) => {
                       <Image
                         style={styles.mapImgContainer}
                         // resizeMode="contain"
-                        source={ mapHeight==400? image.zoom:icon.reduce}
+                        source={mapHeight == 400 ? image.zoom : icon.reduce}
                       />
                     </TouchableOpacity>
                   </View>
@@ -837,10 +871,7 @@ const DriverSearch = ({ navigation, route }) => {
               paddingTop: verticalScale(20),
             }}
           >
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => setIsWatchList(false)}
-            >
+            <TouchableOpacity onPress={() => setIsWatchList(false)}>
               <CustomText
                 text={"Dismiss"}
                 color={colors.white}
@@ -852,15 +883,21 @@ const DriverSearch = ({ navigation, route }) => {
             </TouchableOpacity>
 
             <Spacer width={scale(20)} />
-
-            <CustomText
-              text={"See Watchlist"}
-              color={colors.white}
-              fontWeight={"600"}
-              size={13}
-              // style={{ marginLeft: scale(10) }}
-              fontFam={"Poppins-Medium"}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                // setIsWatchList(false)
+                navigation.navigate("Watchlist");
+              }}
+            >
+              <CustomText
+                text={watchlistDescription}
+                color={colors.white}
+                fontWeight={"600"}
+                size={13}
+                // style={{ marginLeft: scale(10) }}
+                fontFam={"Poppins-Medium"}
+              />
+            </TouchableOpacity>
           </View>
         </Animatable.View>
       )}

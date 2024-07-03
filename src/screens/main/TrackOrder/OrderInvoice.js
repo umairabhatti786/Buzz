@@ -13,10 +13,12 @@ import CustomButton from "../../../components/CustomButton";
 import NewText from "../../../components/NewText";
 import { image } from "../../../assets/png/images";
 import ChargesTipModal from "./ChargesTipModal";
+import CustomCalendar from "../../../components/CustomCalendar";
 
 const OrderInvoice = (navigation) => {
   const [isCollapsible, setIsCollapsible] = useState(false);
-
+  const [pickupDateAndTime, setPickupDateAndTime] = useState("");
+  const [isDateAndTime, setIsDateAndTime] = useState("");
   const [isChangesModal,setIsChangesModal]=useState(false)
 
   return (
@@ -141,7 +143,15 @@ const OrderInvoice = (navigation) => {
         mainColor={colors.primary}
         modalVisible={isChangesModal}
         navigation={navigation}
+        setIsDateAndTime={setIsDateAndTime}
         setModalVisible={setIsChangesModal}
+      />
+
+<CustomCalendar
+        modalVisible={isDateAndTime}
+        date={pickupDateAndTime}
+        setDate={setPickupDateAndTime}
+        setModalVisible={setIsDateAndTime}
       />
     </>
    

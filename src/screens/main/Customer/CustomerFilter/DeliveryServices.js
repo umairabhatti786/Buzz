@@ -44,6 +44,7 @@ const DeliveryServices = ({ navigation }) => {
   const [isTimeModal, setIsTimeModal] = useState(false);
   const [pickupDateAndTime, setPickupDateAndTime] = useState("");
   const [isDateAndTime, setIsDateAndTime] = useState("");
+  const[signal,setSignal]=useState("Single Stop")
 
   const pickUpWithinData = [
     "1 Hour",
@@ -162,6 +163,7 @@ const DeliveryServices = ({ navigation }) => {
 
   return (
     <>
+    
       <ScrollView
         style={{ backgroundColor: colors.white }}
         contentContainerStyle={{ backgroundColor: colors.white }}
@@ -258,12 +260,10 @@ const DeliveryServices = ({ navigation }) => {
                         height={29}
                         color={colors.gray100}
                         width={scale(140)}
-                        // onShowPassword={()=>setIsVehicleTypeModal(true)}
                         value={`Time: Ex ${item.time}`}
                         fontWeight={"600"}
                         rightImageWidth={15}
                         rightImageHeight={15}
-                        // placeholder={"$/day"}
                         borderRadius={8}
                       />
 
@@ -272,6 +272,8 @@ const DeliveryServices = ({ navigation }) => {
                         color={colors.gray100}
                         width={scale(140)}
                         editable={false}
+                        dropDown={true}
+
                         onShowPassword={() => setIsTimeModal(true)}
                         // onShowPassword={()=>setIsVehicleTypeModal(true)}
                         rightImage={icon.down}
@@ -291,6 +293,7 @@ const DeliveryServices = ({ navigation }) => {
                       height={29}
                       color={colors.gray100}
                       editable={false}
+                      dropDown={true}
                       onShowPassword={() => setIsPickUpModel(true)}
                       heading={"Pick Up within"}
                       // onShowPassword={()=>setIsVehicleTypeModal(true)}
@@ -409,26 +412,29 @@ const DeliveryServices = ({ navigation }) => {
               <Button
                 text={"Single Stop"}
                 height={35}
-                bgColor={"#12D1AF" + "10"}
+                bgColor={ signal=="Single Stop"? "#12D1AF" + "10":colors.white}
                 borderColor={colors.primary}
                 borderWidth={-1}
                 size={15}
+                onPress={()=>setSignal("Single Stop")}
                 fontWeight={"400"}
                 borderRadius={10}
-                textColor={colors.primary}
+                textColor={signal=="Single Stop"?colors.primary:colors.black40}
                 paddingHorizontal={15}
               />
               <Spacer width={scale(10)} />
               <Button
                 text={"Multiple Stop"}
                 height={35}
-                bgColor={colors.white}
+                onPress={()=>setSignal("Multiple Stop")}
+
+                bgColor={ signal=="Multiple Stop"? "#12D1AF" + "10":colors.white}
                 borderColor={colors.primary}
                 borderWidth={-1}
                 size={15}
                 fontWeight={"400"}
                 borderRadius={10}
-                textColor={colors.black40}
+                textColor={signal=="Multiple Stop"?colors.primary:colors.black40}
                 paddingHorizontal={15}
               />
             </View>
@@ -501,6 +507,7 @@ const DeliveryServices = ({ navigation }) => {
                 heading={"Standard"}
                 headingWeight={"500"}
                 editable={false}
+                dropDown={true}
                 onShowPassword={() => setIsStandardModal(true)}
                 rightImage={icon.down}
                 value={standardSize}
@@ -518,6 +525,7 @@ const DeliveryServices = ({ navigation }) => {
                 headingWeight={"500"}
                 width={windowWidth / 3.5}
                 editable={false}
+                dropDown={true}
                 onShowPassword={() => setIsLargeModal(true)}
                 rightImage={icon.down}
                 value={largeSize}
@@ -537,6 +545,7 @@ const DeliveryServices = ({ navigation }) => {
                 editable={false}
                 heading={"X-Large"}
                 headingWeight={"500"}
+                dropDown={true}
                 onShowPassword={() => setIsXLargeModal(true)}
                 rightImage={icon.down}
                 value={xLargeSize}
@@ -556,6 +565,7 @@ const DeliveryServices = ({ navigation }) => {
               color={colors.gray100}
               editable={false}
               heading={"Service Description"}
+              dropDown={true}
               onShowPassword={() => setServiceDescriptionModal(true)}
               fontWeight={"600"}
               rightImage={icon.down}
@@ -732,6 +742,7 @@ const DeliveryServices = ({ navigation }) => {
                 heading={"Loading"}
                 headingWeight={"500"}
                 editable={false}
+                dropDown={true}
                 onShowPassword={() => setLaodingDataModal(true)}
                 rightImage={icon.down}
                 value={laodingData}
@@ -749,6 +760,7 @@ const DeliveryServices = ({ navigation }) => {
                 headingWeight={"500"}
                 width={windowWidth / 2.3}
                 editable={false}
+                dropDown={true}
                 onShowPassword={() => setUnLaodingDataModal(true)}
                 rightImage={icon.down}
                 value={unLaoding}
@@ -864,6 +876,7 @@ const DeliveryServices = ({ navigation }) => {
           <Spacer height={150} />
         </View>
       </ScrollView>
+      
 
       <DropDownModal
         mainColor={colors.primary}

@@ -233,6 +233,7 @@ console.log("selectedDrivers",selectedDrivers?.time)
                   width={scale(120)}
                   editable={false}
                   value={selectedServiceType}
+                  dropDown={true}
                   onShowPassword={()=>setIsServiceModal(true)}
                   rightImage={icon.down}
                   fontWeight={"600"}
@@ -260,6 +261,7 @@ console.log("selectedDrivers",selectedDrivers?.time)
                   width={scale(110)}
                   editable={false}
                   value={selectedCategory}
+                  dropDown={true}
                   onShowPassword={()=>setIsCategoryModal(true)}
                   rightImage={icon.down}
                   fontWeight={"600"}
@@ -292,6 +294,7 @@ console.log("selectedDrivers",selectedDrivers?.time)
                   width={scale(140)}
                   editable={false}
                   value={selectedService}
+                  dropDown={true}
                   onShowPassword={()=>setIsServiceDescriptionModal(true)}
                   rightImage={icon.down}
                   fontWeight={"600"}

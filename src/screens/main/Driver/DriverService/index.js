@@ -299,6 +299,7 @@ const DriverService = ({ navigation }) => {
               color={colors.gray100}
               width={scale(170)}
               editable={false}
+              dropDown={true}
               onShowPassword={() => setIsPickupRadiusModal(true)}
               rightImage={icon.down}
               value={pickupRadius}
@@ -488,6 +489,7 @@ const DriverService = ({ navigation }) => {
                   color={colors.gray100}
                   width={scale(170)}
                   editable={false}
+                  dropDown={true}
                   onShowPassword={() => setIsTimeZoneModal(true)}
                   rightImage={icon.down}
                   value={timeZone}
@@ -575,6 +577,7 @@ const DriverService = ({ navigation }) => {
                       color={colors.gray100}
                       width={scale(135)}
                       editable={false}
+                      dropDown={true}
                       onShowPassword={() => setIsStartTimeModal(true)}
                       rightImage={icon.down}
                       value={startTime}
@@ -588,6 +591,7 @@ const DriverService = ({ navigation }) => {
                       color={colors.gray100}
                       width={scale(135)}
                       editable={false}
+                      dropDown={true}
                       onShowPassword={() => setIsTimeModal(true)}
                       rightImage={icon.down}
                       value={time}

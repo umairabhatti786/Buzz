@@ -31,6 +31,8 @@ const OrderUpdateModal = ({
   setData,
 
   title,
+  selectNotificationUpdates,
+  setSelectNotificationUpdates
 }) => {
   return (
     <Modal
@@ -76,28 +78,22 @@ const OrderUpdateModal = ({
         </View>
 
         <CustomLine />
-        <ScrollView>
-          <View style={{ paddingVertical: scale(15), paddingHorizontal: 20 }}>
-            {data?.map((item, index) => {
-              return (
-                <View style={{ width: "100%" }}>
+        <View style={{ paddingVertical: scale(15), paddingHorizontal: 20 }}>
+      
                   <View
                     style={{ ...AppStyles.justifyRow, width: "100%" }}
                     activeOpacity={0.6}
                   >
-                    <NewText color={colors.black} size={14} text={item.name} />
+                    <NewText color={colors.black} size={14} text={"Push"} />
                     <CustomToggle
-                      isActive={item.active}
+                      isActive={selectNotificationUpdates?.push}
                       setIsActive={() => {
-                        const updates = [...data];
-
-                        // Toggle the 'active' property of the item at the specified index
-                        updates[index] = {
-                          ...updates[index],
-                          active: !updates[index].active,
-                        };
-
-                        setData(updates);
+                        setSelectNotificationUpdates((prevUpdates) => {
+                          return {
+                            ...prevUpdates,
+                            push: !prevUpdates.push,
+                          };
+                        });
                       }}
                     />
                   </View>
@@ -110,11 +106,63 @@ const OrderUpdateModal = ({
                       dashColor={colors.gray}
                     />
                   </View>
-                </View>
-              );
-            })}
+
+
+                  <View
+                    style={{ ...AppStyles.justifyRow, width: "100%" }}
+                    activeOpacity={0.6}
+                  >
+                    <NewText color={colors.black} size={14} text={"Email"} />
+                    <CustomToggle
+                      isActive={selectNotificationUpdates?.email}
+                      setIsActive={() => {
+                        setSelectNotificationUpdates((prevUpdates) => {
+                          return {
+                            ...prevUpdates,
+                            email: !prevUpdates.email,
+                          };
+                        });
+                      }}
+                    />
+                  </View>
+
+                  <View style={{ paddingVertical: verticalScale(13) }}>
+                    <DashedLine
+                      dashLength={6}
+                      dashThickness={1}
+                      dashGap={5}
+                      dashColor={colors.gray}
+                    />
+                  </View>
+
+
+                  <View
+                    style={{ ...AppStyles.justifyRow, width: "100%" }}
+                    activeOpacity={0.6}
+                  >
+                    <NewText color={colors.black} size={14} text={"SMS"} />
+                    <CustomToggle
+                      isActive={selectNotificationUpdates?.sms}
+                      setIsActive={() => {
+                        setSelectNotificationUpdates((prevUpdates) => {
+                          return {
+                            ...prevUpdates,
+                            sms: !prevUpdates.sms,
+                          };
+                        });
+                      }}
+                    />
+                  </View>
+
+                  <View style={{ paddingVertical: verticalScale(13) }}>
+                    <DashedLine
+                      dashLength={6}
+                      dashThickness={1}
+                      dashGap={5}
+                      dashColor={colors.gray}
+                    />
+                  </View>
           </View>
-        </ScrollView>
         <View
           style={{
             alignSelf: "flex-end",

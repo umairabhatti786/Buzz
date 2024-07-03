@@ -434,6 +434,7 @@ onPress={()=>setIsWatchList(false)}
 
              <CustomText
               text={"See Watchlist"}
+              onPress={()=>navigation.navigate("Watchlist")}
               color={colors.white}
               fontWeight={"600"}
               size={13}

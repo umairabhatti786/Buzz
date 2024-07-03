@@ -6,7 +6,7 @@ import {
   View,
   FlatList,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Screen } from "../../../../utils/ui/Screen";
 import { colors } from "../../../../utils/colors";
 import { AppStyles } from "../../../../utils/AppStyle";
@@ -27,7 +27,10 @@ const CustomerFilter = ({ navigation }) => {
   const [selectedTab, setSelectedTab] = useState("Need a Ride");
   const [isPostedModal, setIsPostedModal] = useState(false);
   const [isSavedModal, setIsSavedModal] = useState(false);
+  const [isRefresh,setIsRefresh]=useState(false)
+// useEffect(()=>{
 
+// },[isRefresh])
 
   const conversation = [
     {
@@ -155,6 +158,10 @@ const CustomerFilter = ({ navigation }) => {
             size={17}
             text={"Filter"}
           />
+          <TouchableOpacity
+          activeOpacity={0.4}
+          onPress={()=>navigation.goBack()}
+          >
           <NewText
             fontWeight="700"
             color={colors.primary}
@@ -162,6 +169,9 @@ const CustomerFilter = ({ navigation }) => {
             size={17}
             text={"Search"}
           />
+
+          </TouchableOpacity>
+          
         </View>
 
         <View
@@ -262,6 +272,7 @@ const CustomerFilter = ({ navigation }) => {
         label1={"Save"}
         onLabel2={()=>setIsPostedModal(true)}
         onLabel1={()=>setIsSavedModal(true)}
+        onLabel3={()=>setIsRefresh(!isRefresh)}
 
         label2={"Post"}
         label3={"Clear All"}

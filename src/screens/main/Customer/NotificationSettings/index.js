@@ -23,27 +23,29 @@ import OrderUpdateModal from "./OrderUpdateModal";
   const NotificationSettings = ({navigation}) => {
 
     const [isUpdateModal,setIsUpdateModal]=useState(false)
+    const[selectNotificationUpdates,setSelectNotificationUpdates]=useState({})
+    
 
     const [updatesData,setUpdatesData]=useState(
         [{
             name: "Push",
-            active:true
+            active:selectNotificationUpdates?.push
         
           },
           {
             name:"Email",
-            active:false
+            active:selectNotificationUpdates?.email
         
           },
           {
             name:"SMS",
-            active:false
+            active:selectNotificationUpdates?.sms
         
           }
         ]
 
     )
-   
+   console.log("updatcdcdcesDataseleccctNotificationUpdates",selectNotificationUpdates)
     const notificationData = [
       {
         id: 1,
@@ -107,7 +109,7 @@ import OrderUpdateModal from "./OrderUpdateModal";
         
       },
       {
-        id: 7,
+        id: 8,
         img: icon.bulb,
         title: "Account and Security",
         push:true,
@@ -121,7 +123,12 @@ import OrderUpdateModal from "./OrderUpdateModal";
   
     const renderNotification = ({ item, index }) => {
       return <NotificationSettingCard  title={item.title} 
-      onPress={()=>setIsUpdateModal(true)}
+      onPress={()=>{
+        setSelectNotificationUpdates(item)
+
+        setIsUpdateModal(true)
+
+      }}
       push={item.push}
       email={item.email}
       sms={item.sms}
@@ -150,7 +157,7 @@ import OrderUpdateModal from "./OrderUpdateModal";
             style={{ paddingTop: 20 }}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ gap: 20, margin:15}}
-            keyExtractor={(item) => item}
+            keyExtractor={(item,index) => index.toString()}
             ListFooterComponent={<View style={{height: 120}}/>}
   
             renderItem={renderNotification}
@@ -161,7 +168,10 @@ import OrderUpdateModal from "./OrderUpdateModal";
 
       <OrderUpdateModal
       modalVisible={isUpdateModal}
-      title={"Order Update"}
+      title={selectNotificationUpdates?.title}
+      selectNotificationUpdates={selectNotificationUpdates}
+      setSelectNotificationUpdates={setSelectNotificationUpdates}
+
       setModalVisible={setIsUpdateModal}
       data={updatesData}
       setData={setUpdatesData}

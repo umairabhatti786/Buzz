@@ -23,7 +23,7 @@ import {
 import CustomToggle from "../../../../components/CustomToggle";
 import Button from "../../../../components/Button";
   
-  const AddPaymentMethodModal = ({ modalVisible, setModalVisible,onPressCard,onPay }) => {
+  const AddPaymentMethodModal = ({ modalVisible, setModalVisible,onPressCard,onPay,buttonTitle }) => {
  const [isSavePayment,setIsSavePayment]=useState(false)
     return (
       <CustomModal
@@ -81,7 +81,7 @@ import Button from "../../../../components/Button";
 
                 </View>
                 <Button
-                  text={"Pay"}
+                  text={buttonTitle||  "Pay"}
                   height={35}
                   bgColor={colors.primary}
                   borderColor={"transparent"}

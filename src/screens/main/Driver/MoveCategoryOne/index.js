@@ -133,6 +133,7 @@ const MoveCategoryOne = ({ navigation }) => {
                   color={colors.gray100}
                   width={scale(180)}
                   editable={false}
+                  dropDown={true}
                   onShowPassword={() => setIsVehicleSizeModal(true)}
                   rightImage={icon.down}
                   value={vehicleSize}

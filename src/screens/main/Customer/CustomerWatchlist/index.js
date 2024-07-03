@@ -81,7 +81,7 @@ const CustomerWatchlist = ({ navigation, isActive }) => {
           ...AppStyles.justifyRow,
           paddingVertical: verticalScale(10),
 
-          paddingRight: scale(5),
+          // paddingRight: scale(5),
         }}
       >
         <NewText
@@ -134,7 +134,13 @@ const CustomerWatchlist = ({ navigation, isActive }) => {
           contentContainerStyle={colors.white}
         >
           <View style={{ padding: 15 }}>
-            <DropContainer isActive={true} />
+          <NewText
+          fontWeight={"700"}
+          color={colors.black}
+          fontFam={Inter.bold}
+          text={"Favorites Movers"}
+          size={16}
+        />
 
             <View
               style={{
@@ -161,66 +167,23 @@ const CustomerWatchlist = ({ navigation, isActive }) => {
                   {customerTicketData.map((item, index) => {
                     return (
                       <>
-                        <View style={{ paddingRight: 5 }}>
+                        <View >
                           <CustomTicket
                             backgroundColor={colors.white}
                             isNoShadow={true}
+                            navigation={navigation}
                             item={item}
                           />
                         </View>
 
-                        <View style={{ paddingVertical: 10 }}>
-                          {customerTicketData.length - 1 !== index ? (
-                            <CustomLine />
-                          ) : (
-                            <View>
-                              <DashedLine
-                                style={{ width: "100%" }}
-                                dashLength={3}
-                                dashThickness={1}
-                                dashGap={3}
-                                dashColor={colors.gray}
-                              />
+                   
+                          {customerTicketData.length - 1 !== index && (
+                            <View style={{marginTop:10}}>
+                                                          <CustomLine />
 
-                              <View
-                                style={{
-                                  ...AppStyles.row,
-                                  alignSelf: "flex-end",
-                                  marginTop: 15,
-                                }}
-                              >
-                                <Button
-                                  text={"Share Profile"}
-                                  height={28}
-                                  bgColor={colors.white}
-                                  borderColor={colors.primary}
-                                  borderWidth={1}
-                                  size={16}
-                                  borderRadius={7}
-                                  textColor={colors.primary}
-                                  paddingHorizontal={15}
-                                />
-                                <Spacer width={scale(10)} />
-                                <Button
-                                  text={"View Profile"}
-                                  height={28}
-                                  size={16}
-                                  onPress={() =>
-                                    navigation.navigate("CustomerProfile", {
-                                      data: item,
-                                    })
-                                  }
-                                  bgColor={colors.primary}
-                                  borderRadius={7}
-                                  borderColor={colors.primary}
-                                  borderWidth={1}
-                                  paddingHorizontal={15}
-                                  //  width={scale(90)}
-                                />
-                              </View>
+
                             </View>
-                          )}
-                        </View>
+                          ) }
                       </>
                     );
                   })}
@@ -230,6 +193,8 @@ const CustomerWatchlist = ({ navigation, isActive }) => {
               <View style={{ paddingVertical: 10 }}>
                 <CustomLine />
               </View>
+
+              
 
               <DropContainer
                 size={15}
@@ -246,7 +211,14 @@ const CustomerWatchlist = ({ navigation, isActive }) => {
               <View style={{ paddingBottom: 10 }} />
             </View>
             <View style={{ marginTop: 20 }}>
-              <DropContainer isActive={true} txt={"Saved Search"} />
+            <NewText
+          fontWeight={"700"}
+          color={colors.black}
+          fontFam={Inter.bold}
+          text={ "Saved Search"}
+          size={16}
+        />
+              {/* <DropContainer isActive={true} txt={"Saved Search"} /> */}
 
               <View
                 style={{
@@ -282,7 +254,14 @@ const CustomerWatchlist = ({ navigation, isActive }) => {
             </View>
 
             <View style={{ marginTop: 20 }}>
-              <DropContainer isActive={true} txt={"Posts"} />
+            <NewText
+          fontWeight={"700"}
+          color={colors.black}
+          fontFam={Inter.bold}
+          text={"Posts"}
+          size={16}
+        />
+              {/* <DropContainer isActive={true} txt={"Posts"} /> */}
 
               <View
                 style={{

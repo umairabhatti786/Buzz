@@ -35,7 +35,7 @@ const PaymentMethodModal = ({ modalVisible, setModalVisible,onPressCard }) => {
               <NewText
                 color={colors.black}
                 size={15}
-                fontWeight={"600"}
+                fontWeight={"700"}
                 text={title}
               />
               <NewText

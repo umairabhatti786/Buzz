@@ -620,6 +620,7 @@ const CustomerDriverSetting = ({ navigation }) => {
         setModalVisible={setIsPaymentModal}
       />
       <AddPaymentMethodModal
+      buttonTitle={"Submit"}
         onPay={() => {
           steIsAddPaymentMethodVisible(false);
           setTimeout(() => {

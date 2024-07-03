@@ -230,6 +230,7 @@ const DedicatedService = ({ navigation, route }) => {
               editable={false}
               heading={""}
               headingWeight={"500"}
+              dropDown={true}
               onShowPassword={() => setPaymentOptionsodal(true)}
               rightImage={icon.down}
               value={paymentOptions}

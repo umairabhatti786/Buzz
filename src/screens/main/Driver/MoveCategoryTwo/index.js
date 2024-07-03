@@ -294,6 +294,7 @@ import DropDownModal from "../../../../components/DropDownModal";
                             color={colors.gray100}
                             width={scale(160)}
                             editable={false}
+                            dropDown={true}
                             onShowPassword={()=>setIsVehicleTypeModal(true)}
                           
                             rightImage={icon.down}

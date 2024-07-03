@@ -306,7 +306,6 @@ const CustomerTicket = ({
                   editable={false}
                   value={selectedService}
                   dropDown={true}
-
                   onShowPassword={()=>setIsServiceDescriptionModal(true)}
                   rightImage={icon.down}
                   fontWeight={"600"}

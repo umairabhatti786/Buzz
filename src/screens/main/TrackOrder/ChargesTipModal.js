@@ -23,7 +23,7 @@ import CustomModal from "../../../components/CustomModal";
 import HorizontalContainerToggle from "../../../components/HorizontalContainerToggle";
 import CustomInput from "../../../components/CustomInput";
 
-const ChargesTipModal = ({ modalVisible, handelModal, setModalVisible }) => {
+const ChargesTipModal = ({ modalVisible, handelModal, setModalVisible,setIsDateAndTime }) => {
   const [isExtraTip, setIsExtraTip] = useState(false);
   const [tipValue, setTipValue] = useState("");
   const [isDateExtension, setIsDateExtension] = useState(false);
@@ -75,7 +75,7 @@ const ChargesTipModal = ({ modalVisible, handelModal, setModalVisible }) => {
 
         <TouchableOpacity
           activeOpacity={0.6}
-          // onPress={()=>setIsDateAndTime(true)}
+          onPress={()=>setIsDateAndTime(true)}
           style={styles.pickupDateContainer}
         >
           <NewText

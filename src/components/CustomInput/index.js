@@ -49,7 +49,9 @@ const CustomInput = ({
           color={color.black}
         />
       )}
-      <View
+      <TouchableOpacity
+      activeOpacity={dropDown?0.4:1}
+      onPress={dropDown&&onShowPassword}
         style={{
           flexDirection: "row",
           alignItems: "center",
@@ -148,7 +150,7 @@ const CustomInput = ({
             />
           </TouchableOpacity>
         )}
-      </View>
+      </TouchableOpacity>
 
       {error && (
         <View

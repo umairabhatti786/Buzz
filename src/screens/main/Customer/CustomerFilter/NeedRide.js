@@ -23,6 +23,7 @@ import CustomRangeSlider from "../../../../components/RangeSlider";
 import DatePickerModal from "../../../../components/DatePickerModal";
 import DropDownModal from "../../../../components/DropDownModal";
 import CustomCalendar from "../../../../components/CustomCalendar";
+import CategoryBottomTab from "../../../../components/CategoryBottomTab";
 
 const NeedRide = ({ navigation }) => {
 
@@ -34,6 +35,7 @@ const NeedRide = ({ navigation }) => {
   const [isTimeModal, setIsTimeModal] = useState(false);
   const [pickupDateAndTime,setPickupDateAndTime]=useState("")
   const [isDateAndTime,setIsDateAndTime]=useState("")
+  const[signal,setSignal]=useState("Single Stop")
 
   const [ServiceCoverage,setServiceCoverage] = useState([
     { name: "All (Default)", isActive: true },
@@ -188,6 +190,7 @@ const NeedRide = ({ navigation }) => {
                         color={colors.gray100}
                         width={scale(140)}
                         editable={false}
+                        dropDown={true}
                         onShowPassword={() => setIsTimeModal(true)}
 
                         // onShowPassword={()=>setIsVehicleTypeModal(true)}
@@ -208,6 +211,7 @@ const NeedRide = ({ navigation }) => {
                       height={29}
                       color={colors.gray100}
                       editable={false}
+                      dropDown={true}
                       onShowPassword={() => setIsPickUpModel(true)}
 
                       heading={"Pick Up within"}
@@ -327,26 +331,29 @@ const NeedRide = ({ navigation }) => {
               <Button
                 text={"Single Stop"}
                 height={35}
-                bgColor={"#12D1AF" + "10"}
+                bgColor={ signal=="Single Stop"? "#12D1AF" + "10":colors.white}
                 borderColor={colors.primary}
                 borderWidth={-1}
                 size={15}
+                onPress={()=>setSignal("Single Stop")}
                 fontWeight={"400"}
                 borderRadius={10}
-                textColor={colors.primary}
+                textColor={signal=="Single Stop"?colors.primary:colors.black40}
                 paddingHorizontal={15}
               />
               <Spacer width={scale(10)} />
               <Button
                 text={"Multiple Stop"}
                 height={35}
-                bgColor={colors.white}
+                onPress={()=>setSignal("Multiple Stop")}
+
+                bgColor={ signal=="Multiple Stop"? "#12D1AF" + "10":colors.white}
                 borderColor={colors.primary}
                 borderWidth={-1}
                 size={15}
                 fontWeight={"400"}
                 borderRadius={10}
-                textColor={colors.black40}
+                textColor={signal=="Multiple Stop"?colors.primary:colors.black40}
                 paddingHorizontal={15}
               />
             </View>
@@ -456,6 +463,19 @@ const NeedRide = ({ navigation }) => {
           <Spacer height={150} />
         </View>
       </ScrollView>
+
+
+      <CategoryBottomTab
+        label1={"Save"}
+        // onLabel2={()=>setIsPostedModal(true)}
+        onLabel1={()=>setIsSavedModal(true)}
+
+        label2={"Post"}
+        label3={"Clear All"}
+        color={colors.primary}
+      />
+
+      
 
       <DatePickerModal
         mainColor={colors.primary}
