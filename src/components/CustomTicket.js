@@ -24,8 +24,8 @@ const CustomTicket = ({
   isNoShadow,
   backgroundColor,
   isWatchList,
+  navigation,
   onWatchList,
-  navigation
 
 
 }) => {
@@ -143,7 +143,9 @@ const CustomTicket = ({
                   color={colors.black}
                 />
                 <Spacer width={scale(7)} />
-                <TouchableOpacity>
+                <TouchableOpacity
+              onPress={onWatchList}
+                >
                   <Image
                     style={{
                       width: 16,

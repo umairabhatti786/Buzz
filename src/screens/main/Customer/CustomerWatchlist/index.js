@@ -40,7 +40,7 @@ const CustomerWatchlist = ({ navigation, isActive }) => {
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [isSuccessModal, setIsSuccessModal] = useState(false);
 
-  const customerTicketData = [
+  const [customerTicketData, setCustomerTicketData] = useState([
     {
       img: image.defimg900,
       name: "Will Smith",
@@ -52,18 +52,18 @@ const CustomerWatchlist = ({ navigation, isActive }) => {
       id: 1,
       isWatchlist: true,
     },
-    {
-      img: image.defimg600,
-      name: "Kadin Botosh",
-      active: "Busy",
-      distance: "15 mil",
-      time: "15 Min Away",
-      vehicle: "Cargo-van",
-      isOpen: false,
-      id: 2,
-      isWatchlist: true,
-    },
-  ];
+    // {
+    //   img: image.defimg600,
+    //   name: "Kadin Botosh",
+    //   active: "Busy",
+    //   distance: "15 mil",
+    //   time: "15 Min Away",
+    //   vehicle: "Cargo-van",
+    //   isOpen: false,
+    //   id: 2,
+    //   isWatchlist: true,
+    // },
+  ])
 
   const DropContainer = ({
     fontWeight,
@@ -173,6 +173,17 @@ const CustomerWatchlist = ({ navigation, isActive }) => {
                             isNoShadow={true}
                             navigation={navigation}
                             item={item}
+                            onWatchList={()=>{
+                              const updatedData = customerTicketData.map(it => {
+                                if (it.id === item.id) {
+                                  return { ...item, isWatchlist: !item.isWatchlist };
+                                }
+                                return item;
+                              });
+                              setCustomerTicketData(updatedData);
+                              
+
+                            }}
                           />
                         </View>
 
