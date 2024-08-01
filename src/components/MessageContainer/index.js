@@ -12,10 +12,13 @@ import { AppStyles } from "../../utils/AppStyle";
 import NewText from "../NewText";
 import { icon } from "../../assets/png/icons";
 
-const MessageContainer = ({ item }) => {
+const MessageContainer = ({ item ,mainColor}) => {
   return (
     <View style={{ alignSelf: item?.from ? "flex-end" : "flex-start" }}>
-      <View style={item.from ? styles.rightContainer : styles.leftContainer}>
+      <View style={item.from ? {...styles.rightContainer,
+          backgroundColor: mainColor||colors.primary,
+
+      } : styles.leftContainer}>
         <View style={{ width: "82%" }}>
           <Text style={item.from ? styles.rightText : styles.leftText}>
             {item.message}
@@ -42,9 +45,9 @@ const MessageContainer = ({ item }) => {
         />
                 <NewText text={"Seen"}
                 fontWeight={"400"}
-                 size={14} color={colors.primary} />
+                 size={14} color={ mainColor|| colors.primary} />
                  <Image
-                 style={{width:15,height:15,marginLeft:2}}
+                 style={{width:15,height:15,marginLeft:2,tintColor:mainColor ||colors.primary}}
                  resizeMode="contain"
                  source={icon.seen}
                  />
@@ -63,7 +66,6 @@ const MessageContainer = ({ item }) => {
 export default MessageContainer;
 const styles = StyleSheet.create({
   rightContainer: {
-    backgroundColor: colors.primary,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
     borderBottomLeftRadius: 12,

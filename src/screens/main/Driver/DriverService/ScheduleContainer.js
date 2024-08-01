@@ -8,7 +8,7 @@ import { scale, verticalScale } from "react-native-size-matters";
 import { colors } from "../../../../utils/colors";
 import DashedLine from "react-native-dashed-line";
 
-const ScheduleContainer = ({ isActive,showLine,setIsActive,isEdit,day,time,isEditDisable,isEditColor }, ) => {
+const ScheduleContainer = ({ isActive,showLine,setIsActive,isEdit,day,time,isEditDisable,isEditColor,onEdit }, ) => {
   return (
     <View>
       <View style={AppStyles.justifyRow}>
@@ -20,6 +20,7 @@ const ScheduleContainer = ({ isActive,showLine,setIsActive,isEdit,day,time,isEdi
             size="small"
             style={{ opacity: isActive ? 1 : 0.5 }}
             onToggle={setIsActive}
+
             thumbOnStyle={{
               width: 22,
               height: 22,
@@ -41,14 +42,16 @@ const ScheduleContainer = ({ isActive,showLine,setIsActive,isEdit,day,time,isEdi
         </View>
 
         <CustomText text={time} color={colors.gray200} size={12} />
-        <TouchableOpacity
+        {/* <TouchableOpacity
         activeOpacity={0.6}
+
+        onPress={onEdit}
         disabled={isEditDisable}
         >
         <CustomText text={ isEdit ?"Edit":"Save"} color={ isEditColor||  colors.secondary} size={14} />
 
 
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <View style={{ marginVertical: verticalScale(13) }}>

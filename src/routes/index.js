@@ -11,14 +11,14 @@ import SplashScreen from "react-native-splash-screen";
 
 const RootNavigator = () => {
   const Stack = createStackNavigator();
-  // useEffect(() => {
-  //   console.log("SpalsjRunning");
-  //   const timer = setTimeout(() => {
-  //     SplashScreen.hide(); // Hide splash screen after two seconds
-  //   }, 2000);
+  useEffect(() => {
+    console.log("SpalsjRunning");
+    const timer = setTimeout(() => {
+      SplashScreen.hide(); // Hide splash screen after two seconds
+    }, 2000);
 
-  //   return () => clearTimeout(timer); // Clear the timer if the component unmounts
-  // }, []);
+    return () => clearTimeout(timer); // Clear the timer if the component unmounts
+  }, []);
 
   return (
     <NavigationContainer>

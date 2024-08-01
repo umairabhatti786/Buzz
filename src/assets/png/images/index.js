@@ -6,6 +6,9 @@ export const image={
     retailstore:require("../images/retail-store.png"),
     furniture:require("../images/furniture.png"),
     ride:require("../images/ride.png"),
+    
+    default_user:require("../images/default-user.jpeg"),
+
     defimg100:require("../images/defimg100.png"),
     defimg200:require("../images/defimg200.png"),
     defimg300:require("../images/defimg300.png"),
@@ -28,6 +31,10 @@ export const image={
     fqa:require("../images/fqa.png"),
     logout:require("../images/logout.png"),
     driverapplogo:require("../images/driver-app-logo.png"),
+
+
+    markerCount1:require("../images/marker-count1.png"),
+    markerCount2:require("../images/marker-count2.png"),
 
     google:require("../images/google.png"),
 facebook:require("../images/facebook.png"),

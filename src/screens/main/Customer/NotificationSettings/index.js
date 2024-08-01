@@ -45,7 +45,6 @@ import OrderUpdateModal from "./OrderUpdateModal";
         ]
 
     )
-   console.log("updatcdcdcesDataseleccctNotificationUpdates",selectNotificationUpdates)
     const notificationData = [
       {
         id: 1,

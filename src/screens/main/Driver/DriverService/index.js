@@ -42,12 +42,24 @@ const DriverService = ({ navigation }) => {
   const [isTimeZoneModal, setIsTimeZoneModal] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  const [isEdit,setIsEdit]=useState(false)
 
   const [time, setTime] = useState("Midnight");
+  const [endTime, setEndTime] = useState("Midnight");
+
   const [isTimeModal, setIsTimeModal] = useState(false);
 
   const [startTime, setStartTime] = useState("4pm");
   const [isStartTimeModal, setIsStartTimeModal] = useState(false);
+
+
+  const [dedicatedEndTime, setDedicatedEndTime] = useState("Midnight");
+
+  const [isDedicatedTimeModal, setIsDedicatedTimeModal] = useState(false);
+
+  const [dedicatedStartTime, SetDedicatedStartTime] = useState("4pm");
+  const [isDedicatedStartTimeModal, setIsDedicatedStartTimeModal] = useState(false);
+  
 
   const [isPickupRadiusModal, setIsPickupRadiusModal] = useState(false);
 
@@ -80,7 +92,7 @@ const DriverService = ({ navigation }) => {
   const MAX_DEFAULT = 100;
   const [minValue, setMinValue] = useState(MIN_DEFAULT);
   const [maxValue, setMaxValue] = useState(MAX_DEFAULT);
-  console.log("minValucdce",minValue)
+  console.log("minValucdce", minValue);
   const data = [
     {
       id: 1,
@@ -94,42 +106,127 @@ const DriverService = ({ navigation }) => {
     },
   ];
 
-  const MoveCategory = [
-    { name: "Ride Service", isActive: true },
-    { name: "Delivery Service", isActive: true },
-    { name: "Delivery Add-ons service only", isActive: true },
-  ];
-  const ServiceCoverage = [
+  const [MoveCategory,setMoveCategory] =useState ([
+    { name: "Ride Service", isActive: true,onPressNext:()=>navigation.navigate("MoveCategoryOne") },
+    { name: "Delivery Service", isActive: true,onPressNext:()=>navigation.navigate("MoveCategoryTwo")  },
+    { name: "Delivery Add-ons service only", isActive: true ,onPressNext:()=>navigation.navigate("Addons") },
+  ])
+  const [ServiceCoverage,setServiceCoverage] =useState ([
     { name: "All (Default)", isActive: true },
     { name: "Local", isActive: true },
     { name: "Intercity", isActive: true },
     { name: "Interstate", isActive: true },
-  ];
-  const ServiceCategory = [
+  ])
+  const [ServiceCategory,setServiceCategory] =useState ([
     { name: "All (Default)", isActive: true },
     { name: "On Demand", isActive: false },
     { name: "Scheduled", isActive: false },
     { name: "Dedicated", isActive: false },
-  ];
+  ])
 
-  const schedule = [
-    { day: "Mon", time: "4pm - midnight", isActive: true },
-    { day: "Tues", time: "4pm - midnight", isActive: false },
-    { day: "Wed", time: "4pm - midnight", isActive: false },
-    { day: "Thurs", time: "4pm - midnight", isActive: false },
-    { day: "Fri", time: "4pm - midnight", isActive: false },
-    { day: "Sat", time: "4pm - midnight", isActive: false },
-  ];
+  const [schedule, setSchedule] = useState([
+    {
+      day: "Sun",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: true,
+    },
+    {
+      day: "Mon",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: true,
+    },
+    {
+      day: "Tues",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: false,
+    },
+    {
+      day: "Wed",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: false,
+    },
+    {
+      day: "Thurs",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: false,
+    },
+    {
+      day: "Fri",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: false,
+    },
+    {
+      day: "Sat",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: false,
+    },
+  ]);
 
-  const Dedicated = [
-    { day: "Sun", time: "4pm - midnight", isActive: false },
-    { day: "Mon", time: "4pm - midnight", isActive: true },
-    { day: "Tues", time: "4pm - midnight", isActive: false },
-    { day: "Wed", time: "4pm - midnight", isActive: false },
-    { day: "Thurs", time: "4pm - midnight", isActive: false },
-    { day: "Fri", time: "4pm - midnight", isActive: false },
-    { day: "Sat", time: "4pm - midnight", isActive: false },
-  ];
+  const [Dedicated,setDedicated] = useState([
+    {
+      day: "Sun",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: false,
+    },
+    {
+      day: "Mon",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: true,
+    },
+    {
+      day: "Tues",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: false,
+    },
+    {
+      day: "Wed",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: false,
+    },
+    {
+      day: "Thurs",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: false,
+    },
+    {
+      day: "Fri",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: false,
+    },
+    {
+      day: "Sat",
+      time: "4pm - midnight",
+      startTime: "4pm",
+      endTime: "midnight",
+      isActive: false,
+    },
+  ])
 
   const VehicleInfo = ({ txt1, txt2 }) => {
     return (
@@ -137,11 +234,13 @@ const DriverService = ({ navigation }) => {
         style={{
           paddingHorizontal: scale(15),
           paddingTop: verticalScale(5),
-        }}>
+        }}
+      >
         <TouchableOpacity
           activeOpacity={0.6}
           // onPress={onPress}
-          style={AppStyles.justifyRow}>
+          style={AppStyles.justifyRow}
+        >
           <CustomText
             text={txt1}
             color={colors.black}
@@ -184,11 +283,11 @@ const DriverService = ({ navigation }) => {
 
   const ProfileContainer = () => {
     return (
-    
       <View style={{ ...AppStyles.box, paddingVertical: verticalScale(10) }}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("MoveCategoryOne")}
-          style={{ flexDirection: "row", paddingLeft: scale(10) }}>
+          // onPress={() => navigation.navigate("MoveCategoryOne")}
+          style={{ flexDirection: "row", paddingLeft: scale(10) }}
+        >
           <Image
             style={{
               width: scale(63),
@@ -198,7 +297,8 @@ const DriverService = ({ navigation }) => {
             source={image.defimg600}
           />
           <View
-            style={{ paddingLeft: scale(10), paddingTop: verticalScale(3) }}>
+            style={{ paddingLeft: scale(10), paddingTop: verticalScale(3) }}
+          >
             <CustomText
               text={"Hello,"}
               size={13}
@@ -233,11 +333,13 @@ const DriverService = ({ navigation }) => {
           style={{
             paddingHorizontal: scale(15),
             paddingTop: verticalScale(5),
-          }}>
+          }}
+        >
           <TouchableOpacity
             activeOpacity={0.6}
             // onPress={onPress}
-            style={AppStyles.justifyRow}>
+            style={AppStyles.justifyRow}
+          >
             <CustomText
               text={"Current"}
               color={colors.black}
@@ -253,7 +355,8 @@ const DriverService = ({ navigation }) => {
                 borderColor: colors.secondary,
                 padding: scale(5),
                 borderRadius: scale(7),
-              }}>
+              }}
+            >
               <Image
                 style={{
                   width: scale(18),
@@ -286,7 +389,8 @@ const DriverService = ({ navigation }) => {
             style={{
               ...AppStyles.justifyRow,
               marginVertical: verticalScale(10),
-            }}>
+            }}
+          >
             <CustomText
               text={"Pickup Radius"}
               color={colors.black}
@@ -307,7 +411,6 @@ const DriverService = ({ navigation }) => {
               placeholder={"$/day"}
               borderRadius={8}
             />
-        
           </View>
           <Spacer height={verticalScale(20)} />
 
@@ -319,9 +422,8 @@ const DriverService = ({ navigation }) => {
             step={100}
             minValue={10}
             maxValue={100}
-
             onValueChange={(range) => {
-              console.log("range",range)
+              console.log("range", range);
               setMinValue(range.min);
               setMaxValue(range.max);
             }}
@@ -338,13 +440,15 @@ const DriverService = ({ navigation }) => {
         height={40}
         backgroundColor={colors.white}
         // topBarColor={colors.primary}
-        barStyle={"dark-content"}>
+        barStyle={"dark-content"}
+      >
         <View
           style={{
             flex: 1,
 
             backgroundColor: colors.white,
-          }}>
+          }}
+        >
           <View
             style={{
               ...AppStyles.justifyRow,
@@ -356,14 +460,14 @@ const DriverService = ({ navigation }) => {
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.2,
               // shadowRadius: 5,
-            }}>
+            }}
+          >
             <TouchableOpacity
               style={{ width: "30%" }}
               onPress={() => {
                 setIsModalVisible(true);
-
-
-              }}>
+              }}
+            >
               <Image
                 style={{ width: scale(15), height: scale(15) }}
                 resizeMode="contain"
@@ -386,7 +490,9 @@ const DriverService = ({ navigation }) => {
               style={{
                 paddingHorizontal: scale(15),
                 paddingTop: verticalScale(15),
-              }}>
+                paddingBottom:verticalScale(20)
+              }}
+            >
               <ProfileContainer />
 
               <CustomText
@@ -409,6 +515,19 @@ const DriverService = ({ navigation }) => {
                         <HorizontalContainerToggle
                           text={item.name}
                           isActive={item.isActive}
+                          setIsActive={() => {
+                            const updates = [...ServiceCoverage];
+
+                            // Toggle the 'active' property of the item at the specified index
+                            updates[index] = {
+                              ...updates[index],
+                              isActive: !updates[index].isActive,
+                            };
+
+                            console.log("updates[index]", updates[index]);
+
+                            setServiceCoverage(updates);
+                          }}
                           // text1={"On-demand"}
                         />
                         {ServiceCoverage.length != index + 1 ? (
@@ -449,6 +568,19 @@ const DriverService = ({ navigation }) => {
                         <HorizontalContainerToggle
                           text={item.name}
                           isActive={item.isActive}
+                          setIsActive={() => {
+                            const updates = [...ServiceCategory];
+
+                            // Toggle the 'active' property of the item at the specified index
+                            updates[index] = {
+                              ...updates[index],
+                              isActive: !updates[index].isActive,
+                            };
+
+                            console.log("updates[index]", updates[index]);
+
+                            setServiceCategory(updates);
+                          }}
                           // text1={"On-demand"}
                         />
                         {ServiceCategory.length != index + 1 ? (
@@ -477,7 +609,8 @@ const DriverService = ({ navigation }) => {
                   alignItems: "center",
                   justifyContent: "space-between",
                   marginVertical: verticalScale(30),
-                }}>
+                }}
+              >
                 <CustomText
                   text={"Set Time Zone"}
                   color={colors.black}
@@ -525,7 +658,8 @@ const DriverService = ({ navigation }) => {
                 size={14}
               />
               <View
-                style={{ ...AppStyles.box, marginBottom: verticalScale(30) }}>
+                style={{ ...AppStyles.box, marginBottom: verticalScale(30) }}
+              >
                 <View style={{ paddingHorizontal: scale(15) }}>
                   <Spacer height={verticalScale(15)} />
                   <View style={AppStyles.justifyRow}>
@@ -550,7 +684,8 @@ const DriverService = ({ navigation }) => {
                     style={{
                       ...AppStyles.justifyRow,
                       marginBottom: verticalScale(13),
-                    }}>
+                    }}
+                  >
                     <CustomText text={"Scheduled"} size={13} />
 
                     <Image
@@ -560,18 +695,44 @@ const DriverService = ({ navigation }) => {
                     />
                   </View>
                   <Spacer height={verticalScale(5)} />
+                  {/* {
+                    !isEdit&&(
 
-                  <ScheduleContainer
-                    isActive={false}
-                    day={"Sun"}
-                    time={"4pm - midnight"}
-                  />
+                      <ScheduleContainer
+                      isActive={false}
+                      day={"Sun"}
+  
+                      onEdit={() => {
+                        setIsEdit(!isEdit)
+                        let newEntry = {
+                          day: "Sun",
+                          time: "4pm - midnight",
+                          startTime: "4pm",
+                          endTime: "midnight",
+                          isActive: true,
+                        };
+                      
+                        let applySchedule = [newEntry, ...schedule]; // Add the new entry at the start of the array
+                      
+                        console.log("applySchedule", applySchedule);
+                        setSchedule(applySchedule);
+                      }}
+  
+  
+                      time={"4pm - midnight"}
+                    />
+
+                    )
+                  } */}
+
+                
 
                   <View
                     style={{
                       ...AppStyles.justifyRow,
                       marginTop: verticalScale(-10),
-                    }}>
+                    }}
+                  >
                     <CustomInput
                       height={29}
                       color={colors.gray100}
@@ -594,28 +755,31 @@ const DriverService = ({ navigation }) => {
                       dropDown={true}
                       onShowPassword={() => setIsTimeModal(true)}
                       rightImage={icon.down}
-                      value={time}
+                      value={endTime}
                       paddingHorizontal={10}
                       // placeholder={"$/day"}
                       borderRadius={8}
                     />
-                    {/* <DropDown
-                      placeholder={"Midnight"}
-                      dropWidth={scale(135)}
-                      data={data.map((item, _index) => {
-                        return {
-                          id: item?.id,
-                          label: item?.value,
-                          value: item?.value,
-                        };
-                      })}
-                    /> */}
+                   
                   </View>
                   <TouchableOpacity
+                    onPress={() => {
+                      let applySchedule = schedule.map((ite) => {
+                        return {
+                          ...ite,
+                          startTime: ite?.isActive ? startTime : ite.startTime,
+                          endTime: ite?.isActive ? endTime : ite.endTime,
+                        };
+                      });
+
+                      console.log("applySchedule", applySchedule);
+                      setSchedule(applySchedule);
+                    }}
                     style={{
                       alignSelf: "flex-end",
                       marginVertical: verticalScale(13),
-                    }}>
+                    }}
+                  >
                     <CustomText
                       text={"Apply to selected days"}
                       size={14}
@@ -639,8 +803,21 @@ const DriverService = ({ navigation }) => {
                       <>
                         <ScheduleContainer
                           day={item.day}
-                          time={item.time}
+                          time={`${item.startTime} - ${item.endTime}`}
                           isEditDisable={!item.isActive}
+                          setIsActive={() => {
+                            const updates = [...schedule];
+
+                            // Toggle the 'active' property of the item at the specified index
+                            updates[index] = {
+                              ...updates[index],
+                              isActive: !updates[index].isActive,
+                            };
+
+                            console.log("updates[index]", updates[index]);
+
+                            setSchedule(updates);
+                          }}
                           isEditColor={
                             item.isActive ? colors.secondary : colors.gray100
                           }
@@ -657,7 +834,8 @@ const DriverService = ({ navigation }) => {
                     style={{
                       ...AppStyles.justifyRow,
                       marginVertical: verticalScale(13),
-                    }}>
+                    }}
+                  >
                     <CustomText text={"Dedicated"} size={13} />
 
                     <Image
@@ -666,14 +844,91 @@ const DriverService = ({ navigation }) => {
                       resizeMode={"contain"}
                     />
                   </TouchableOpacity>
+                  <View
+                    style={{
+                      ...AppStyles.justifyRow,
+                      // marginTop: verticalScale(-10),
+                    }}
+                  >
+                    <CustomInput
+                      height={29}
+                      color={colors.gray100}
+                      width={scale(135)}
+                      editable={false}
+                      dropDown={true}
+                      onShowPassword={() => setIsDedicatedStartTimeModal(true)}
+                      rightImage={icon.down}
+                      value={dedicatedStartTime}
+                      paddingHorizontal={10}
+                      // placeholder={"$/day"}
+                      borderRadius={8}
+                    />
+
+                    <CustomInput
+                      height={29}
+                      color={colors.gray100}
+                      width={scale(135)}
+                      editable={false}
+                      dropDown={true}
+                      onShowPassword={() => setIsDedicatedTimeModal(true)}
+                      rightImage={icon.down}
+                      value={dedicatedEndTime}
+                      paddingHorizontal={10}
+                      // placeholder={"$/day"}
+                      borderRadius={8}
+                    />
+                   
+                  </View>
+                  <TouchableOpacity
+                    onPress={() => {
+                      let applySchedule = Dedicated.map((ite) => {
+                        return {
+                          ...ite,
+                          startTime: ite?.isActive ? dedicatedStartTime : ite.startTime,
+                          endTime: ite?.isActive ? dedicatedEndTime : ite.endTime,
+                        };
+                      });
+
+                      console.log("applySchedule", applySchedule);
+                      setDedicated(applySchedule);
+                    }}
+                    style={{
+                      alignSelf: "flex-end",
+                      marginVertical: verticalScale(13),
+                    }}
+                  >
+                    <CustomText
+                      text={"Apply to selected days"}
+                      size={14}
+                      // fontWeight={"600"}
+                      color={colors.secondary}
+
+                      // fontWeight={"400"}
+                    />
+                  </TouchableOpacity>
 
                   {Dedicated.map((item, index) => {
                     return (
                       <>
                         <ScheduleContainer
                           day={item.day}
-                          time={item.time}
+                          time={`${item.startTime} - ${item.endTime}`}
                           isEditDisable={!item.isActive}
+                          setIsActive={() => {
+                            const updates = [...Dedicated];
+
+                            // Toggle the 'active' property of the item at the specified index
+                            updates[index] = {
+                              ...updates[index],
+                              isActive: !updates[index].isActive,
+                            };
+
+                            console.log("updates[index]", updates[index]);
+
+                            setDedicated(updates);
+                          }}
+
+
                           isEditColor={
                             item.isActive ? colors.secondary : colors.gray100
                           }
@@ -684,10 +939,7 @@ const DriverService = ({ navigation }) => {
                       </>
                     );
                   })}
-
-
                 </View>
-                
               </View>
               <CustomText
                 text={"Move Category"}
@@ -709,7 +961,26 @@ const DriverService = ({ navigation }) => {
                         <HorizontalContainerToggle
                           text={item.name}
                           isNext
+                          onPressNext={ ()=> {
+                            if(item.isActive){
+                              item.onPressNext()
+                            }
+
+                          }}
                           isActive={item.isActive}
+                          setIsActive={() => {
+                            const updates = [...MoveCategory];
+
+                            // Toggle the 'active' property of the item at the specified index
+                            updates[index] = {
+                              ...updates[index],
+                              isActive: !updates[index].isActive,
+                            };
+
+                            console.log("updates[index]", updates[index]);
+
+                            setMoveCategory(updates);
+                          }}
                           // text1={"On-demand"}
                         />
                         {MoveCategory.length != index + 1 ? (
@@ -752,9 +1023,9 @@ const DriverService = ({ navigation }) => {
 
       <DropDownModal
         modalVisible={isTimeModal}
-        selectedObject={time}
+        selectedObject={endTime}
         title={"Select Time"}
-        setSelectedObject={setTime}
+        setSelectedObject={setEndTime}
         setModalVisible={setIsTimeModal}
         data={timeData}
       />
@@ -768,7 +1039,25 @@ const DriverService = ({ navigation }) => {
         data={timeData}
       />
 
-<CustomBackModal
+<DropDownModal
+        modalVisible={isDedicatedTimeModal}
+        selectedObject={dedicatedEndTime}
+        title={"Select Time"}
+        setSelectedObject={setDedicatedEndTime}
+        setModalVisible={setIsDedicatedTimeModal}
+        data={timeData}
+      />
+
+      <DropDownModal
+        modalVisible={isDedicatedStartTimeModal}
+        selectedObject={dedicatedStartTime}
+        title={"Select Time"}
+        setSelectedObject={SetDedicatedStartTime}
+        setModalVisible={setIsDedicatedStartTimeModal}
+        data={timeData}
+      />
+
+      <CustomBackModal
         startButtonText={"Don’t Save"}
         onSave={() => {
           setIsModalVisible(false);

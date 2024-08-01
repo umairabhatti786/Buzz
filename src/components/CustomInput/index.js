@@ -137,7 +137,6 @@ const CustomInput = ({
               justifyContent: "center",
               alignItems: "flex-end",
               height: verticalScale(height || 45),
-              // width: 30,
             }}
           >
             <Image

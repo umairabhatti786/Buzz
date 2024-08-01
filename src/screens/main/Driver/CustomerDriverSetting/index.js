@@ -8,7 +8,7 @@ import {
   Platform,
   FlatList,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Screen } from "../../../../utils/ui/Screen";
 import { colors } from "../../../../utils/colors";
 import { AppStyles } from "../../../../utils/AppStyle";
@@ -29,6 +29,9 @@ import PaymentMethodModal from "../../Customer/DriverSearch/PaymentMethodModal";
 import AddPaymentMethodModal from "../../Customer/DriverSearch/AddPaymentMethodModal";
 import EmailVerificationBottomSheet from "./EmailVerificationBottomSheet";
 import NewPasswordBottomSheet from "./NewPasswordBottomSheet";
+import { useSelector } from "react-redux";
+import { getSelectedAccount } from "../../../../redux/reducers/authReducer";
+import { useIsFocused } from "@react-navigation/native";
 
 const CustomerDriverSetting = ({ navigation }) => {
   const [isPhoneNumberVisible, setIsPhoneNumberVisible] = useState(false);
@@ -42,6 +45,11 @@ const CustomerDriverSetting = ({ navigation }) => {
   const [isPaymentModal, setIsPaymentModal] = useState(false);
   const emailVerificattionSheet = useRef(false);
   const newPasswordSheet = useRef(false);
+  const focused=useIsFocused()
+
+
+  const selectAccount=useSelector(getSelectedAccount)
+  console.log("selectAccount",selectAccount)
 
   const [isAddAccountVisible, setIsAddAccountVisible] = useState(false);
 
@@ -55,51 +63,32 @@ const CustomerDriverSetting = ({ navigation }) => {
       buttonWidth: 55,
     },
   ]);
-  const data = [
-    {
-      id: 1,
-      label: "task1",
-      value: "Andrede",
-    },
-    {
-      id: 2,
-      label: "task2",
-      value: "Herr",
-    },
-  ];
 
-  const customerTicketData = [
-    {
-      img: image.defimg102,
-      name: "Customer Name",
-      active: "Available",
-      date: "02/26/23",
-      distance: "15 mil",
-      time: "15 Min Away",
-      isOpen: true,
-      pass: icon.pass,
-    },
-    {
-      img: image.defimg103,
-      name: "Customer Name",
-      active: "Busy",
-      date: "02/26/23",
-      distance: "15 mil",
-      time: "15 Min Away",
-      isOpen: false,
-      pass: icon.passg,
-    },
-    {
-      img: image.defimg700,
-      name: "Customer Name",
-      active: "On Schedule",
-      date: "02/26/23",
-      distance: "15 mil",
-      time: "15 Min Away",
-      isOpen: true,
-      pass: icon.passp,
-    },
-  ];
+  useEffect(() => {
+    setUserProfile((prevProfile) => {
+      const updatedProfiles = prevProfile.map(profile => ({
+        ...profile,
+        isActive: profile.user === selectAccount
+      }));
+
+      if (selectAccount === 'Customer') {
+        return [
+          updatedProfiles.find(profile => profile.user === 'Customer'),
+          updatedProfiles.find(profile => profile.user === 'Driver')
+        ];
+      } else if (selectAccount === 'Driver') {
+        return [
+          updatedProfiles.find(profile => profile.user === 'Driver'),
+          updatedProfiles.find(profile => profile.user === 'Customer')
+        ];
+      }
+
+      return updatedProfiles;
+    });
+  }, [focused]);
+ 
+
+ 
   const ManageOrdersData = [
     {
       title: "Upcoming",

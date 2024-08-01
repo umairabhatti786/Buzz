@@ -1,4 +1,6 @@
 package com.buzz;
+import android.os.Bundle; // here
+
 // import android.os.Bundle; // here
 
 import com.facebook.react.ReactActivity;
@@ -18,6 +20,12 @@ public class MainActivity extends ReactActivity {
     //     SplashScreen.show(this);  // here
     //     super.onCreate(savedInstanceState);
     // }
+
+     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.show(this);  // here
+        super.onCreate(null);
+    }
 
 
   @Override

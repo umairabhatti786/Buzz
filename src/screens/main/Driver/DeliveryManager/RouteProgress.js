@@ -30,7 +30,6 @@ const DestinationContainer=()=>{
     style={{
       width: "100%",
       height: "100%",
-      borderRadius: scale(10),
     }}
     resizeMode={"contain"}
     source={image.marker}
@@ -64,7 +63,6 @@ backgroundColor={"#0A987F20"}
     style={{
       width: "100%",
       height: "100%",
-      borderRadius: scale(10),
     }}
     resizeMode={"contain"}
     source={image.marker}

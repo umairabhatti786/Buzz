@@ -31,8 +31,11 @@ import DropDownModal from "../../../../components/DropDownModal";
 const MoveCategoryOne = ({ navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [base,setBase]=useState("")
-  const [dedicated,setDedicated]=useState("")
+  const [priceAdjuster, setPriceAdjuster] = useState("1.2");
+  const [onDemandPrice, setOnDemandPrice] = useState("1.2");
+
+  const [base, setBase] = useState("");
+  const [dedicated, setDedicated] = useState("");
 
   const [vehicleSize, setVehicleSize] = useState("Standard (2-4 seats)");
   const [isVehicleSizeModal, setIsVehicleSizeModal] = useState(false);
@@ -50,12 +53,10 @@ const MoveCategoryOne = ({ navigation }) => {
   //   { mile: 50, fromMi: "50",fromMile:"" },
   // ],
 
-  const [PriceData,setPriceData] =useState ([
-    { mile: 20, toMi: "20",toMile:"" },
-    { toMile: 20, formMile: 50, toFromMile: "" },
-    { mile: 50, fromMi: "50",fromMile:"" },
-   
-  ])
+  const [PriceData, setPriceData] = useState({
+    mileTo: "20",
+    mileFrom: "50",
+  });
   const ScheduleQuote = ({ title }) => {
     return (
       <View>
@@ -66,7 +67,8 @@ const MoveCategoryOne = ({ navigation }) => {
               width: "60%",
               //   backgroundColor:"red"
               //   marginBottom: verticalScale(13),
-            }}>
+            }}
+          >
             <CustomText
               text={title || "Schedule Quote"}
               color={colors.gray200}
@@ -97,13 +99,15 @@ const MoveCategoryOne = ({ navigation }) => {
         height={40}
         backgroundColor={colors.white}
         // topBarColor={colors.primary}
-        barStyle={"dark-content"}>
+        barStyle={"dark-content"}
+      >
         <View
           style={{
             flex: 1,
 
             backgroundColor: colors.white,
-          }}>
+          }}
+        >
           <TopHeader
             txt={"Ride Service"}
             isBack={() => setIsModalVisible(true)}
@@ -114,14 +118,16 @@ const MoveCategoryOne = ({ navigation }) => {
               style={{
                 paddingHorizontal: scale(15),
                 paddingTop: verticalScale(15),
-              }}>
+              }}
+            >
               <CustomLine />
 
               <View
                 style={{
                   ...AppStyles.justifyRow,
                   marginVertical: verticalScale(15),
-                }}>
+                }}
+              >
                 <CustomText
                   text={"Vehicle Size/Feature"}
                   color={colors.black}
@@ -179,7 +185,8 @@ const MoveCategoryOne = ({ navigation }) => {
                       ...AppStyles.justifyRow,
                       marginBottom: verticalScale(13),
                       marginRight: scale(5),
-                    }}>
+                    }}
+                  >
                     <CustomText text={"On Demand"} size={13} />
 
                     <Image
@@ -189,7 +196,61 @@ const MoveCategoryOne = ({ navigation }) => {
                     />
                   </View>
 
-                  <ScheduleQuote />
+                  <View style={AppStyles.justifyRow}>
+                    <View
+                      style={{
+                        ...AppStyles.justifyRow,
+                        width: "60%",
+                        //   backgroundColor:"red"
+                        //   marginBottom: verticalScale(13),
+                      }}
+                    >
+                      <CustomText
+                        text={"Schedule Quote"}
+                        color={colors.gray200}
+                        size={13}
+                      />
+
+                      <Image
+                        style={{ width: scale(13), height: scale(13) }}
+                        source={icon.cross}
+                        resizeMode={"contain"}
+                      />
+                    </View>
+                    <CustomInput
+                      height={29}
+                      width={scale(70)}
+                      paddingHorizontal={1}
+                      borderRadius={8}
+                      keyboard={"numeric"}
+                      value={onDemandPrice}
+                      onChangeText={(txt) => {
+                        // Remove any non-numeric characters
+                        let numericValue = txt.replace(/[^0-9]/g, "");
+
+                        // Remove leading zeros
+                        numericValue = numericValue.replace(/^0+/, "");
+
+                        console.log("Numberbcd", numericValue);
+                        // Limit the length of the input to 2 digits
+                        if (numericValue.length > 2) {
+                          numericValue = numericValue.slice(0, 2);
+                        }
+                        // Format the value as x.y
+                        let formattedValue;
+                        if (numericValue.length === 1) {
+                          formattedValue = `0.${numericValue}`;
+                        } else if (numericValue.length === 2) {
+                          formattedValue = `${numericValue[0]}.${numericValue[1]}`;
+                        }
+
+                        // Update the state with the formatted value
+                        setOnDemandPrice(formattedValue);
+                      }}
+                    />
+                  </View>
+
+                  {/* <ScheduleQuote /> */}
                   <View style={{ marginVertical: verticalScale(13) }}>
                     <DashedLine
                       dashLength={6}
@@ -204,7 +265,8 @@ const MoveCategoryOne = ({ navigation }) => {
                       ...AppStyles.justifyRow,
                       marginBottom: verticalScale(13),
                       marginRight: scale(5),
-                    }}>
+                    }}
+                  >
                     <CustomText text={"Scheduled"} size={13} />
 
                     <Image
@@ -218,7 +280,8 @@ const MoveCategoryOne = ({ navigation }) => {
                     style={{
                       ...AppStyles.justifyRow,
                       //   marginTop: verticalScale(13),
-                    }}>
+                    }}
+                  >
                     <CustomText
                       text={"Base"}
                       color={colors.gray200}
@@ -231,32 +294,58 @@ const MoveCategoryOne = ({ navigation }) => {
                       placeholder={"$"}
                       value={base}
                       borderRadius={8}
-                      onChangeText={(txt)=>{
-
-              if (/^\d+$/.test(txt) || txt === "") {
-               
-
-                setBase(txt);
-              }
+                      onChangeText={(txt) => {
+                        if (/^\d+$/.test(txt) || txt === "") {
+                          setBase(txt);
+                        }
                       }}
-                      
 
                       // value={"1.2"}
                     />
                   </View>
-                  
-                  {PriceData.map((item, index) => {
-                    return <MilesContainer 
+                  <MilesContainer
+                    isActive={true}
+                    array={PriceData}
+                    mile={PriceData.mileTo}
+                    onChangeText={(txt) => {
+                      if (/^\d*$/.test(txt)) {
+                        setPriceData({ ...PriceData, mileTo: txt });
+                        // Allows only digits and empty string
+                        // setPriceData((prevData) =>
+                        //   prevData.map((item, ind) =>
+                        //     ind === index
+                        //       ? { ...item, mileTo: txt }
+                        //       : item
+                        //   )
+                        // );
+                      }
+                    }}
+                    mileFrom={PriceData.mileFrom}
+                    mileTo={PriceData.mileTo}
+                  />
 
-                    editable={item.isActive}
+                  <MilesContainer
+                    isActive={true}
                     array={PriceData}
                     setArray={setPriceData}
-                    ind={index}
-                    index={1}
-                    
-                    item={item}
-                    />;
-                  })}
+                    showMile={true}
+                    mileFrom={PriceData.mileFrom}
+                    mileTo={PriceData.mileTo}
+                  />
+                  <MilesContainer
+                    mile={PriceData.mileFrom}
+                    isActive={true}
+                    array={PriceData}
+                    setArray={setPriceData}
+                    mileFrom={PriceData.mileFrom}
+                    mileTo={PriceData.mileTo}
+                    onChangeText={(txt) => {
+                      if (/^\d*$/.test(txt)) {
+                        setPriceData({ ...PriceData, mileFrom: txt });
+                      }
+                    }}
+                  />
+
                   <View style={{ marginVertical: verticalScale(13) }}>
                     <DashedLine
                       dashLength={6}
@@ -270,7 +359,8 @@ const MoveCategoryOne = ({ navigation }) => {
                     style={{
                       ...AppStyles.justifyRow,
                       marginBottom: verticalScale(13),
-                    }}>
+                    }}
+                  >
                     <CustomText
                       text={"Dedicated"}
                       //   color={colors.}
@@ -283,14 +373,11 @@ const MoveCategoryOne = ({ navigation }) => {
                       placeholder={"$/day"}
                       borderRadius={8}
                       value={dedicated}
-                      onChangeText={(txt)=>{
-
+                      onChangeText={(txt) => {
                         if (/^\d+$/.test(txt) || txt === "") {
-                         
-          
                           setDedicated(txt);
                         }
-                                }}
+                      }}
 
                       // value={"1.2"}
                     />
@@ -311,11 +398,68 @@ const MoveCategoryOne = ({ navigation }) => {
               />
 
               <View
-                style={{ ...AppStyles.box, marginBottom: verticalScale(50) }}>
+                style={{ ...AppStyles.box, marginBottom: verticalScale(50) }}
+              >
                 <View style={{ paddingHorizontal: scale(15) }}>
                   <Spacer height={verticalScale(15)} />
+                  <View>
+                    <View style={AppStyles.justifyRow}>
+                      <View
+                        style={{
+                          ...AppStyles.justifyRow,
+                          width: "60%",
+                          //   backgroundColor:"red"
+                          //   marginBottom: verticalScale(13),
+                        }}
+                      >
+                        <CustomText
+                          text={"Schedule Quote"}
+                          color={colors.gray200}
+                          size={13}
+                        />
 
-                  <ScheduleQuote />
+                        <Image
+                          style={{ width: scale(13), height: scale(13) }}
+                          source={icon.cross}
+                          resizeMode={"contain"}
+                        />
+                      </View>
+                      <CustomInput
+                        height={29}
+                        width={scale(70)}
+                        paddingHorizontal={1}
+                        borderRadius={8}
+                        keyboard={"numeric"}
+                        value={priceAdjuster}
+                        onChangeText={(txt) => {
+                          // Remove any non-numeric characters
+                          let numericValue = txt.replace(/[^0-9]/g, "");
+  
+                          // Remove leading zeros
+                          numericValue = numericValue.replace(/^0+/, "");
+  
+                          console.log("Numberbcd", numericValue);
+                          // Limit the length of the input to 2 digits
+                          if (numericValue.length > 2) {
+                            numericValue = numericValue.slice(0, 2);
+                          }
+                          // Format the value as x.y
+                          let formattedValue;
+                          if (numericValue.length === 1) {
+                            formattedValue = `0.${numericValue}`;
+                          } else if (numericValue.length === 2) {
+                            formattedValue = `${numericValue[0]}.${numericValue[1]}`;
+                          }
+  
+                          // Update the state with the formatted value
+                          setPriceAdjuster(formattedValue);
+                        }}
+                       
+                      />
+                    </View>
+                  </View>
+
+                  {/* <ScheduleQuote /> */}
 
                   <CustomText
                     text={"Note: Only applicable to Scheduled Service"}
@@ -330,7 +474,10 @@ const MoveCategoryOne = ({ navigation }) => {
         </View>
       </Screen>
 
-      <CategoryBottomTab />
+      <CategoryBottomTab
+        onLabel3={() => navigation.navigate("Watchlist")}
+        onLabel1={() => navigation.navigate("Watchlist")}
+      />
 
       <CustomBackModal
         startButtonText={"Don’t Save"}
@@ -351,13 +498,13 @@ const MoveCategoryOne = ({ navigation }) => {
         setModalVisible={setIsModalVisible}
       />
 
-<DropDownModal
-      modalVisible={isVehicleSizeModal}
-      selectedObject={vehicleSize}
-      title={"Vehicle Size/Feature"}
-      setSelectedObject={setVehicleSize}
-      setModalVisible={setIsVehicleSizeModal}
-      data={vehicleSizeData}
+      <DropDownModal
+        modalVisible={isVehicleSizeModal}
+        selectedObject={vehicleSize}
+        title={"Vehicle Size/Feature"}
+        setSelectedObject={setVehicleSize}
+        setModalVisible={setIsVehicleSizeModal}
+        data={vehicleSizeData}
       />
     </>
   );

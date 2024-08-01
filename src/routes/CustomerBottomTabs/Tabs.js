@@ -19,15 +19,7 @@ const CustomerBottomTabs=()=> {
       tabBarOptions={{
         activeTintColor: colors.black, // Set your desired active tab text color
         inactiveTintColor: colors.gray,
-        // Set your desired inactive tab text color
-        //  style: {
-        //   elevation: 5, // Add elevation for Android shadow effect
-        //   shadowColor: colors.black, // Add shadow color for iOS
-        //   shadowOffset: { width: 0, height: -4 }, // Add shadow offset for iOS
-        //   shadowOpacity: 5, // Add shadow opacity for iOS
-        //   shadowRadius: 10, // Add shadow radius for iOS
-        //   backgroundColor:"white"
-        // },
+     
       }}
       screenOptions={{
         tabBarStyle: {

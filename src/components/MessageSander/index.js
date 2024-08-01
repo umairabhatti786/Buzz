@@ -10,7 +10,7 @@ import {
 import { AppStyles } from "../../utils/AppStyle";
 import { icon } from "../../assets/png/icons";
 import { colors } from "../../utils/colors";
-const MessageSander = ({onAttach}) => {
+const MessageSander = ({onAttach,mainColor}) => {
   return (
     <View style={styles.main}>
       <TouchableOpacity 
@@ -31,7 +31,10 @@ const MessageSander = ({onAttach}) => {
           />
         </View>
       </View>
-      <TouchableOpacity activeOpacity={0.6} style={styles.sendContainer}>
+      <TouchableOpacity activeOpacity={0.6} style={{...styles.sendContainer,
+          backgroundColor:mainColor||  colors.primary,
+
+      }}>
         <Image
           style={{ width: 20, height: 20 }}
           resizeMode="contain"
@@ -57,7 +60,6 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 15,
-    backgroundColor: colors.primary,
     alignItems: "center",
     justifyContent: "center",
   },

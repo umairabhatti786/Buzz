@@ -101,7 +101,8 @@ const DriverHome = ({ navigation }) => {
           ...AppStyles.justifyRow,
           paddingLeft: scale(10),
           paddingVertical: verticalScale(10),
-        }}>
+        }}
+      >
         <CustomText
           text={"Availability"}
           size={14}
@@ -142,21 +143,23 @@ const DriverHome = ({ navigation }) => {
 
   const ProfileContainer = () => {
     return (
-      <TouchableOpacity 
-      activeOpacity={0.6}
-      onPress={()=>navigation.navigate("CustomerDriverSetting")}
-      style={{ ...styles.box, paddingVertical: verticalScale(10) }}>
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={() => navigation.navigate("DriverProfile")}
+        style={{ ...styles.box, paddingVertical: verticalScale(10) }}
+      >
         <View style={{ flexDirection: "row", paddingLeft: scale(10) }}>
           <Image
             style={{
               width: scale(70),
               height: scale(70),
-              borderRadius: scale(10),
+              borderRadius: scale(8),
             }}
-            source={image.defimg500}
+            source={image.default_user}
           />
           <View
-            style={{ paddingLeft: scale(10), paddingTop: verticalScale(3) }}>
+            style={{ paddingLeft: scale(10), paddingTop: verticalScale(3) }}
+          >
             <View style={{ flexDirection: "row" }}>
               <CustomText
                 text={"Welcome,"}
@@ -179,7 +182,7 @@ const DriverHome = ({ navigation }) => {
               text={"Base: Tampa, FL"}
               size={13}
               //   fontFam={"100"}
-              style={{ marginVertical: verticalScale(6) }}
+              style={{ marginVertical: verticalScale(2) }}
               color={colors.gray}
             />
 
@@ -198,13 +201,17 @@ const DriverHome = ({ navigation }) => {
           <CustomLine />
         </View>
 
-        <View
+        <TouchableOpacity
+         onPress={() => {
+          navigation.navigate("DriverService");
+        }}
           style={{
             ...AppStyles.justifyRow,
             paddingHorizontal: scale(10),
             paddingVertical: verticalScale(3),
-          }}>
-          <View style={AppStyles.row}>
+          }}
+        >
+          <View style={{...AppStyles.row,}}>
             <Image
               style={{
                 width: scale(20),
@@ -215,23 +222,19 @@ const DriverHome = ({ navigation }) => {
             />
             <Spacer width={scale(10)} />
             <TouchableOpacity
-            activeOpacity={0.6}
-            onPress={()=>{
-              navigation.navigate("DriverService")
-
-            }}
+              activeOpacity={0.6}
+              onPress={() => {
+                navigation.navigate("DriverService");
+              }}
             >
-            <CustomText
-              text={"Service Profile"}
-              color={colors.secondary}
-              fontFam={Inter.medium}
-              //   fontWeight="500"
-              size={14}
-            />
-
+              <CustomText
+                text={"Service Profile"}
+                color={colors.secondary}
+                fontFam={Inter.medium}
+                //   fontWeight="500"
+                size={14}
+              />
             </TouchableOpacity>
-
-           
           </View>
           <Image
             style={{
@@ -241,7 +244,7 @@ const DriverHome = ({ navigation }) => {
             source={icon.nexticon}
             resizeMode="contain"
           />
-        </View>
+        </TouchableOpacity>
       </TouchableOpacity>
     );
   };
@@ -249,7 +252,8 @@ const DriverHome = ({ navigation }) => {
     <Screen
       backgroundColor={colors.white}
       topBarColor={colors.secondary}
-      barStyle={"light-content"}>
+      barStyle={"dark-content"}
+    >
       <View
         style={{
           flexDirection: "row",
@@ -259,9 +263,10 @@ const DriverHome = ({ navigation }) => {
           paddingLeft: scale(20),
           paddingRight: scale(30),
 
-          paddingTop: verticalScale(10),
-          paddingBottom: verticalScale(60),
-        }}>
+          paddingTop: verticalScale(20),
+          paddingBottom: verticalScale(70),
+        }}
+      >
         <Image
           style={{ width: scale(85), height: verticalScale(22) }}
           source={image.appicon}
@@ -270,7 +275,8 @@ const DriverHome = ({ navigation }) => {
         <View style={AppStyles.row}>
           <TouchableOpacity
             activeOpacity={0.6}
-            onPress={() => navigation.navigate("CustomerSearch")}>
+            onPress={() => navigation.navigate("CustomerSearch")}
+          >
             <Image
               style={{ width: scale(22), height: scale(22) }}
               source={icon.search}
@@ -279,13 +285,16 @@ const DriverHome = ({ navigation }) => {
           </TouchableOpacity>
           <Spacer width={scale(15)} />
 
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("DriverConversation")}
+          >
             <Image
               style={{ width: scale(22), height: scale(22) }}
               source={icon.message}
               resizeMode="contain"
             />
             <TouchableOpacity
+              onPress={() => navigation.navigate("DriverConversation")}
               style={{
                 width: scale(22),
                 height: scale(22),
@@ -298,7 +307,8 @@ const DriverHome = ({ navigation }) => {
                 right: -12,
                 borderColor: colors.secondary,
                 borderWidth: 1.5,
-              }}>
+              }}
+            >
               <CustomText
                 text={"1"}
                 //   size={12}
@@ -316,7 +326,8 @@ const DriverHome = ({ navigation }) => {
           marginTop: verticalScale(-40),
           paddingTop: verticalScale(30),
           backgroundColor: colors.white,
-        }}>
+        }}
+      >
         <ScrollView>
           <View style={{ paddingHorizontal: scale(15) }}>
             <AvailabilityContainer />
@@ -337,7 +348,9 @@ const DriverHome = ({ navigation }) => {
               keyExtractor={(item, index) => item + index}
               renderItem={({ item }) => (
                 <View style={{ paddingHorizontal: scale(15) }}>
-                  <ProductCard ennPointColor={colors.secondary} item={item} />
+                  <ProductCard 
+                  onPress={()=>navigation.navigate("CustomerSearch")}
+                  ennPointColor={colors.secondary} item={item} />
                 </View>
               )}
               renderSectionHeader={({ section: { title } }) => (
@@ -347,7 +360,8 @@ const DriverHome = ({ navigation }) => {
                     alignItems: "center",
                     //   marginTop: verticalScale(10),
                     paddingHorizontal: scale(15),
-                  }}>
+                  }}
+                >
                   <CustomText
                     text={title}
                     color={colors.black}
@@ -362,7 +376,8 @@ const DriverHome = ({ navigation }) => {
                       width: "85%",
                       backgroundColor: colors.gray1,
                       marginLeft: 20,
-                    }}></View>
+                    }}
+                  ></View>
                 </View>
               )}
             />

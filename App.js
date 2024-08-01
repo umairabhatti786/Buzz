@@ -7,26 +7,20 @@ import { Provider } from "react-redux";
 import RootNavigator from "./src/routes";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-
+import store from "./src/redux/store";
 
 LogBox.ignoreLogs(["VirtualizedLists", "Warning:..."]);
 LogBox.ignoreAllLogs();
 
 const App = () => {
   return (
-    <GestureHandlerRootView
-    style={{flex:1}}
-    >
-              <BottomSheetModalProvider>
-              <RootNavigator/>
-
-
-              </BottomSheetModalProvider>
-
-
-      
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Provider store={store}>
+        <BottomSheetModalProvider>
+          <RootNavigator />
+        </BottomSheetModalProvider>
+      </Provider>
     </GestureHandlerRootView>
-   
   );
 };
 

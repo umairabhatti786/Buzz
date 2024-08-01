@@ -23,6 +23,8 @@ export const icon={
     dots:require("../icons/dots.png"),
     share:require("../icons/share.png"),
     thumbup:require("../icons/thumbup.png"),
+    dateClendar:require("../icons/date-clendar.png"),
+
     grayforward:require("../icons/grayforward.png"),
     play:require("../icons/play.png"),
     backIcon:require("../icons/back-icon.png"),

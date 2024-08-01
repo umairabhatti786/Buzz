@@ -1,5 +1,5 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { scale } from "react-native-size-matters";
+import { scale, verticalScale } from "react-native-size-matters";
 import ToggleSwitch from "toggle-switch-react-native";
 import { icon } from "../../assets/png/icons";
 import { AppStyles } from "../../utils/AppStyle";
@@ -26,6 +26,7 @@ const HorizontalContainerToggle = ({
   setIsActive,
   isNext,
   fontWeight,
+  onPressNext
 }) => {
   return (
     <TouchableOpacity
@@ -41,12 +42,20 @@ const HorizontalContainerToggle = ({
 
         {isNext && (
           <>
-            <Spacer width={scale(10)} />
+            {/* <Spacer width={scale(5)} /> */}
+            <TouchableOpacity
+            disabled={!isActive}
+            style={{height:verticalScale(30),alignItems:"flex-end",justifyContent:"center",width:scale(30)}}
+            onPress={onPressNext}
+            >
             <Image
               style={{ width: scale(15), height: scale(15) }}
               source={icon.nexticon}
               resizeMode={"contain"}
             />
+
+            </TouchableOpacity>
+           
           </>
         )}
       </View>

@@ -81,7 +81,8 @@ const CustomCalendar = ({
   navigation,
   title,
   date,
-  setDate
+  setDate,
+  mainColor
 }) => {
   const [selected, setSelected] = useState("2024-03-15");
   const [currentMonth, setCurrentMonth] = useState("");
@@ -139,7 +140,7 @@ const CustomCalendar = ({
     <CustomModal
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
-      title={"From Date"}
+      title={ title|| "From Date"}
       width={"100%"}
     >
       <View style={{ height: 420 }}>
@@ -180,9 +181,9 @@ const CustomCalendar = ({
             calendarBackground: "#ffffff",
             textSectionTitleColor: "#000",
             textDayFontFamily: "700",
-            selectedDayBackgroundColor: "#12D1AF",
+            selectedDayBackgroundColor:mainColor|| "#12D1AF",
             selectedDayTextColor: "#ffffff",
-            todayTextColor: "#12D1AF",
+            todayTextColor: mainColor||"#12D1AF",
             textDayFontSize: 18,
             textMonthFontSize: 20,
             dayTextColor: "#000",
@@ -234,11 +235,11 @@ const CustomCalendar = ({
 
               }}
               bgColor={colors.white}
-              borderColor={colors.primary}
+              borderColor={mainColor || colors.primary}
               borderWidth={1}
               size={16}
               paddingHorizontal={15}
-              textColor={colors.primary}
+              textColor={mainColor ||colors.primary}
               // width={scale(110)}
             />
             <Button
@@ -247,8 +248,8 @@ const CustomCalendar = ({
               size={16}
               onPress={()=>setModalVisible(false)}
               paddingHorizontal={15}
-              bgColor={colors.primary}
-              borderColor={colors.primary}
+              bgColor={mainColor ||colors.primary}
+              borderColor={mainColor ||colors.primary}
               borderWidth={1}
             />
           </View>

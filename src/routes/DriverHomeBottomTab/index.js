@@ -11,6 +11,8 @@ import CustomerWatchlist from "../../screens/main/Customer/CustomerWatchlist";
 import DeliveryManager from "../../screens/main/Driver/DeliveryManager";
 import DriverHome from "../../screens/main/Driver/DriverHome";
 import { colors } from "../../utils/colors";
+import DriverNotification from "../../screens/main/Driver/DriverNotification";
+import CustomerDriverSetting from "../../screens/main/Driver/CustomerDriverSetting";
 
 const Tab = createBottomTabNavigator();
 
@@ -30,21 +32,23 @@ function DriverHomeBottomTab({navigation}) {
       //   backgroundColor:"white"
       // },
     }}
-      screenOptions={{
-        tabBarStyle: { backgroundColor: colors.white, borderTopWidth: 0.5
-           ,
-           paddingTop:verticalScale(5),
-           height:verticalScale(70),
-             activeTintColor: colors.black, // Set your desired active tab text color
-      inactiveTintColor: colors.gray,
-          
-        },
-        tabBarLabelStyle: {
-          lineHeight: 18,
-          fontWeight: "500",
-          fontSize: verticalScale(9),
-        },
-      }}>
+    screenOptions={{
+      tabBarStyle: {
+        backgroundColor: colors.white,
+        borderTopWidth: 0.5,
+        paddingTop: verticalScale(5),
+        height: verticalScale(60),
+        activeTintColor: colors.black, // Set your desired active tab text color
+        inactiveTintColor: colors.gray,
+        paddingBottom:10
+      },
+      tabBarLabelStyle: {
+        lineHeight: 18,
+        fontWeight: "500",
+        fontSize: verticalScale(9),
+      },
+    }}
+      >
       <Tab.Screen
         name={"Home"}
         component={DriverHome}
@@ -117,7 +121,7 @@ function DriverHomeBottomTab({navigation}) {
       />
       <Tab.Screen
         name={"Notification"}
-        component={CustomerNotification}
+        component={DriverNotification}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
@@ -135,7 +139,7 @@ function DriverHomeBottomTab({navigation}) {
       />
       <Tab.Screen
         name={"Menu"}
-        component={CustomerMenu}
+        component={CustomerDriverSetting}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
