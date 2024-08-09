@@ -16,8 +16,9 @@ import Collapsible from 'react-native-collapsible';
 
 
 
-const DriverCard = ({item,onPress,isNoShadow,backgroundColor,onWatchList}) => {
+const DriverCard = ({item,onPress,isNoShadow,backgroundColor,onWatchList,onCounterOffer,onAccept}) => {
     const [isCollapsible,setIsCollapsible]=useState(item.isOpen)
+    const [isAddons,setIsAddons]=useState(true)
 
     
   return (
@@ -220,11 +221,55 @@ const DriverCard = ({item,onPress,isNoShadow,backgroundColor,onWatchList}) => {
 
         </View>
 
-        <View style={{paddingVertical:verticalScale(10)}}>
-        <CustomLine
-        />
+        <View style={{ paddingVertical: verticalScale(13) }}>
+            <CustomLine />
 
-        </View>
+            <TouchableOpacity
+              onPress={() => setIsAddons(!isAddons)}
+              style={{
+                width: 35,
+                height: 35,
+                borderRadius: 999,
+                backgroundColor: "#EEEEEE",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "absolute",
+                left: "45%",
+              }}
+            >
+              <Image
+                style={{ width: scale(13), height: scale(13) }}
+                source={icon.down}
+                resizeMode={"contain"}
+              />
+            </TouchableOpacity>
+          </View>
+
+        <Collapsible collapsed={isAddons} >
+          <View style={{paddingHorizontal:15}}>
+         
+
+              <HorizontalContainer text={"Loading fee"} text1={"$10/flight"} />
+              <View style={{ marginVertical: verticalScale(13) }}>
+                <DashedLine
+                  dashLength={6}
+                  dashThickness={1}
+                  dashGap={5}
+                  dashColor={colors.gray}
+                />
+              </View>
+              <HorizontalContainer text={"Unloading fee"} text1={"$10/flight"} />
+              <View style={{ marginVertical: verticalScale(13) }}>
+                <DashedLine
+                  dashLength={6}
+                  dashThickness={1}
+                  dashGap={5}
+                  dashColor={colors.gray}
+                />
+              </View>
+
+          </View>
+          </Collapsible>
 
        
         <Spacer height={verticalScale(5)}/>
@@ -257,6 +302,7 @@ const DriverCard = ({item,onPress,isNoShadow,backgroundColor,onWatchList}) => {
                  bgColor={colors.white}
                  borderColor={colors.secondary}
                  borderWidth={1}
+                 onPress={onCounterOffer}
                  size={14}
                  textColor={colors.secondary}
                  width={scale(110)}
@@ -264,6 +310,7 @@ const DriverCard = ({item,onPress,isNoShadow,backgroundColor,onWatchList}) => {
                  <Spacer width={scale(10)}/>
                   <CustomButton
                  text={"Accept"}
+                 onPress={onAccept}
                  height={30}
                  size={14}
                  bgColor={colors.secondary}

@@ -22,9 +22,11 @@ import { Inter } from "../../../../utils/Fonts";
 import ProductCard from "../../../../components/ProductCard";
 import CustomButton from "../../../../components/CustomButton";
 import CustomLine from "../../../../components/CustomLine/CustomLine";
+import ActionModal from "../../../../components/ActionModal";
 const DriverHome = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState(-1);
-  const [activeAvailability, setActiveAvailability] = useState(0);
+  const [activeAvailability, setActiveAvailability] = useState("Off");
+  const [isActionModal,setIsActionModal]=useState(false)
 
   const categoryData = [
     { name: "Need a Ride", img: image.ride },
@@ -115,7 +117,16 @@ const DriverHome = ({ navigation }) => {
             return (
               <View style={{ marginRight: scale(5) }}>
                 <CustomButton
-                  onPress={() => setActiveAvailability(index)}
+                  onPress={() => {
+                    if(item=="Scheduled"){
+
+                      setIsActionModal(true)
+                      
+                    }
+
+                    setActiveAvailability(item)
+
+                  }}
                   text={item}
                   height={29}
                   fontWeight={"500"}
@@ -123,10 +134,10 @@ const DriverHome = ({ navigation }) => {
                   fontFam={Inter.regular}
                   paddingHorizontal={scale(10)}
                   textColor={
-                    activeAvailability == index ? colors.secondary : "#00000030"
+                    activeAvailability == item ? colors.secondary : "#00000030"
                   }
                   bgColor={
-                    activeAvailability == index
+                    activeAvailability == item
                       ? colors.secondary + "20"
                       : "transparent"
                   }
@@ -145,7 +156,7 @@ const DriverHome = ({ navigation }) => {
     return (
       <TouchableOpacity
         activeOpacity={0.6}
-        onPress={() => navigation.navigate("DriverProfile")}
+        onPress={() => navigation.navigate("ServiceProfile")}
         style={{ ...styles.box, paddingVertical: verticalScale(10) }}
       >
         <View style={{ flexDirection: "row", paddingLeft: scale(10) }}>
@@ -249,7 +260,9 @@ const DriverHome = ({ navigation }) => {
     );
   };
   return (
-    <Screen
+    <>
+
+<Screen
       backgroundColor={colors.white}
       topBarColor={colors.secondary}
       barStyle={"dark-content"}
@@ -385,6 +398,23 @@ const DriverHome = ({ navigation }) => {
         </ScrollView>
       </View>
     </Screen>
+
+<ActionModal
+        modalVisible={isActionModal}
+        title={"Accepted!"}
+        successButtonColor={colors.secondary}
+        descripation={"You can view accepted offer in save trips"}
+        submitText={"See Save Trips"}
+        setModalVisible={setIsActionModal}
+        onAction={() => {
+          setIsActionModal(false);
+          setTimeout(() => {
+            navigation.navigate("Menu");
+          }, 500);
+        }}
+      />
+    </>
+   
   );
 };
 

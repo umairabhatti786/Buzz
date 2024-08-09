@@ -8,7 +8,7 @@ import {
   Platform,
   FlatList,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Screen } from "../../../../utils/ui/Screen";
 import { colors } from "../../../../utils/colors";
 import { AppStyles } from "../../../../utils/AppStyle";
@@ -24,15 +24,52 @@ import CustomerTicket from "../../../../components/CustomerTicket";
 import { image } from "../../../../assets/png/images";
 import DriverCard from "../../../../components/DriverCard";
 import * as Animatable from "react-native-animatable";
+import SortedModal from "../../Customer/DriverSearch/SortedModal";
+import ViewModal from "../../Customer/DriverSearch/ViewModal";
+import VehicleModal from "../../Customer/DriverSearch/VehicleModal";
+import CategoryModal from "../../Customer/DriverSearch/CategoryModal";
+import TravelModel from "../../Customer/DriverSearch/TravelModel";
+import AllServicesModal from "../../../../components/AllServicesModal";
+import { AddonsServicesData } from "../../../../utils/Arrays";
+import CounterOfferModal from "../../Customer/DriverSearch/CounterOfferModal";
+import SuccessModal from "../../../../components/SuccessModal";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 
 const CustomerSearch = ({ navigation }) => {
   const [isWatchList, setIsWatchList] = useState(false);
   const [watchListObject, setWatchListObject] = useState([]);
   const [saveText, setSaveText] = useState("");
   const [isSwapped, setIsSwapped] = useState(false);
+  const [isSortedVisible, setIsSortedVisible] = useState(false);
+  const [selectedSorted, setSelectedSorted] = useState("Default (Relevance)");
+  const [isSelectedView, setIsSelectedView] = useState("List View");
+  const [isViewVisible, setIsViewVisible] = useState(false);
+  const [categoryObject, setCategoryObject] = useState("Delivery");
+  const [isCategoryVisible, setIsCategoryVisible] = useState(false);
+  const [isTravelVisible, setIsTravelVisible] = useState(false);
+  const [vehicleObject, setVehicleObject] = useState("Vehicle Size");
+  const [isVehicleVisible, setIsVehicleVisible] = useState(false);
+  const [isCounterOfferVisible, setIsCounterOfferVisible] = useState(false);
+  const [isSubmitModal, setIsSubmitModal] = useState(false);
+  const [mapHeight, setMapHeight] = useState(400);
+  const [mapType, setMapType] = useState("standard");
+  const [selectedDrivers, setSelectedDrivers] = useState([]);
 
+  const [isSaveModal,setIsSaveModal]=useState(false)
+  const [isAcceptModal,setIsAcceptModal]=useState(false)
+
+
+  const [isAddonsVisible, setIsAddonVisible] = useState(false);
+  const [selectedAddons, setSelectedAddons] = useState("Addons Services");
   const [pickUp, setPickUp] = useState("");
   const [dropOff, setDropOff] = useState("");
+  const [region, setRegion] = useState({
+    latitude: 32.3363,
+    longitude: 74.3675,
+    latitudeDelta: 0.039330183268125069,
+    longitudeDelta: 0.045962757229776571,
+  });
+  const mapRef = useRef(null);
 
   const pickUpInput = (
     <CustomInput
@@ -78,6 +115,8 @@ const CustomerSearch = ({ navigation }) => {
       time: "15 Min Away",
       isOpen: true,
       pass: icon.pass,
+      lat: 32.3463,
+      long: 74.3775,
     },
     {
       img: image.defimg103,
@@ -88,6 +127,8 @@ const CustomerSearch = ({ navigation }) => {
       time: "15 Min Away",
       isOpen: false,
       pass: icon.passg,
+      lat: 32.3663,
+      long: 74.3875,
     },
     {
       img: image.defimg700,
@@ -98,6 +139,8 @@ const CustomerSearch = ({ navigation }) => {
       time: "15 Min Away",
       isOpen: true,
       pass: icon.passp,
+      lat: 32.3373,
+      long: 74.3685,
     },
   ];
 
@@ -112,12 +155,14 @@ const CustomerSearch = ({ navigation }) => {
         >
           <DriverCard
             item={item}
+            onAccept={()=>setIsAcceptModal(true)}
             // onPress={()=>navigation.navigate("DeliveryManager",{orderData:item})}
-
+            onCounterOffer={() => setIsCounterOfferVisible(true)}
             onWatchList={() => {
               setSaveText(
                 "Saved, you can see your saved customer in Watchlist"
               );
+
               setIsWatchList(true);
 
               const findObject = watchListObject?.find((e) => e.id == item.id);
@@ -140,6 +185,67 @@ const CustomerSearch = ({ navigation }) => {
         </View>
       </>
     );
+  };
+  const renderMapViewDriver = ({ item, index }) => {
+    return (
+      <>
+        <View
+          style={{
+            paddingHorizontal: scale(15),
+            paddingTop: verticalScale(10),
+          }}
+        >
+          <DriverCard
+            item={item}
+            // onPress={()=>navigation.navigate("DeliveryManager",{orderData:item})}
+            onCounterOffer={() => setIsCounterOfferVisible(true)}
+
+            // onWatchList={() => {
+            //   setSaveText(
+            //     "Saved, you can see your saved customer in Watchlist"
+            //   );
+
+            //   setIsWatchList(true);
+
+            //   const findObject = watchListObject?.find((e) => e.id == item.id);
+            //   if (findObject) {
+            //     const dataContact1 = watchListObject.filter(
+            //       (f) => f.id != item.id
+            //     );
+
+            //     setWatchListObject(dataContact1);
+            //   } else {
+            //     const dataContact = [...watchListObject, item]; // Replace 'New Data' with your actual data
+            //     setWatchListObject(dataContact);
+            //   }
+            //   setTimeout(() => {
+            //     setIsWatchList(false);
+            //   }, 2000);
+            //   // setWatchListObject(item)
+            // }}
+          />
+        </View>
+      </>
+    );
+  };
+
+  const updateMapCenter = (index) => {
+    try {
+      if (mapRef) {
+        mapRef.current.animateToRegion(
+          {
+            latitude: 32.3363,
+            longitude: 74.3675,
+            latitudeDelta: 0.039330183268125069,
+            longitudeDelta: 0.045962757229776571,
+          },
+
+          1000
+        );
+      }
+    } catch (error) {
+      console.log("updateMapCenter", error);
+    }
   };
   return (
     <>
@@ -227,18 +333,21 @@ const CustomerSearch = ({ navigation }) => {
                     size={14}
                   />
                   <Spacer width={scale(10)} />
-
-                  <DropDown
-                    placeholder={"Default"}
-                    dropWidth={scale(90)}
-                    //   data={data}
-                    data={data.map((item, _index) => {
-                      return {
-                        id: item?.id,
-                        label: item?.value,
-                        value: item?.value,
-                      };
-                    })}
+                  <CustomInput
+                    height={29}
+                    dropDown={true}
+                    color={colors.gray100}
+                    width={scale(100)}
+                    editable={false}
+                    value={selectedSorted}
+                    onShowPassword={() => setIsSortedVisible(true)}
+                    rightImage={icon.down}
+                    fontWeight={"600"}
+                    // paddingHorizontal={10}
+                    rightImageWidth={15}
+                    rightImageHeight={15}
+                    // placeholder={"$/day"}
+                    borderRadius={8}
                   />
                 </View>
                 <View style={AppStyles.row}>
@@ -251,17 +360,21 @@ const CustomerSearch = ({ navigation }) => {
                   />
                   <Spacer width={scale(10)} />
 
-                  <DropDown
-                    placeholder={"List View"}
-                    dropWidth={scale(100)}
-                    //   data={data}
-                    data={data.map((item, _index) => {
-                      return {
-                        id: item?.id,
-                        label: item?.value,
-                        value: item?.value,
-                      };
-                    })}
+                  <CustomInput
+                    dropDown={true}
+                    height={29}
+                    color={colors.gray100}
+                    width={scale(100)}
+                    editable={false}
+                    value={isSelectedView}
+                    onShowPassword={() => setIsViewVisible(true)}
+                    rightImage={icon.down}
+                    fontWeight={"600"}
+                    // paddingHorizontal={10}
+                    rightImageWidth={15}
+                    rightImageHeight={15}
+                    // placeholder={"$/day"}
+                    borderRadius={8}
                   />
                 </View>
               </View>
@@ -270,14 +383,15 @@ const CustomerSearch = ({ navigation }) => {
               <TouchableOpacity
                 activeOpacity={0.6}
                 onPress={() => {
-                  setSaveText(
-                    "Saved. You can view your saved search in watchlist."
-                  );
-                  setIsWatchList(true);
+                  setIsSaveModal(true)
+                  // setSaveText(
+                  //   "Saved. You can view your saved search in watchlist."
+                  // );
+                  // setIsWatchList(true);
 
-                  setTimeout(() => {
-                    setIsWatchList(false);
-                  }, 3000);
+                  // setTimeout(() => {
+                  //   setIsWatchList(false);
+                  // }, 3000);
                 }}
                 style={{
                   ...AppStyles.row,
@@ -343,50 +457,256 @@ const CustomerSearch = ({ navigation }) => {
             <View style={{ ...AppStyles.row, height: verticalScale(60) }}>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View style={{ marginRight: scale(10), marginLeft: scale(15) }}>
-                  <DropDown
-                    placeholder={"Category"}
-                    dropWidth={scale(100)}
-                    //   data={data}
-                    data={data.map((item, _index) => {
-                      return {
-                        id: item?.id,
-                        label: item?.value,
-                        value: item?.value,
-                      };
-                    })}
+                  <CustomInput
+                    height={29}
+                    dropDown={true}
+                    color={colors.gray100}
+                    width={scale(110)}
+                    editable={false}
+                    value={categoryObject}
+                    onShowPassword={() => setIsCategoryVisible(true)}
+                    rightImage={icon.down}
+                    fontWeight={"600"}
+                    // paddingHorizontal={10}
+                    rightImageWidth={15}
+                    rightImageHeight={15}
+                    // placeholder={"$/day"}
+                    borderRadius={8}
+                  />
+                </View>
+
+                <View style={{ marginRight: scale(10) }}>
+                  <CustomInput
+                    height={29}
+                    dropDown={true}
+                    color={colors.gray100}
+                    width={scale(110)}
+                    editable={false}
+                    value={"Travel Distance"}
+                    onShowPassword={() => setIsTravelVisible(true)}
+                    rightImage={icon.down}
+                    fontWeight={"600"}
+                    // paddingHorizontal={10}
+                    rightImageWidth={15}
+                    rightImageHeight={15}
+                    // placeholder={"$/day"}
+                    borderRadius={8}
                   />
                 </View>
                 <View style={{ marginRight: scale(10) }}>
-                  <DropDown
-                    placeholder={"Travel Distance"}
-                    dropWidth={scale(140)}
-                    //   data={data}
-                    data={data.map((item, _index) => {
-                      return {
-                        id: item?.id,
-                        label: item?.value,
-                        value: item?.value,
-                      };
-                    })}
+                  <CustomInput
+                    dropDown={true}
+                    height={29}
+                    color={colors.gray100}
+                    width={scale(110)}
+                    editable={false}
+                    value={selectedAddons}
+                    onShowPassword={() => setIsAddonVisible(true)}
+                    rightImage={icon.down}
+                    fontWeight={"600"}
+                    // paddingHorizontal={10}
+                    rightImageWidth={15}
+                    rightImageHeight={15}
+                    // placeholder={"$/day"}
+                    borderRadius={8}
                   />
                 </View>
                 <View style={{ marginRight: scale(10) }}>
-                  <DropDown
-                    placeholder={"Addon Services"}
-                    dropWidth={scale(150)}
-                    //   data={data}
-                    data={data.map((item, _index) => {
-                      return {
-                        id: item?.id,
-                        label: item?.value,
-                        value: item?.value,
-                      };
-                    })}
+                  <CustomInput
+                    dropDown={true}
+                    height={29}
+                    color={colors.gray100}
+                    width={scale(110)}
+                    editable={false}
+                    value={vehicleObject}
+                    onShowPassword={() => setIsVehicleVisible(true)}
+                    rightImage={icon.down}
+                    fontWeight={"600"}
+                    // paddingHorizontal={10}
+                    rightImageWidth={15}
+                    rightImageHeight={15}
+                    // placeholder={"$/day"}
+                    borderRadius={8}
                   />
                 </View>
               </ScrollView>
             </View>
-            <View
+
+            <View style={{ paddingBottom: scale(15) }}>
+              {isSelectedView == "Map View" && (
+                <View
+                  style={{
+                    width: "100%",
+                    height: mapHeight,
+                    alignSelf: "center",
+                    borderRadius: 20,
+                    overflow: "hidden",
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "90%",
+                      height: "90%",
+                      alignSelf: "center",
+                      borderRadius: 20,
+                    }}
+                  >
+                    <MapView.Animated
+                      zoomControlEnabled={false}
+                      ref={mapRef}
+                      mapType={mapType}
+                      showsBuildings={true}
+                      showsCompass={false}
+                      toolbarEnabled={false}
+                      // initialRegion={region}
+                      region={region}
+                      // provider={PROVIDER_GOOGLE}
+                      style={{
+                        height: "100%",
+                        width: "100%",
+                        marginTop: 5,
+                        borderRadius: 20,
+                        overflow: "hidden",
+                      }}
+                    >
+                      {customerTicketData.map((item, index) => {
+                        return (
+                          <Marker
+                            onPress={() => setSelectedDrivers([item])}
+                            // style={{width:30,height:30,alignItems:"center",justifyContent:"center",}}
+
+                            key={index}
+                            coordinate={{
+                              latitude: item.lat,
+                              longitude: item.long,
+                            }}
+                            // identifier={index.toString()}
+                          >
+                            <TouchableOpacity
+                              style={{
+                                width: scale(22),
+                                height: scale(22),
+                              }}
+                            >
+                              <Image
+                                style={{
+                                  width: scale(22),
+                                  height: scale(22),
+                                }}
+                                resizeMode={"contain"}
+                                source={item.pass}
+                              />
+                            </TouchableOpacity>
+                            {/* <StoreMarker /> */}
+                          </Marker>
+                        );
+                      })}
+                    </MapView.Animated>
+
+                    <View
+                      style={{
+                        position: "absolute",
+                        top: 10,
+                        left: 10,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 10,
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => {
+                          if (mapType == "standard") {
+                            setMapType("satellite");
+                          } else {
+                            setMapType("standard");
+                          }
+                        }}
+                        activeOpacity={0.6}
+                      >
+                        <Image
+                          style={styles.mapImgContainer}
+                          // resizeMode="contain"
+                          source={image.layers}
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity activeOpacity={0.6}>
+                        <Image
+                          style={styles.mapImgContainer}
+                          // resizeMode="contain"
+                          source={image.gesture}
+                        />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => updateMapCenter()}
+                      >
+                        <Image
+                          style={styles.mapImgContainer}
+                          // resizeMode="contain"
+                          source={image.routes}
+                        />
+                      </TouchableOpacity>
+                    </View>
+
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress={() => {
+                        if (mapHeight == 400) {
+                          setMapHeight(700);
+                        } else {
+                          setMapHeight(400);
+                        }
+                      }}
+                      style={{
+                        position: "absolute",
+                        bottom: 80,
+                        right: 20,
+                        gap: 10,
+                      }}
+                    >
+                      <Image
+                        style={styles.mapImgContainer}
+                        // resizeMode="contain"
+                        source={mapHeight == 400 ? image.zoomroute : icon.reduce}
+                      />
+                    </TouchableOpacity>
+                  </View>
+
+                  {isSelectedView == "Map View" && (
+                    <View style={{ position: "absolute", bottom: -15 }}>
+                      <FlatList
+                        data={selectedDrivers}
+                        style={{ paddingBottom: verticalScale(30) }}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{
+                          gap: verticalScale(5),
+                          paddingBottom: 10,
+                        }}
+                        keyExtractor={(item) => item}
+                        renderItem={renderMapViewDriver}
+                      />
+                    </View>
+                  )}
+                </View>
+              )}
+              {isSelectedView == "List View" && (
+                <>
+                  <FlatList
+                    data={customerTicketData}
+                    style={{ paddingBottom: verticalScale(30) }}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{
+                      gap: verticalScale(5),
+                      paddingBottom: 10,
+                    }}
+                    keyExtractor={(item) => item}
+                    renderItem={renderDriver}
+                  />
+                </>
+              )}
+            </View>
+            {/* <View
             // style={{paddingHorizontal:scale(15)}}
             >
               <FlatList
@@ -397,7 +717,7 @@ const CustomerSearch = ({ navigation }) => {
                 keyExtractor={(item) => item}
                 renderItem={renderDriver}
               />
-            </View>
+            </View> */}
           </ScrollView>
         </View>
       </Screen>
@@ -467,6 +787,106 @@ const CustomerSearch = ({ navigation }) => {
           </View>
         </Animatable.View>
       )}
+
+      <SortedModal
+        modalVisible={isSortedVisible}
+        title={"Sort by"}
+        selectedObject={selectedSorted}
+        setSelectedObject={setSelectedSorted}
+        setModalVisible={setIsSortedVisible}
+      />
+      <ViewModal
+        modalVisible={isViewVisible}
+        title={"View"}
+        selectedObject={isSelectedView}
+        setSelectedObject={setIsSelectedView}
+        setModalVisible={setIsViewVisible}
+      />
+
+      <VehicleModal
+        modalVisible={isVehicleVisible}
+        title={"Vehicle Size"}
+        selectedObject={vehicleObject}
+        setSelectedObject={setVehicleObject}
+        setModalVisible={setIsVehicleVisible}
+      />
+      <CategoryModal
+        modalVisible={isCategoryVisible}
+        title={"Category"}
+        selectedObject={categoryObject}
+        setSelectedObject={setCategoryObject}
+        setModalVisible={setIsCategoryVisible}
+      />
+      <TravelModel
+        modalVisible={isTravelVisible}
+        title={"Pickup Radius"}
+        setModalVisible={setIsTravelVisible}
+      />
+      <AllServicesModal
+        modalVisible={isAddonsVisible}
+        title={"Pickup Radius"}
+        setModalVisible={setIsAddonVisible}
+        selectedObject={selectedAddons}
+        setSelectedObject={setSelectedAddons}
+        servicesData={AddonsServicesData}
+      />
+      <CounterOfferModal
+        modalVisible={isCounterOfferVisible}
+        submitButtonColor={colors.secondary}
+        title={"Counteroffer Price"}
+        onSubmit={() => {
+          setIsCounterOfferVisible(false);
+          setTimeout(() => {
+            setIsSubmitModal(true);
+          }, 500);
+        }}
+        setModalVisible={setIsCounterOfferVisible}
+      />
+       <SuccessModal
+        modalVisible={isSaveModal}
+        title={"Saved!"}
+        
+        successButtonColor={colors.secondary}
+        descripation={"You can view Saved Search in Service Profile."}
+        submitText={"See Service Profile"}
+        setModalVisible={setIsSaveModal}
+        onSubmit={() => {
+          setIsSaveModal(false);
+          setTimeout(() => {
+            navigation.navigate("ServiceProfile");
+          }, 500);
+        }}
+      />
+
+      <SuccessModal
+        modalVisible={isSubmitModal}
+        title={"Submitted"}
+        successButtonColor={colors.secondary}
+        descripation={"You will receive a response soon."}
+        submitText={"Return to Home"}
+        setModalVisible={setIsSubmitModal}
+        onSubmit={() => {
+          setIsSubmitModal(false);
+          setTimeout(() => {
+            navigation.navigate("Home");
+          }, 500);
+        }}
+      />
+
+<SuccessModal
+        modalVisible={isAcceptModal}
+        title={"Accepted!"}
+        successButtonColor={colors.secondary}
+        descripation={"You can view accepted offer in save trips"}
+        submitText={"See Save Trips"}
+        setModalVisible={setIsAcceptModal}
+        onSubmit={() => {
+          setIsAcceptModal(false);
+          setTimeout(() => {
+            // navigation.navigate("Home");
+          }, 500);
+        }}
+      />
     </>
   );
 };
@@ -480,5 +900,9 @@ const styles = StyleSheet.create({
     width: scale(35),
     height: scale(35),
     right: scale(20),
+  },
+  mapImgContainer: {
+    width: scale(30),
+    height: scale(30),
   },
 });

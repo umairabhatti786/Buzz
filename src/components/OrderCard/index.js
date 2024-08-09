@@ -134,24 +134,27 @@ const OrderCard = ({ item, ennPointColor,taskStatus }) => {
 
           <View style={{...AppStyles.justifyRow,paddingHorizontal:scale(15),paddingVertical:verticalScale(10)}}>
           <CustomButton
-                 text={"Start"}
+                 text={item.is_start}
                  height={30}
-                 bgColor={colors.secondary}
+                 bgColor={ item.is_complete=="Failed"||item.is_complete=="Success"?"#EEEEEE": colors.secondary}
+                 textColor={ item.is_complete=="Failed"||item.is_complete=="Success"?"#AAAAAA": colors.white}
 
                  borderColor={colors.secondary}
-                 borderWidth={1}
-                 paddingHorizontal={scale(25)}
+                 borderWidth={-1}
+                 paddingHorizontal={scale(20)}
                  />
 
 <CustomButton
-                            text={ taskStatus}
+                            text={ item.is_complete}
                             height={30}
                             fontWeight={"500"}
                             size={14}
                             fontFam={Inter.regular}
-                            paddingHorizontal={scale(15)}
-                            textColor={ taskStatus=="Failed"?colors.red: colors.primary}
-                            bgColor={ taskStatus=="Failed"?colors.red+"20": colors.secondary+"20"}
+                            paddingHorizontal={scale(10)}
+                            borderWidth={item.is_complete=="En-Route"?1:-1}
+                            borderColor={item.is_complete=="En-Route"?colors.black+"10":"transparent"}
+                            textColor={ item.is_complete=="Failed"?colors.red: item.is_complete=="En-Route"?colors. black:item?.is_complete=="Pending"?"#666666"  : colors.primary}
+                            bgColor={ item?.is_complete=="Failed"?colors.red+"20":item.is_complete=="En-Route"?colors.white: item?.is_complete=="Pending"?"#EEEEEE":  colors.secondary+"20"}
 
                            //  width={scale(90)}
                             />

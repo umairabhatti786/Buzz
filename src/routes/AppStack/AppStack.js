@@ -27,7 +27,8 @@ import DriverFilter from "../../screens/main/Driver/DriverFilter";
 import DriverConversation from "../../screens/main/Driver/DriverConversation";
 import DriverChat from "../../screens/main/Driver/DriverChat";
 import DriverNotificationSettings from "../../screens/main/Driver/DriverNotificationSettings";
-import DriverProfile from "../../screens/main/Driver/DriverProfile";
+// import DriverProfile from "../../screens/main/Driver/DriverProfile";
+import ServiceProfile from "../../screens/main/Driver/ServiceProfile";
 
 const AppStack = () => {
   const Stack = createStackNavigator();
@@ -48,7 +49,9 @@ const AppStack = () => {
       {/* {splashState&&<Stack.Screen name={strings.splashScreen} component={SplashScreen} />} */}
 
       <Stack.Screen name={"CustomerSignup"} component={CustomerSignup} />
-            <Stack.Screen name={"DriverSignup"} component={DriverSignup} />
+      <Stack.Screen name={"DriverSignup"} component={DriverSignup} />
+      <Stack.Screen name={"ServiceProfile"} component={ServiceProfile} />
+
 
       <Stack.Screen
         name={"CustomerConversation"}
@@ -67,9 +70,11 @@ const AppStack = () => {
       <Stack.Screen name={"CustomerFilter"} component={CustomerFilter} />
       <Stack.Screen name={"DriverFilter"} component={DriverFilter} />
 
-
       <Stack.Screen name={"DriverSearch"} component={DriverSearch} />
-      <Stack.Screen name={"DriverConversation"} component={DriverConversation} />
+      <Stack.Screen
+        name={"DriverConversation"}
+        component={DriverConversation}
+      />
 
       <Stack.Screen name={"DriverService"} component={DriverService} />
       <Stack.Screen name={"MoveCategoryOne"} component={MoveCategoryOne} />
@@ -77,13 +82,18 @@ const AppStack = () => {
       <Stack.Screen name={"SetPrice"} component={SetPrice} />
       <Stack.Screen name={"Addons"} component={Addons} />
       <Stack.Screen name={"ResolutionCenter"} component={ResolutionCenter} />
-      <Stack.Screen name={"SupportTeamLiveChat"} component={SupportTeamLiveChat} />
+      <Stack.Screen
+        name={"SupportTeamLiveChat"}
+        component={SupportTeamLiveChat}
+      />
 
       <Stack.Screen name={"DriverChat"} component={DriverChat} />
-      <Stack.Screen name={"DriverProfile"} component={DriverProfile} />
+      {/* <Stack.Screen name={"DriverProfile"} component={DriverProfile} /> */}
 
-      <Stack.Screen name={"DriverNotificationSettings"} component={DriverNotificationSettings} />
-
+      <Stack.Screen
+        name={"DriverNotificationSettings"}
+        component={DriverNotificationSettings}
+      />
 
       <Stack.Screen name={"TrackOrder"} component={TrackOrder} />
       <Stack.Screen name={"CustomerProfile"} component={CustomerProfile} />

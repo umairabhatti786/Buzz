@@ -42,7 +42,7 @@ const DriverService = ({ navigation }) => {
   const [isTimeZoneModal, setIsTimeZoneModal] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [isEdit,setIsEdit]=useState(false)
+  const [isEdit, setIsEdit] = useState(false);
 
   const [time, setTime] = useState("Midnight");
   const [endTime, setEndTime] = useState("Midnight");
@@ -52,14 +52,13 @@ const DriverService = ({ navigation }) => {
   const [startTime, setStartTime] = useState("4pm");
   const [isStartTimeModal, setIsStartTimeModal] = useState(false);
 
-
   const [dedicatedEndTime, setDedicatedEndTime] = useState("Midnight");
 
   const [isDedicatedTimeModal, setIsDedicatedTimeModal] = useState(false);
 
   const [dedicatedStartTime, SetDedicatedStartTime] = useState("4pm");
-  const [isDedicatedStartTimeModal, setIsDedicatedStartTimeModal] = useState(false);
-  
+  const [isDedicatedStartTimeModal, setIsDedicatedStartTimeModal] =
+    useState(false);
 
   const [isPickupRadiusModal, setIsPickupRadiusModal] = useState(false);
 
@@ -106,23 +105,35 @@ const DriverService = ({ navigation }) => {
     },
   ];
 
-  const [MoveCategory,setMoveCategory] =useState ([
-    { name: "Ride Service", isActive: true,onPressNext:()=>navigation.navigate("MoveCategoryOne") },
-    { name: "Delivery Service", isActive: true,onPressNext:()=>navigation.navigate("MoveCategoryTwo")  },
-    { name: "Delivery Add-ons service only", isActive: true ,onPressNext:()=>navigation.navigate("Addons") },
-  ])
-  const [ServiceCoverage,setServiceCoverage] =useState ([
+  const [MoveCategory, setMoveCategory] = useState([
+    {
+      name: "Ride Service",
+      isActive: true,
+      onPressNext: () => navigation.navigate("MoveCategoryOne"),
+    },
+    {
+      name: "Delivery Service",
+      isActive: true,
+      onPressNext: () => navigation.navigate("MoveCategoryTwo"),
+    },
+    {
+      name: "Delivery Add-ons service only",
+      isActive: true,
+      onPressNext: () => navigation.navigate("Addons"),
+    },
+  ]);
+  const [ServiceCoverage, setServiceCoverage] = useState([
     { name: "All (Default)", isActive: true },
     { name: "Local", isActive: true },
     { name: "Intercity", isActive: true },
     { name: "Interstate", isActive: true },
-  ])
-  const [ServiceCategory,setServiceCategory] =useState ([
+  ]);
+  const [ServiceCategory, setServiceCategory] = useState([
     { name: "All (Default)", isActive: true },
     { name: "On Demand", isActive: false },
     { name: "Scheduled", isActive: false },
     { name: "Dedicated", isActive: false },
-  ])
+  ]);
 
   const [schedule, setSchedule] = useState([
     {
@@ -176,7 +187,7 @@ const DriverService = ({ navigation }) => {
     },
   ]);
 
-  const [Dedicated,setDedicated] = useState([
+  const [Dedicated, setDedicated] = useState([
     {
       day: "Sun",
       time: "4pm - midnight",
@@ -226,7 +237,7 @@ const DriverService = ({ navigation }) => {
       endTime: "midnight",
       isActive: false,
     },
-  ])
+  ]);
 
   const VehicleInfo = ({ txt1, txt2 }) => {
     return (
@@ -490,7 +501,7 @@ const DriverService = ({ navigation }) => {
               style={{
                 paddingHorizontal: scale(15),
                 paddingTop: verticalScale(15),
-                paddingBottom:verticalScale(20)
+                paddingBottom: verticalScale(20),
               }}
             >
               <ProfileContainer />
@@ -725,8 +736,6 @@ const DriverService = ({ navigation }) => {
                     )
                   } */}
 
-                
-
                   <View
                     style={{
                       ...AppStyles.justifyRow,
@@ -743,7 +752,6 @@ const DriverService = ({ navigation }) => {
                       rightImage={icon.down}
                       value={startTime}
                       paddingHorizontal={10}
-                      // placeholder={"$/day"}
                       borderRadius={8}
                     />
 
@@ -757,10 +765,8 @@ const DriverService = ({ navigation }) => {
                       rightImage={icon.down}
                       value={endTime}
                       paddingHorizontal={10}
-                      // placeholder={"$/day"}
                       borderRadius={8}
                     />
-                   
                   </View>
                   <TouchableOpacity
                     onPress={() => {
@@ -783,11 +789,7 @@ const DriverService = ({ navigation }) => {
                     <CustomText
                       text={"Apply to selected days"}
                       size={14}
-                      // fontWeight={"600"}
-                      color={colors.secondary}
-
-                      // fontWeight={"400"}
-                    />
+                      color={colors.secondary}/>
                   </TouchableOpacity>
                   <View style={{ marginBottom: verticalScale(13) }}>
                     <DashedLine
@@ -847,7 +849,6 @@ const DriverService = ({ navigation }) => {
                   <View
                     style={{
                       ...AppStyles.justifyRow,
-                      // marginTop: verticalScale(-10),
                     }}
                   >
                     <CustomInput
@@ -860,7 +861,6 @@ const DriverService = ({ navigation }) => {
                       rightImage={icon.down}
                       value={dedicatedStartTime}
                       paddingHorizontal={10}
-                      // placeholder={"$/day"}
                       borderRadius={8}
                     />
 
@@ -874,18 +874,20 @@ const DriverService = ({ navigation }) => {
                       rightImage={icon.down}
                       value={dedicatedEndTime}
                       paddingHorizontal={10}
-                      // placeholder={"$/day"}
                       borderRadius={8}
                     />
-                   
                   </View>
                   <TouchableOpacity
                     onPress={() => {
                       let applySchedule = Dedicated.map((ite) => {
                         return {
                           ...ite,
-                          startTime: ite?.isActive ? dedicatedStartTime : ite.startTime,
-                          endTime: ite?.isActive ? dedicatedEndTime : ite.endTime,
+                          startTime: ite?.isActive
+                            ? dedicatedStartTime
+                            : ite.startTime,
+                          endTime: ite?.isActive
+                            ? dedicatedEndTime
+                            : ite.endTime,
                         };
                       });
 
@@ -900,10 +902,7 @@ const DriverService = ({ navigation }) => {
                     <CustomText
                       text={"Apply to selected days"}
                       size={14}
-                      // fontWeight={"600"}
                       color={colors.secondary}
-
-                      // fontWeight={"400"}
                     />
                   </TouchableOpacity>
 
@@ -927,8 +926,6 @@ const DriverService = ({ navigation }) => {
 
                             setDedicated(updates);
                           }}
-
-
                           isEditColor={
                             item.isActive ? colors.secondary : colors.gray100
                           }
@@ -961,11 +958,10 @@ const DriverService = ({ navigation }) => {
                         <HorizontalContainerToggle
                           text={item.name}
                           isNext
-                          onPressNext={ ()=> {
-                            if(item.isActive){
-                              item.onPressNext()
+                          onPressNext={() => {
+                            if (item.isActive) {
+                              item.onPressNext();
                             }
-
                           }}
                           isActive={item.isActive}
                           setIsActive={() => {
@@ -1039,7 +1035,7 @@ const DriverService = ({ navigation }) => {
         data={timeData}
       />
 
-<DropDownModal
+      <DropDownModal
         modalVisible={isDedicatedTimeModal}
         selectedObject={dedicatedEndTime}
         title={"Select Time"}

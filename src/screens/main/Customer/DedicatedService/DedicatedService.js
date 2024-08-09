@@ -31,6 +31,7 @@ import DedicatedAgreementModal from "./DedicatedAgreementModal";
 import ThankyouModal from "../DriverSearch/ThankyouModal";
 import AddPaymentMethodModal from "../DriverSearch/AddPaymentMethodModal";
 import PaymentMethodModal from "../DriverSearch/PaymentMethodModal";
+import PickupDropInstructionModal from "../DriverSearch/PickupDropInstructionModal";
 
 const DedicatedService = ({ navigation, route }) => {
   const [selectedDays, setSelectedDays] = useState([]);
@@ -41,8 +42,12 @@ const DedicatedService = ({ navigation, route }) => {
   const [serviceOfferModal, setServiceOfferModal] = useState(false);
   const [isThankyouModal, setIsThankyouModal] = useState(false);
   const [isRateExperienceModal, setIsRateExperienceModal] = useState(false);
-  const [isDedicatedAgreement,setIsDedicatedAgreement]=useState(false)
+  const [isDedicatedAgreement, setIsDedicatedAgreement] = useState(false);
   const [isPaymentModal, setIsPaymentModal] = useState(false);
+  const [isPickupDropInstructionModal, setIsPickupDropInstructionModal] =
+    useState(false);
+  const [numberOfDays, setNumberOfDays] = useState("4");
+  const [serviceslength, setServiceslength] = useState("16");
 
   console.log("selectedDays", selectedDays);
 
@@ -123,7 +128,11 @@ const DedicatedService = ({ navigation, route }) => {
               }}
             >
               <TextInput
-                value="4"
+                value={numberOfDays}
+                maxLength={2}
+                onChangeText={(text) => {
+                  setNumberOfDays(text);
+                }}
                 style={{
                   color: colors.black,
                   fontFamily: "700",
@@ -131,6 +140,7 @@ const DedicatedService = ({ navigation, route }) => {
                   fontFamily: Inter.bold,
                   height: 48,
                 }}
+                keyboardType="numeric"
               />
               <NewText
                 text={"days"}
@@ -157,7 +167,12 @@ const DedicatedService = ({ navigation, route }) => {
               }}
             >
               <TextInput
-                value="16"
+                value={serviceslength}
+                maxLength={2}
+                keyboardType="numeric"
+                onChangeText={(text) => {
+                  setServiceslength(text);
+                }}
                 style={{
                   color: colors.black,
                   fontFamily: "700",
@@ -302,6 +317,11 @@ const DedicatedService = ({ navigation, route }) => {
             <Button
               text={"Clear"}
               height={33}
+              onPress={() => {
+                setSelectedDays([]);
+                setNumberOfDays("")
+                setServiceslength("")
+              }}
               bgColor={"#EEEEEE"}
               borderColor={"transparent"}
               borderWidth={1}
@@ -362,7 +382,7 @@ const DedicatedService = ({ navigation, route }) => {
         data={paymentOptionsData}
       />
 
-<DedicatedAgreementModal
+      <DedicatedAgreementModal
         onBook={() => {
           setIsDedicatedAgreement(false);
           setTimeout(() => {
@@ -373,7 +393,7 @@ const DedicatedService = ({ navigation, route }) => {
         setModalVisible={setIsDedicatedAgreement}
       />
 
-<PaymentMethodModal
+      <PaymentMethodModal
         onPressCard={() => {
           setIsPaymentModal(false);
           setTimeout(() => {
@@ -384,6 +404,20 @@ const DedicatedService = ({ navigation, route }) => {
         setModalVisible={setIsPaymentModal}
       />
 
+      <PickupDropInstructionModal
+        mainColor={colors.primary}
+        modalVisible={isPickupDropInstructionModal}
+        navigation={navigation}
+        onDonePress={() => {
+          setIsPickupDropInstructionModal(false);
+          setTimeout(() => {
+            setIsThankyouModal(true);
+          }, 1000);
+        }}
+        setIsRateExperienceModal={setIsRateExperienceModal}
+        setModalVisible={setIsPickupDropInstructionModal}
+      />
+
       <ThankyouModal
         mainColor={colors.primary}
         modalVisible={isThankyouModal}
@@ -392,11 +426,11 @@ const DedicatedService = ({ navigation, route }) => {
         setModalVisible={setIsThankyouModal}
       />
 
-<AddPaymentMethodModal
+      <AddPaymentMethodModal
         onPay={() => {
           steIsAddPaymentMethodVisible(false);
           setTimeout(() => {
-            setIsThankyouModal(true);
+            setIsPickupDropInstructionModal(true);
           }, 1000);
         }}
         modalVisible={isAddPaymentMethodVisible}

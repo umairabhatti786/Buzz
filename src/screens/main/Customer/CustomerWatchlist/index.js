@@ -229,7 +229,6 @@ const CustomerWatchlist = ({ navigation, isActive }) => {
           text={ "Saved Search"}
           size={16}
         />
-              {/* <DropContainer isActive={true} txt={"Saved Search"} /> */}
 
               <View
                 style={{
@@ -272,7 +271,6 @@ const CustomerWatchlist = ({ navigation, isActive }) => {
           text={"Posts"}
           size={16}
         />
-              {/* <DropContainer isActive={true} txt={"Posts"} /> */}
 
               <View
                 style={{
@@ -312,8 +310,6 @@ const CustomerWatchlist = ({ navigation, isActive }) => {
 
       <BottomSheet
         bottomSheetModalRef={bottomSheetModalRef}
-        // snapTo={["40%"]}
-        // onDismiss={() => setPause(false)}
       >
         <View style={{ paddingHorizontal: 15 }}>
           <TouchableOpacity

@@ -8,6 +8,10 @@ export const image={
     ride:require("../images/ride.png"),
     
     default_user:require("../images/default-user.jpeg"),
+    upload_photo:require("../images/upload_photo.png"),
+    address:require("../images/address.png"),
+
+
 
     defimg100:require("../images/defimg100.png"),
     defimg200:require("../images/defimg200.png"),

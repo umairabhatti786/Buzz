@@ -20,7 +20,7 @@ import NewText from "../NewText";
 import { Spacer } from "../Spacer";
 
   
-  const SuccessModal = ({ modalVisible, setModalVisible,onSubmit,submitText,title,descripation }) => {
+  const SuccessModal = ({ modalVisible, setModalVisible,onSubmit,submitText,title,descripation,successButtonColor }) => {
     return (
       <Modal
         isVisible={modalVisible}
@@ -61,7 +61,7 @@ import { Spacer } from "../Spacer";
             </TouchableOpacity>
           </View>
   
-          <View style={{ width: "100%", alignItems: "center" }}>
+          <View style={{ width: "100%", alignItems: "center", }}>
             <NewText
               color={colors.black}
               style={{ textAlign: "center" }}
@@ -72,7 +72,7 @@ import { Spacer } from "../Spacer";
             <Spacer height={10}/>
                <NewText
               color={colors.gray200}
-              style={{ textAlign: "center" }}
+              style={{ textAlign: "center",marginHorizontal:scale(20) }}
               size={13}
               fontWeight={"400"}
               text={descripation||  "Your selected action is successful."}
@@ -102,7 +102,7 @@ import { Spacer } from "../Spacer";
               <Button
                 text={  submitText||"Return to Home"}
                 height={28}
-                bgColor={colors.primary}
+                bgColor={ successButtonColor|| colors.primary}
                 borderColor={"transparent"}
                 borderWidth={1}
                 size={14}

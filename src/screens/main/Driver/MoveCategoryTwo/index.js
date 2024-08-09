@@ -29,11 +29,15 @@ import HorizontalContainerToggle from "../../../../components/HorizontalContaine
 import DropDownModal from "../../../../components/DropDownModal";
 import { image } from "../../../../assets/png/images";
 import { numericRegex } from "../../../../utils/Regex";
+import SuccessModal from "../../../../components/SuccessModal";
 
 const MoveCategoryTwo = ({ navigation }) => {
   const [vehicleType, setVehicleType] = useState("10-12 ft Box Truck");
   const [isVehicleTypeModal, setIsVehicleTypeModal] = useState(false);
   const [priceAdjuster, setPriceAdjuster] = useState("1.2");
+  const [isSaveModal,setIsSaveModal]=useState(false)
+
+  const [isPostedModal,setIsPostedModal]=useState(false)
 
   const vehicleTypeData = [
     "Car",
@@ -522,10 +526,9 @@ const MoveCategoryTwo = ({ navigation }) => {
       </Screen>
 
       <CategoryBottomTab
-        onLabel1={() => navigation.navigate("DriverProfile")}
-        onLabel3={() => navigation.navigate("DriverProfile")}
-      />
-
+        onLabel1={() => setIsSaveModal(true)}
+        onLabel3={() => setIsPostedModal(true)}
+    />
       <DropDownModal
         modalVisible={isVehicleTypeModal}
         selectedObject={vehicleType}
@@ -533,6 +536,39 @@ const MoveCategoryTwo = ({ navigation }) => {
         setSelectedObject={setVehicleType}
         setModalVisible={setIsVehicleTypeModal}
         data={vehicleTypeData}
+      />
+
+<SuccessModal
+        modalVisible={isSaveModal}
+        title={"Saved!"}
+        successButtonColor={colors.secondary}
+        descripation={"You can view Item in Offered Service"}
+        submitText={"See Offered Service"}
+        setModalVisible={setIsSaveModal}
+        onSubmit={() => {
+          setIsSaveModal(false);
+          setTimeout(() => {
+            navigation.navigate("ServiceProfile")
+
+            // navigation.navigate("Home");
+          }, 500);
+        }}
+      />
+
+<SuccessModal
+        modalVisible={isPostedModal}
+        title={"Posted!"}
+        successButtonColor={colors.secondary}
+        descripation={"You can view Item in Offered Service"}
+        submitText={"See Offered Service"}
+        setModalVisible={setIsPostedModal}
+        onSubmit={() => {
+          setIsPostedModal(false);
+          setTimeout(() => {
+            navigation.navigate("ServiceProfile")
+            // navigation.navigate("Home");
+          }, 500);
+        }}
       />
     </>
   );

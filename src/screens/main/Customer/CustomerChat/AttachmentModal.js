@@ -28,6 +28,9 @@ const AttachmentModal = ({
   setModalVisible,
   data,
   setData,
+  subtitle1,
+  subtitle_image,
+  subtitle2,
 
   title,
 }) => {
@@ -84,7 +87,7 @@ const AttachmentModal = ({
               activeOpacity={0.6}
             >
               <Image
-                source={image.file}
+                source={ subtitle_image|| image.file}
                 resizeMode="contain"
                 style={{
                   width: 45,
@@ -93,7 +96,7 @@ const AttachmentModal = ({
                 }}
               />
               <NewText color={colors.gray200} size={17} 
-              text={"Pick a FIle"} />
+              text={ subtitle1|| "Pick a FIle"} />
             </View>
 
             <View style={{ paddingTop: verticalScale(13) }}>
@@ -125,7 +128,7 @@ const AttachmentModal = ({
                 }}
               />
               <NewText color={colors.gray200} size={17} 
-              text={"Take a Photo"} />
+              text={ subtitle2|| "Take a Photo"} />
             </View>
 
           

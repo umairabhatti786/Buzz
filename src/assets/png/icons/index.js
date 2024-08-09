@@ -24,6 +24,12 @@ export const icon={
     share:require("../icons/share.png"),
     thumbup:require("../icons/thumbup.png"),
     dateClendar:require("../icons/date-clendar.png"),
+    no_internet:require("../icons/no-internet.png"),
+    internet:require("../icons/internet.png"),
+    camera:require("../icons/camera.png"),
+
+
+
 
     grayforward:require("../icons/grayforward.png"),
     play:require("../icons/play.png"),

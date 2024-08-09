@@ -33,6 +33,7 @@ import { Spacer } from "../../../../components/Spacer";
     data,
     setData,
     onSubmit,
+    submitButtonColor,
   
     title,
   }) => {
@@ -127,7 +128,7 @@ import { Spacer } from "../../../../components/Spacer";
                 <Button
                   text={"Submit"}
                   height={28}
-                  bgColor={colors.primary}
+                  bgColor={ submitButtonColor|| colors.primary}
                   borderColor={"transparent"}
                   borderWidth={1}
                   size={14}

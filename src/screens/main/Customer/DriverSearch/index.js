@@ -37,6 +37,7 @@ import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import DriverDetailSheet from "./DriverDetailSheet";
 import CategoryModal from "./CategoryModal";
 import SuccessModal from "../../../../components/SuccessModal";
+import PickupDropInstructionModal from "./PickupDropInstructionModal";
 
 const DriverSearch = ({ navigation, route }) => {
   const [isWatchList, setIsWatchList] = useState(false);
@@ -77,6 +78,7 @@ const DriverSearch = ({ navigation, route }) => {
   const [isAddPaymentMethodVisible, steIsAddPaymentMethodVisible] =
     useState(false);
   const [isThankyouModal, setIsThankyouModal] = useState(false);
+  const [isPickupDropInstructionModal,setIsPickupDropInstructionModal]=useState(false)
   const [selectedDrivers, setSelectedDrivers] = useState([]);
   const driverDetailSheetRef = useRef();
 
@@ -908,6 +910,7 @@ const DriverSearch = ({ navigation, route }) => {
         onSubmit={() => {
           setIsCounterOfferVisible(false);
           setTimeout(() => {
+            
             setIsSubmitModal(true);
           }, 500);
         }}
@@ -974,11 +977,26 @@ const DriverSearch = ({ navigation, route }) => {
         onPay={() => {
           steIsAddPaymentMethodVisible(false);
           setTimeout(() => {
-            setIsThankyouModal(true);
+            setIsPickupDropInstructionModal(true);
           }, 1000);
         }}
         modalVisible={isAddPaymentMethodVisible}
         setModalVisible={steIsAddPaymentMethodVisible}
+      />
+
+<PickupDropInstructionModal
+        mainColor={colors.primary}
+        modalVisible={isPickupDropInstructionModal}
+        navigation={navigation}
+        onDonePress={()=>{
+          setIsPickupDropInstructionModal(false);
+          setTimeout(() => {
+            setIsThankyouModal(true);
+          }, 1000);
+
+        }}
+        setIsRateExperienceModal={setIsRateExperienceModal}
+        setModalVisible={setIsPickupDropInstructionModal}
       />
 
       <ThankyouModal
