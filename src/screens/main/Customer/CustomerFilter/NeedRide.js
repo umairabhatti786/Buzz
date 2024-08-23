@@ -7,7 +7,7 @@ import {
   FlatList,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { colors } from "../../../../utils/colors";
 import { AppStyles } from "../../../../utils/AppStyle";
 import { Inter } from "../../../../utils/Fonts";
@@ -26,23 +26,24 @@ import CustomCalendar from "../../../../components/CustomCalendar";
 import CategoryBottomTab from "../../../../components/CategoryBottomTab";
 
 const NeedRide = ({ navigation }) => {
-
-  const [isDatePickerModal,setIsDatePickerModal]=useState(false)
-  const [date,setDate]=useState(new Date)
+  const [isDatePickerModal, setIsDatePickerModal] = useState(false);
+  const [date, setDate] = useState(new Date());
   const [pickUpWithin, setPickUpWithin] = useState("2 Hours");
   const [isPickUpModel, setIsPickUpModel] = useState(false);
   const [time, setTime] = useState("pm");
   const [isTimeModal, setIsTimeModal] = useState(false);
-  const [pickupDateAndTime,setPickupDateAndTime]=useState("")
-  const [isDateAndTime,setIsDateAndTime]=useState("")
-  const[signal,setSignal]=useState("Single Stop")
+  const [pickupDateAndTime, setPickupDateAndTime] = useState("");
+  const [isDateAndTime, setIsDateAndTime] = useState("");
+  const [signal, setSignal] = useState("Single Stop");
+  const [selectedPicker, setSelectedPicker] = useState(0);
+  const [isValid, setIsValid] = useState(true);
 
-  const [ServiceCoverage,setServiceCoverage] = useState([
+  const [ServiceCoverage, setServiceCoverage] = useState([
     { name: "All (Default)", isActive: true },
     { name: "On Demand", isActive: false },
     { name: "Scheduled", isActive: false },
     { name: "Dedicated", isActive: false },
-  ])
+  ]);
   const pickUpWithinData = [
     "1 Hour",
     "2 Hours",
@@ -60,23 +61,27 @@ const NeedRide = ({ navigation }) => {
   const [minValue, setMinValue] = useState(MIN_DEFAULT);
   const [maxValue, setMaxValue] = useState(MAX_DEFAULT);
 
-  const [ServiceCoverage1,setServiceCoverage1] = useState([
+  const [ServiceCoverage1, setServiceCoverage1] = useState([
     { name: "All (Default)", isActive: true },
     { name: "Local", isActive: false },
     { name: "Intercity", isActive: false },
     { name: "Interstate", isActive: false },
-  ])
-  const [VehicleSize,setVehicleSize] = useState([
+  ]);
+  const [VehicleSize, setVehicleSize] = useState([
     { name: "Standard (2-4 seats)", isActive: true },
     { name: "Large (2-6 seats)", isActive: false },
     { name: "Large (2-6 seats)", isActive: false },
     { name: "+ Premium (Luxury)", isActive: false },
     { name: "Assisted Ride", isActive: false },
-  ])
+  ]);
 
   const [pickupDateTimeData, setPickupDateTimeData] = useState([
     { dateTime: "03-23-24", time: "3:24", format: "am", pichup: "6 Hours" },
   ]);
+
+  // useEffect(()=>{
+
+  // },[pickUpWithin])
 
   return (
     <>
@@ -111,11 +116,10 @@ const NeedRide = ({ navigation }) => {
                           ...updates[index],
                           isActive: !updates[index].isActive,
                         };
-          
-                        console.log("updates[index]", updates[index]);
-          
-                        setServiceCoverage(updates);
 
+                        console.log("updates[index]", updates[index]);
+
+                        setServiceCoverage(updates);
                       }}
                     />
                     {ServiceCoverage.length != index + 1 ? (
@@ -150,10 +154,14 @@ const NeedRide = ({ navigation }) => {
                       style={{ marginBottom: 15 }}
                       text={"Pick Up Date and Time"}
                     />
-                    <TouchableOpacity 
-                    activeOpacity={0.6}
-                    onPress={()=>setIsDateAndTime(true)}
-                    style={styles.pickupDateContainer}>
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress={() => {
+                        setSelectedPicker(index);
+                        setIsDateAndTime(true);
+                      }}
+                      style={styles.pickupDateContainer}
+                    >
                       <NewText
                         fontWeight="600"
                         color={colors.black}
@@ -176,12 +184,36 @@ const NeedRide = ({ navigation }) => {
                         height={29}
                         color={colors.gray100}
                         width={scale(140)}
-                        // onShowPassword={()=>setIsVehicleTypeModal(true)}
-                        value={`Time: Ex ${item.time}`}
+                        placeholder={"Time: Ex"}
+                        keyboard={"numeric"}
+                        value={item.time}
+                        maxLength={5}
+                        onChangeText={(text) => {
+                          // Remove any characters that are not digits or colon
+                          let filteredText = text.replace(/[^0-9:]/g, "");
+
+                          // Automatically insert colon after HH
+                          if (
+                            filteredText.length === 2 &&
+                            !filteredText.includes(":")
+                          ) {
+                            filteredText = `${filteredText}:`;
+                          }
+
+                          // Only allow input up to 5 characters (HH:MM)
+                          if (filteredText.length <= 5) {
+                            setPickupDateTimeData((prevData) =>
+                              prevData.map((item, ind) =>
+                                ind === index
+                                  ? { ...item, time: filteredText }
+                                  : item
+                              )
+                            );
+                          }
+                        }}
                         fontWeight={"600"}
                         rightImageWidth={15}
                         rightImageHeight={15}
-                        // placeholder={"$/day"}
                         borderRadius={8}
                       />
 
@@ -191,16 +223,16 @@ const NeedRide = ({ navigation }) => {
                         width={scale(140)}
                         editable={false}
                         dropDown={true}
-                        onShowPassword={() => setIsTimeModal(true)}
-
-                        // onShowPassword={()=>setIsVehicleTypeModal(true)}
+                        onShowPassword={() => {
+                          setSelectedPicker(index);
+                          setIsTimeModal(true);
+                        }}
                         rightImage={icon.down}
                         value={item.format}
                         fontWeight={"600"}
                         paddingHorizontal={10}
                         rightImageWidth={15}
                         rightImageHeight={15}
-                        // placeholder={"$/day"}
                         borderRadius={8}
                       />
                     </View>
@@ -212,13 +244,15 @@ const NeedRide = ({ navigation }) => {
                       color={colors.gray100}
                       editable={false}
                       dropDown={true}
-                      onShowPassword={() => setIsPickUpModel(true)}
-
+                      onShowPassword={() => {
+                        setSelectedPicker(index);
+                        setIsPickUpModel(true);
+                      }}
                       heading={"Pick Up within"}
                       // onShowPassword={()=>setIsVehicleTypeModal(true)}
                       fontWeight={"600"}
                       rightImage={icon.down}
-                      value={"6 Hours"}
+                      value={item?.pichup}
                       paddingHorizontal={10}
                       rightImageWidth={15}
                       rightImageHeight={15}
@@ -331,29 +365,36 @@ const NeedRide = ({ navigation }) => {
               <Button
                 text={"Single Stop"}
                 height={35}
-                bgColor={ signal=="Single Stop"? "#12D1AF" + "10":colors.white}
+                bgColor={
+                  signal == "Single Stop" ? "#12D1AF" + "10" : colors.white
+                }
                 borderColor={colors.primary}
                 borderWidth={-1}
                 size={15}
-                onPress={()=>setSignal("Single Stop")}
+                onPress={() => setSignal("Single Stop")}
                 fontWeight={"400"}
                 borderRadius={10}
-                textColor={signal=="Single Stop"?colors.primary:colors.black40}
+                textColor={
+                  signal == "Single Stop" ? colors.primary : colors.black40
+                }
                 paddingHorizontal={15}
               />
               <Spacer width={scale(10)} />
               <Button
                 text={"Multiple Stop"}
                 height={35}
-                onPress={()=>setSignal("Multiple Stop")}
-
-                bgColor={ signal=="Multiple Stop"? "#12D1AF" + "10":colors.white}
+                onPress={() => setSignal("Multiple Stop")}
+                bgColor={
+                  signal == "Multiple Stop" ? "#12D1AF" + "10" : colors.white
+                }
                 borderColor={colors.primary}
                 borderWidth={-1}
                 size={15}
                 fontWeight={"400"}
                 borderRadius={10}
-                textColor={signal=="Multiple Stop"?colors.primary:colors.black40}
+                textColor={
+                  signal == "Multiple Stop" ? colors.primary : colors.black40
+                }
                 paddingHorizontal={15}
               />
             </View>
@@ -377,21 +418,18 @@ const NeedRide = ({ navigation }) => {
                       text={item.name}
                       isActive={item.isActive}
                       setIsActive={() => {
-                          const updates = [...ServiceCoverage1];
-  
-                          // Toggle the 'active' property of the item at the specified index
-                          updates[index] = {
-                            ...updates[index],
-                            isActive: !updates[index].isActive,
-                          };
-            
-                          console.log("updates[index]", updates[index]);
-            
-                          setServiceCoverage1(updates);
-  
-                        }}
+                        const updates = [...ServiceCoverage1];
 
-   
+                        // Toggle the 'active' property of the item at the specified index
+                        updates[index] = {
+                          ...updates[index],
+                          isActive: !updates[index].isActive,
+                        };
+
+                        console.log("updates[index]", updates[index]);
+
+                        setServiceCoverage1(updates);
+                      }}
                     />
                     {ServiceCoverage1.length != index + 1 ? (
                       <View style={{ marginVertical: verticalScale(13) }}>
@@ -436,12 +474,12 @@ const NeedRide = ({ navigation }) => {
                           ...updates[index],
                           isActive: !updates[index].isActive,
                         };
-          
-                        console.log("updates[index]", updates[index]);
-          
-                        setVehicleSize(updates);
 
-                      }}                    />
+                        console.log("updates[index]", updates[index]);
+
+                        setVehicleSize(updates);
+                      }}
+                    />
                     {VehicleSize.length != index + 1 ? (
                       <View style={{ marginVertical: verticalScale(13) }}>
                         <DashedLine
@@ -464,18 +502,14 @@ const NeedRide = ({ navigation }) => {
         </View>
       </ScrollView>
 
-
       <CategoryBottomTab
         label1={"Save"}
         // onLabel2={()=>setIsPostedModal(true)}
-        onLabel1={()=>setIsSavedModal(true)}
-
+        onLabel1={() => setIsSavedModal(true)}
         label2={"Post"}
         label3={"Clear All"}
         color={colors.primary}
       />
-
-      
 
       <DatePickerModal
         mainColor={colors.primary}
@@ -486,32 +520,80 @@ const NeedRide = ({ navigation }) => {
         setModalVisible={setIsDatePickerModal}
       />
 
-<DropDownModal
+      <DropDownModal
         mainColor={colors.primary}
         modalVisible={isTimeModal}
-        selectedObject={time}
+        selectedObject={pickupDateTimeData[selectedPicker].format}
         title={"Time"}
         setSelectedObject={setTime}
         setModalVisible={setIsTimeModal}
         data={timeData}
+        onPress={(it) => {
+          console.log("ckndkcnd", it);
+
+          const updates = [...pickupDateTimeData];
+
+          // Toggle the 'active' property of the item at the specified index
+          updates[selectedPicker] = {
+            ...updates[selectedPicker],
+            format: it,
+          };
+
+          // console.log("updates[index]", updates[index]);
+
+          setPickupDateTimeData(updates);
+          setIsTimeModal(false);
+        }}
       />
 
       <DropDownModal
         mainColor={colors.primary}
         modalVisible={isPickUpModel}
-        selectedObject={pickUpWithin}
+        selectedObject={pickupDateTimeData[selectedPicker].pichup}
         title={"Pick Up Within"}
+        onPress={(it) => {
+          console.log("ckndkcnd", it);
+
+          const updates = [...pickupDateTimeData];
+
+          // Toggle the 'active' property of the item at the specified index
+          updates[selectedPicker] = {
+            ...updates[selectedPicker],
+            pichup: it,
+          };
+
+          // console.log("updates[index]", updates[index]);
+
+          setPickupDateTimeData(updates);
+          setIsPickUpModel(false);
+        }}
         setSelectedObject={setPickUpWithin}
         setModalVisible={setIsPickUpModel}
         data={pickUpWithinData}
       />
-       <CustomCalendar
-      modalVisible={isDateAndTime}
-      date={pickupDateAndTime}
-      setDate={setPickupDateAndTime}
-      setModalVisible={setIsDateAndTime}
+      <CustomCalendar
+        modalVisible={isDateAndTime}
+        date={pickupDateAndTime}
+        setDate={setPickupDateAndTime}
+        setModalVisible={setIsDateAndTime}
+        onPress={(it) => {
+          console.log("ckndkcnd", it);
+
+          const updates = [...pickupDateTimeData];
+
+          // Toggle the 'active' property of the item at the specified index
+          updates[selectedPicker] = {
+            ...updates[selectedPicker],
+            dateTime: it,
+          };
+
+          // console.log("updates[index]", updates[index]);
+
+          setPickupDateTimeData(updates);
+          setIsDateAndTime(false);
+        }}
       />
-         {/* <CustomCalendar
+      {/* <CustomCalendar
       modalVisible={isToModalVisible}
       date={toDate}
       setDate={setToDate}

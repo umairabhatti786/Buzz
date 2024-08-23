@@ -10,7 +10,7 @@ import {
   Platform,
   TextInput,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { colors } from "../../../utils/colors";
 import { Screen } from "../../../utils/ui/Screen";
 import { scale, verticalScale } from "react-native-size-matters";
@@ -23,12 +23,24 @@ import { Spacer } from "../../../components/Spacer";
 import CustomInput from "../../../components/CustomInput";
 import CustomButton from "../../../components/CustomButton";
 import CustomLine from "../../../components/CustomLine/CustomLine";
+import EmailVerificationBottomSheet from "../../main/Driver/CustomerDriverSetting/EmailVerificationBottomSheet";
+import NewPasswordBottomSheet from "../../main/Driver/CustomerDriverSetting/NewPasswordBottomSheet";
+import SignupWarningModal from "../../../components/SignupWarningModal";
+import { useDispatch } from "react-redux";
+import { setSelectedAccount } from "../../../redux/reducers/authReducer";
+import {CommonActions} from '@react-navigation/native';
 
 const CustomerSignup = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [activeAuth, setActiveAuth] = useState(0);
   const [isLoginPassword, setIsLoginPassword] = useState(true);
   const [isSignPassword, setIsSignPassword] = useState(true);
+  const emailVerificattionSheet = useRef(false);
+  const [newPassword,setNewPassword]=useState("")
+  const [reEnterNewPassword,setReEnterNewPassword]=useState("")
+  const [isSignupWarningVisible,setIsSignupWarningVisible]=useState(false)
+  const newPasswordSheet = useRef(false);
+  const dispatch=useDispatch()
   return (
     <>
       <StatusBar barStyle={"light-content"} backgroundColor={colors.primary} />
@@ -270,11 +282,28 @@ const CustomerSignup = ({ navigation }) => {
                 height={42}
                 bgColor={colors.primary}
                 text={"Login"}
-                onPress={() => navigation.navigate("CustomerTab")}
+                onPress={() => 
+                  {
+                    dispatch(setSelectedAccount("Customer"));
+                    navigation.dispatch(
+                      CommonActions.reset({
+                        index: 0,
+                        routes: [{name: 'CustomerTab'}],
+                      }),
+                    );
+                  }
+                  }
                 borderRadius={12}
               />
               {activeAuth == 0 && (
-                <CustomText
+                <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={()=>emailVerificattionSheet.current.present()}
+                style={{width:"60%",alignSelf:"center"}}
+
+                
+                >
+                   <CustomText
                   text={"Forgot Password"}
                   size={14}
                   fontWeight={"400"}
@@ -283,6 +312,9 @@ const CustomerSignup = ({ navigation }) => {
                   fontFam={Inter.medium}
                   color={colors.gray200}
                 />
+
+                </TouchableOpacity>
+               
               )}
               <View
                 style={{
@@ -349,8 +381,14 @@ const CustomerSignup = ({ navigation }) => {
               // fontFam={Inter.medium}
               color={colors.gray200}
             />
+                <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={()=>setIsSignupWarningVisible(true)}
+                style={{width:"60%",alignSelf:"center"}}
 
-            <CustomText
+                
+                >
+    <CustomText
               text={"Become a Mover"}
               size={13}
               fontWeight={"600"}
@@ -359,9 +397,49 @@ const CustomerSignup = ({ navigation }) => {
               fontFam={Inter.medium}
               color={colors.primary}
             />
+                </TouchableOpacity>
+
+        
           </ScrollView>
         </View>
       </Screen>
+
+      <EmailVerificationBottomSheet
+        bottomSheetModalRef={emailVerificattionSheet}
+        onSubmit={() => {
+          emailVerificattionSheet.current.dismiss();
+          setTimeout(() => {
+            newPasswordSheet.current.present();
+          }, 500);
+        }}
+      />
+      <NewPasswordBottomSheet
+        bottomSheetModalRef={newPasswordSheet}
+        onSubmit={() => {
+          newPasswordSheet.current.dismiss();
+          setTimeout(() => {
+            navigation.navigate("CustomerTab");
+          }, 500);
+          dispatch(setSelectedAccount("Customer"));
+
+        }}
+      />
+      <SignupWarningModal
+      modalVisible={isSignupWarningVisible}
+      setModalVisible={setIsSignupWarningVisible}
+      onSignup={()=>{
+        setActiveAuth(1)
+        setIsSignupWarningVisible(false)
+
+      }}
+      onLogin={()=>{
+        setActiveAuth(0)
+        setIsSignupWarningVisible(false)
+        
+      }}
+
+    
+      />
     </>
   );
 };

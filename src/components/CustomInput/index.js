@@ -36,7 +36,8 @@ const CustomInput = ({
   fontWeight,
   headingWeight,
   headingSize,
-  dropDown
+  dropDown,
+  textAlignVertical
 }) => {
   return (
     <View style={{ ...props }}>
@@ -105,6 +106,7 @@ const CustomInput = ({
                 paddingVertical:5,
                 height: verticalScale(height || 45),
                 color: color || colors.black,
+                textAlignVertical:textAlignVertical,
                 
                 fontFamily: Inter.medium,
                 fontWeight: fontWeight || "500",

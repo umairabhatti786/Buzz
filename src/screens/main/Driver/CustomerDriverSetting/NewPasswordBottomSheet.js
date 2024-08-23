@@ -14,8 +14,11 @@ import { Spacer } from "../../../../components/Spacer";
 import { Inter } from "../../../../utils/Fonts";
 import CustomInput from "../../../../components/CustomInput";
 
-const NewPasswordBottomSheet = ({ bottomSheetModalRef, onSubmit }) => {
+const NewPasswordBottomSheet = ({ bottomSheetModalRef, onSubmit,color }) => {
   const navigation = useNavigation();
+  const [newPassword,setNewPassword]=useState("")
+  const [reEnterNewPassword,setReEnterNewPassword]=useState("")
+
   const [value, setValue] = useState("");
 
 
@@ -38,7 +41,8 @@ const NewPasswordBottomSheet = ({ bottomSheetModalRef, onSubmit }) => {
 <CustomInput
                   height={40}
                   color={colors.gray100}
-                  value={""}
+                  value={newPassword}
+                  onChangeText={(txt)=>setNewPassword(txt)}
                   placeholder={"New Password"}
                   fontWeight={"600"}
                   paddingHorizontal={10}
@@ -47,8 +51,10 @@ const NewPasswordBottomSheet = ({ bottomSheetModalRef, onSubmit }) => {
                 <CustomInput
                   height={40}
                   color={colors.gray100}
-                  value={""}
-                  placeholder={"New Password"}
+                
+                  value={reEnterNewPassword}
+                  onChangeText={(txt)=>setReEnterNewPassword(txt)}
+                  placeholder={"Re-enter New Password"}
                   fontWeight={"600"}
                   paddingHorizontal={10}
                   borderRadius={8}
@@ -61,6 +67,7 @@ const NewPasswordBottomSheet = ({ bottomSheetModalRef, onSubmit }) => {
         <Button
           text={"Login"}
           height={40}
+        bgColor={color||colors.primary}
           size={16}
           onPress={onSubmit}
           borderRadius={10}

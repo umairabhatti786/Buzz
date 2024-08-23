@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import Modal from "react-native-modal";
-import { windowHeight } from "../../../../utils/Commons";
+import { formatPhoneNumber, windowHeight } from "../../../../utils/Commons";
 import { AppStyles } from "../../../../utils/AppStyle";
 import { colors } from "../../../../utils/colors";
 import NewText from "../../../../components/NewText";
@@ -33,6 +33,25 @@ const ThankyouModal = ({
   setModalVisible,
   setIsRateExperienceModal,
 }) => {
+
+  const [pickUpContactName, setPickUpContactName] = useState("");
+  const [pickUpContactPhone, setPickUpContactPhone] = useState("");
+  const [dropOffContactName, setDropOffContactName] = useState("");
+  const [dropOffContactPhone, setDropOffContactPhone] = useState("");
+  const [pickupInstructionValue, setPickupInstructionValue] = useState({
+    code: "",
+    knockDoor: "",
+    bell: "",
+    frontDesk: "",
+    shipping: "",
+  });
+  const [dropOffStructionValue, setDropOffInstructionValue] = useState({
+    code: "",
+    knockDoor: "",
+    bell: "",
+    frontDesk: "",
+    shipping: "",
+  })
   const navigation = useNavigation();
 
   return (
@@ -79,17 +98,7 @@ const ThankyouModal = ({
               size={14}
             />
 
-            <View
-              style={{ marginVertical: verticalScale(5), marginHorizontal: 15 }}
-            >
-              <DashedLine
-                dashLength={6}
-                dashThickness={1}
-                dashGap={5}
-                dashColor={colors.black40}
-              />
-            </View>
-            <View style={{ paddingHorizontal: scale(10) }}>
+<View style={{ paddingHorizontal: scale(10) }}>
               <NewText
                 color={colors.black}
                 size={16}
@@ -125,7 +134,10 @@ const ThankyouModal = ({
               <CustomInput
                 height={35}
                 placeholder={"Enter Name at Pick-up or N/A "}
-                value={""}
+                value={pickUpContactName}
+                onChangeText={(text) => {
+                  setPickUpContactName(text);
+                }}
               />
               <Spacer height={verticalScale(5)} />
 
@@ -139,41 +151,83 @@ const ThankyouModal = ({
               <CustomInput
                 height={35}
                 placeholder={"(000)-000-0000"}
-                value={""}
+                value={pickUpContactPhone}
+                keyboard={"numeric"}
+                maxLength={15}
+                onChangeText={(text) => {
+                  const formattedText = formatPhoneNumber(text);
+
+                  
+                  setPickUpContactPhone(formattedText);
+                }}
               />
               <Spacer height={verticalScale(5)} />
 
               <View style={styles.contactDetail}>
-                <NewText
-                  text={"Enter gate code 0000"}
-                  color={colors.gray}
-                  fontWeight="400"
-                  size={13}
+                <TextInput
+                  value={pickupInstructionValue.code}
+                  maxLength={4}
+                  placeholder="Enter gate code 0000"
+                  keyboard="numeric"
+                  placeholderTextColor={colors.gray}
+                  onChangeText={(text) => {
+                    setPickupInstructionValue({
+                      ...pickupInstructionValue,
+                      code: text,
+                    });
+                  }}
+                  style={styles.instructionsInput}
+                  keyboardType="numeric"
                 />
 
-                <NewText
-                  text={"Knock on the door"}
-                  color={colors.gray}
-                  fontWeight="400"
-                  size={13}
+                <TextInput
+                  value={pickupInstructionValue.knockDoor}
+                  placeholder="Knock on the door"
+                  placeholderTextColor={colors.gray}
+                  onChangeText={(text) => {
+                    setPickupInstructionValue({
+                      ...pickupInstructionValue,
+                      knockDoor: text,
+                    });
+                  }}
+                  style={styles.instructionsInput}
                 />
-                <NewText
-                  text={"Ring the bell"}
-                  color={colors.gray}
-                  fontWeight="400"
-                  size={13}
+
+                <TextInput
+                  value={pickupInstructionValue.bell}
+                  placeholder="Ring the bell"
+                  placeholderTextColor={colors.gray}
+                  onChangeText={(text) => {
+                    setPickupInstructionValue({
+                      ...pickupInstructionValue,
+                      bell: text,
+                    });
+                  }}
+                  style={styles.instructionsInput}
                 />
-                <NewText
-                  text={"Walk to front desk"}
-                  color={colors.gray}
-                  fontWeight="400"
-                  size={13}
+                <TextInput
+                  value={pickupInstructionValue.frontDesk}
+                  placeholder="Walk to front desk"
+                  placeholderTextColor={colors.gray}
+                  onChangeText={(text) => {
+                    setPickupInstructionValue({
+                      ...pickupInstructionValue,
+                      frontDesk: text,
+                    });
+                  }}
+                  style={styles.instructionsInput}
                 />
-                <NewText
-                  text={"Go to Shipping/Receiving"}
-                  color={colors.gray}
-                  fontWeight="400"
-                  size={13}
+                <TextInput
+                  value={pickupInstructionValue.shipping}
+                  placeholder="Go to Shipping/Receiving"
+                  placeholderTextColor={colors.gray}
+                  onChangeText={(text) => {
+                    setPickupInstructionValue({
+                      ...pickupInstructionValue,
+                      shipping: text,
+                    });
+                  }}
+                  style={styles.instructionsInput}
                 />
               </View>
             </View>
@@ -214,7 +268,10 @@ const ThankyouModal = ({
               <CustomInput
                 height={35}
                 placeholder={"Enter Name at Pick-up or N/A "}
-                value={""}
+                value={dropOffContactName}
+                onChangeText={(text) => {
+                  setDropOffContactName(text);
+                }}
               />
               <Spacer height={verticalScale(5)} />
 
@@ -228,51 +285,106 @@ const ThankyouModal = ({
               <CustomInput
                 height={35}
                 placeholder={"(000)-000-0000"}
-                value={""}
+                keyboard={"numeric"}
+                maxLength={15}
+                value={dropOffContactPhone}
+                onChangeText={(text) => {
+                  const formattedText = formatPhoneNumber(text);
+
+                  
+                  setDropOffContactPhone(formattedText);
+                }}
               />
               <Spacer height={verticalScale(5)} />
 
               <View style={styles.contactDetail}>
-                <NewText
-                  text={"Enter gate code 0000"}
-                  color={colors.gray}
-                  fontWeight="400"
-                  size={13}
+                <TextInput
+                  value={dropOffStructionValue.code}
+                  maxLength={4}
+                  placeholder="Enter gate code 0000"
+                  keyboard="numeric"
+                  placeholderTextColor={colors.gray}
+                  onChangeText={(text) => {
+                    setDropOffInstructionValue({
+                      ...dropOffStructionValue,
+                      code: text,
+                    });
+                  }}
+                  style={styles.instructionsInput}
+                  keyboardType="numeric"
                 />
 
-                <NewText
-                  text={"Knock on the door"}
-                  color={colors.gray}
-                  fontWeight="400"
-                  size={13}
+                <TextInput
+                  value={dropOffStructionValue.knockDoor}
+                  placeholder="Knock on the door"
+                  placeholderTextColor={colors.gray}
+                  onChangeText={(text) => {
+                    setDropOffInstructionValue({
+                      ...dropOffStructionValue,
+                      knockDoor: text,
+                    });
+                  }}
+                  style={styles.instructionsInput}
                 />
-                <NewText
-                  text={"Ring the bell"}
-                  color={colors.gray}
-                  fontWeight="400"
-                  size={13}
+
+                <TextInput
+                  value={dropOffStructionValue.bell}
+                  placeholder="Ring the bell"
+                  placeholderTextColor={colors.gray}
+                  onChangeText={(text) => {
+                    setDropOffInstructionValue({
+                      ...dropOffStructionValue,
+                      bell: text,
+                    });
+                  }}
+                  style={styles.instructionsInput}
                 />
-                <NewText
-                  text={"Walk to front desk"}
-                  color={colors.gray}
-                  fontWeight="400"
-                  size={13}
+                <TextInput
+                  value={dropOffStructionValue.frontDesk}
+                  placeholder="Walk to front desk"
+                  placeholderTextColor={colors.gray}
+                  onChangeText={(text) => {
+                    setDropOffInstructionValue({
+                      ...dropOffStructionValue,
+                      frontDesk: text,
+                    });
+                  }}
+                  style={styles.instructionsInput}
                 />
-                <NewText
-                  text={"Go to Shipping/Receiving"}
-                  color={colors.gray}
-                  fontWeight="400"
-                  size={13}
+                <TextInput
+                  value={dropOffStructionValue.shipping}
+                  placeholder="Go to Shipping/Receiving"
+                  placeholderTextColor={colors.gray}
+                  onChangeText={(text) => {
+                    setDropOffInstructionValue({
+                      ...dropOffStructionValue,
+                      shipping: text,
+                    });
+                  }}
+                  style={styles.instructionsInput}
                 />
               </View>
             </View>
+
 
             <View style={{ ...AppStyles.justifyRow, marginVertical: 10 }}>
               <Button
                 text={"Later"}
                 height={28}
-                onPress={() => setModalVisible(false)}
-                bgColor={"#EEEEEE"}
+                onPress={() =>
+                  {
+                    setModalVisible(false)
+
+
+                    setTimeout(() => {
+                      navigation.navigate("ManageOrders")
+
+                      
+                    }, 500);
+                  }
+                  
+                  }
+                                  bgColor={"#EEEEEE"}
                 borderColor={"transparent"}
                 borderWidth={1}
                 size={16}
@@ -352,5 +464,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     padding: 15,
     gap: verticalScale(5),
+  },
+  instructionsInput: {
+    flex: 1,
+    color: colors.black,
+    fontWeight: "500",
+    fontFamily: Inter.regular,
+    padding: -1,
+    fontSize: 13,
   },
 });

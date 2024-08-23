@@ -34,6 +34,10 @@ const DeliveryManager = ({ navigation }) => {
   const [selectedFilerby, setSelectedFilerby] = useState("Today");
   const [isDeliverySortby, setIsDeliverySortby] = useState(false);
   const [selectedSortby, setSelectedSortby] = useState("Recent (Default)");
+
+  const [optimizeImageColor,setOptimizeImageColor]=useState(colors.black)
+  const    [optimizeTextColor,setOptimizeTextColor]=useState(colors.black)
+  
   const mapRef = useRef(null);
 
   const data = [
@@ -226,13 +230,26 @@ const DeliveryManager = ({ navigation }) => {
               <RouteProgress />
             </View>
           </ScrollView>
-          <DeliveryBottomTab />
+          <DeliveryBottomTab
+          optimizeTextColor={optimizeTextColor}
+          onPressOptomize={()=>{
+            setOptimizeTextColor(colors.gray)
+            setOptimizeImageColor(colors.gray)
+            setTimeout(() => {
+              setOptimizeTextColor(colors.black)
+              setOptimizeImageColor(colors.black)
+              
+            }, 2000);
+          }}
+          optimizeImageColor={optimizeImageColor}
+           />
         </View>
       </Screen>
 
       <DeliveryFilerbyModal
         modalVisible={isDeliveryFilerby}
         title={"Filter by"}
+
         selectedObject={selectedFilerby}
         setSelectedObject={setSelectedFilerby}
         setModalVisible={setIsDeliveryFilerby}

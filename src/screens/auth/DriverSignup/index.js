@@ -10,7 +10,7 @@ import {
   ImageBackground,
   TextInput,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { colors } from "../../../utils/colors";
 import { Screen } from "../../../utils/ui/Screen";
 import { scale, verticalScale } from "react-native-size-matters";
@@ -23,11 +23,21 @@ import { Spacer } from "../../../components/Spacer";
 import CustomInput from "../../../components/CustomInput";
 import CustomButton from "../../../components/CustomButton";
 import CustomLine from "../../../components/CustomLine/CustomLine";
+import EmailVerificationBottomSheet from "../../main/Driver/CustomerDriverSetting/EmailVerificationBottomSheet";
+import NewPasswordBottomSheet from "../../main/Driver/CustomerDriverSetting/NewPasswordBottomSheet";
+import {CommonActions} from '@react-navigation/native';
+import { useDispatch } from "react-redux";
+import { setSelectedAccount } from "../../../redux/reducers/authReducer";
+
 const DriverSignup = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [activeAuth, setActiveAuth] = useState(0);
   const [isLoginPassword, setIsLoginPassword] = useState(true);
   const [isSignPassword, setIsSignPassword] = useState(true);
+  const newPasswordSheet = useRef(false);
+  const emailVerificattionSheet = useRef(false);
+  const dispatch=useDispatch()
+
 
   return (
     <>
@@ -274,15 +284,24 @@ const DriverSignup = ({ navigation }) => {
                 borderRadius={12}
               />
               {activeAuth == 0 && (
-                <CustomText
-                  text={"Forgot Password"}
-                  size={14}
-                  fontWeight={"400"}
-                  textDecorationLine={"underline"}
-                  style={{ textAlign: "center", marginTop: verticalScale(15) }}
-                  fontFam={Inter.medium}
-                  color={colors.gray200}
-                />
+                 <TouchableOpacity
+                 activeOpacity={0.5}
+                 onPress={()=>emailVerificattionSheet.current.present()}
+                 style={{width:"60%",alignSelf:"center"}}
+ 
+                 
+                 >
+                    <CustomText
+                   text={"Forgot Password"}
+                   size={14}
+                   fontWeight={"400"}
+                   textDecorationLine={"underline"}
+                   style={{ textAlign: "center", marginTop: verticalScale(15) }}
+                   fontFam={Inter.medium}
+                   color={colors.gray200}
+                 />
+ 
+                 </TouchableOpacity>
               )}
 
               <View
@@ -370,6 +389,19 @@ const DriverSignup = ({ navigation }) => {
                 // fontFam={Inter.medium}
                 color={colors.gray200}
               />
+              <TouchableOpacity
+              activeOpacity={0.4}
+              onPress={()=>{
+                dispatch(setSelectedAccount("Customer"))
+                navigation.dispatch(
+                  CommonActions.reset({
+                    index: 0,
+                    routes: [{name: 'CustomerTab'}],
+                  }),
+                );
+
+              }}
+              >
               <CustomText
                 text={"Sign in as Customer"}
                 size={13}
@@ -379,10 +411,35 @@ const DriverSignup = ({ navigation }) => {
                 fontFam={Inter.medium}
                 color={colors.secondary}
               />
+
+              </TouchableOpacity>
+            
             </View>
           </ScrollView>
         </View>
       </Screen>
+
+      <EmailVerificationBottomSheet
+            color={colors.secondary}
+
+        bottomSheetModalRef={emailVerificattionSheet}
+        onSubmit={() => {
+          emailVerificattionSheet.current.dismiss();
+          setTimeout(() => {
+            newPasswordSheet.current.present();
+          }, 500);
+        }}
+      />
+      <NewPasswordBottomSheet
+      color={colors.secondary}
+        bottomSheetModalRef={newPasswordSheet}
+        onSubmit={() => {
+          newPasswordSheet.current.dismiss();
+          setTimeout(() => {
+            navigation.navigate("DriverHomeBottomTab");
+          }, 500);
+        }}
+      />
     </>
   );
 };

@@ -50,6 +50,8 @@ const CustomerSearch = ({ navigation }) => {
   const [vehicleObject, setVehicleObject] = useState("Vehicle Size");
   const [isVehicleVisible, setIsVehicleVisible] = useState(false);
   const [isCounterOfferVisible, setIsCounterOfferVisible] = useState(false);
+  const [counterOffer, setCounterOffer] = useState(false);
+
   const [isSubmitModal, setIsSubmitModal] = useState(false);
   const [mapHeight, setMapHeight] = useState(400);
   const [mapType, setMapType] = useState("standard");
@@ -833,6 +835,8 @@ const CustomerSearch = ({ navigation }) => {
       <CounterOfferModal
         modalVisible={isCounterOfferVisible}
         submitButtonColor={colors.secondary}
+        counterOffer={counterOffer}
+        setCounterOffer={setCounterOffer}
         title={"Counteroffer Price"}
         onSubmit={() => {
           setIsCounterOfferVisible(false);

@@ -21,7 +21,7 @@ import {
   import CustomModal from "../../../../components/CustomModal";
   import NewText from "../../../../components/NewText";
   import { AppStyles } from "../../../../utils/AppStyle";
-  const RenameModal = ({ modalVisible, handelModal, setModalVisible, title,onSubmit }) => {
+  const RenameModal = ({ modalVisible, handelModal, setModalVisible, title,onSubmit,setRenameText,renameText,onChangeText }) => {
     const [isExtraTip, setIsExtraTip] = useState(false);
     const [tipValue, setTipValue] = useState("");
     const [isDateExtension, setIsDateExtension] = useState(false);
@@ -37,13 +37,12 @@ import {
           <CustomInput
             height={35}
             color={colors.black}
+            
             placeholder={"[Name]"}
             placeholderTextColor={colors.black}
-            value={tipValue}
+            value={renameText}
             borderRadius={8}
-            onChangeText={(txt) => {
-              setTipValue(txt);
-            }}
+            onChangeText={onChangeText}
             fontWeight={"600"}
           />
   

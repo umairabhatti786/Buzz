@@ -7,7 +7,7 @@ import { icon } from '../../../../assets/png/icons'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { Spacer } from '../../../../components/Spacer'
 
-const DeliveryBottomTab = () => {
+const DeliveryBottomTab = ({isActive,optimizeImageColor,optimizeTextColor,onPressOptomize}) => {
   return (
     <View style={{flexDirection:"row",justifyContent:"space-between",height:verticalScale(65),
         backgroundColor:colors.white,
@@ -19,10 +19,12 @@ const DeliveryBottomTab = () => {
         paddingTop:verticalScale(8),
         paddingHorizontal:scale(15)
     }}>
-        <TouchableOpacity style={{alignItems:"center"}}>
+        <TouchableOpacity
+        onPress={onPressOptomize}
+         style={{alignItems:"center"}}>
        
                 <Image
-                  style={{ width: scale(23), height: scale(23),tintColor:colors.gray }}
+                  style={{ width: scale(23), height: scale(23),tintColor: optimizeImageColor|| colors.gray }}
                   resizeMode="contain"
                   source={icon.route}
                 />
@@ -30,7 +32,7 @@ const DeliveryBottomTab = () => {
               
               <CustomText
                 // fontWeight="400"
-                color={colors.gray}
+                color={ optimizeTextColor|| colors.gray}
                 size={9}
                 style={{textAlign:"center"}}
                 text={"Optimize Route"}
@@ -49,7 +51,7 @@ const DeliveryBottomTab = () => {
      
      <CustomText
        // fontWeight="400"
-       color={colors.gray}
+       color={  colors.gray}
        size={9}
        style={{textAlign:"center"}}
        text={"New Trip"}

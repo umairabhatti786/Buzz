@@ -11,7 +11,7 @@ import HorizontalContainer from "../../../components/HorizontalContainer";
 import DashedLine from "react-native-dashed-line";
 import Collapsible from "react-native-collapsible";
 
-const ActivitySummary = () => {
+const ActivitySummary = ({setIsPickupDropInstructionModal,isPickupDropInstructionModal}) => {
   const [isCollapsible, setIsCollapsible] = useState(false);
 
   return (
@@ -107,7 +107,12 @@ const ActivitySummary = () => {
             <HorizontalContainer
               text={"Pickup Instruction"}
               size={13}
-              text1={"Come early please"}
+              text1={"View/Edit"}
+              onPress={()=>{
+                setIsPickupDropInstructionModal(true)
+                
+
+              }}
               size1={13}
             />
             <View style={{ marginVertical: verticalScale(13) }}>
@@ -121,7 +126,12 @@ const ActivitySummary = () => {
             <HorizontalContainer
               text={"Drop-Off Instruction"}
               size={13}
-              text1={"-"}
+              onPress={()=>{
+                setIsPickupDropInstructionModal(true)
+                
+
+              }}
+              text1={"View/Edit"}
               size1={13}
             />
           </View>

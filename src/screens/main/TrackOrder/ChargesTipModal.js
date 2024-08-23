@@ -27,6 +27,7 @@ const ChargesTipModal = ({ modalVisible, handelModal, setModalVisible,setIsDateA
   const [isExtraTip, setIsExtraTip] = useState(false);
   const [tipValue, setTipValue] = useState("");
   const [isDateExtension, setIsDateExtension] = useState(false);
+  const [description,setDescription]=useState("")
 
   const [dateExtension, setDateExtension] = useState("03-23-24");
   return (
@@ -47,7 +48,9 @@ const ChargesTipModal = ({ modalVisible, handelModal, setModalVisible,setIsDateA
 
         <CustomInput
           height={32}
+          keyboard={"numeric"}
           color={colors.gray100}
+          editable={isExtraTip}
           placeholder={"$"}
           value={tipValue}
           borderRadius={8}
@@ -75,6 +78,7 @@ const ChargesTipModal = ({ modalVisible, handelModal, setModalVisible,setIsDateA
 
         <TouchableOpacity
           activeOpacity={0.6}
+          disabled={!isDateExtension}
           onPress={()=>setIsDateAndTime(true)}
           style={styles.pickupDateContainer}
         >
@@ -114,12 +118,13 @@ const ChargesTipModal = ({ modalVisible, handelModal, setModalVisible,setIsDateA
 <CustomInput
           height={100}
           color={colors.gray100}
+          value={description}
+          textAlignVertical={"top"}
           // placeholder={"$"}
           // heading={"Description"}
-          value={tipValue}
           borderRadius={8}
           onChangeText={(txt) => {
-            setTipValue(txt);
+            setDescription(txt);
           }}
           fontWeight={"600"}
         />

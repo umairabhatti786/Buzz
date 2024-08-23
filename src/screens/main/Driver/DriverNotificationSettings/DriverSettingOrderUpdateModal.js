@@ -33,7 +33,8 @@ import CustomLine from "../../../../components/CustomLine/CustomLine";
   
     title,
     selectNotificationUpdates,
-    setSelectNotificationUpdates
+    setSelectNotificationUpdates,
+    bgColor
   }) => {
     return (
       <Modal
@@ -178,7 +179,7 @@ import CustomLine from "../../../../components/CustomLine/CustomLine";
               size={16}
               onPress={() => setModalVisible(false)}
               textColor={colors.white}
-              bgColor={colors.primary}
+              bgColor={ bgColor|| colors.primary}
               //  borderColor={colors.secondary}
               //  borderWidth={1}
               paddingHorizontal={scale(10)}

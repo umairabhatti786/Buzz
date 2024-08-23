@@ -23,6 +23,7 @@ import CustomRangeSlider from "../../../../components/RangeSlider";
 import { windowWidth } from "../../../../utils/Commons";
 import DropDownModal from "../../../../components/DropDownModal";
 import CustomCalendar from "../../../../components/CustomCalendar";
+import DatePickerModal from "../../../../components/DatePickerModal";
 
 const DeliveryServices = ({ navigation }) => {
   const [standardSize, setStandardSize] = useState("SUV");
@@ -45,6 +46,9 @@ const DeliveryServices = ({ navigation }) => {
   const [pickupDateAndTime, setPickupDateAndTime] = useState("");
   const [isDateAndTime, setIsDateAndTime] = useState("");
   const[signal,setSignal]=useState("Single Stop")
+  const [selectedPicker, setSelectedPicker] = useState(0);
+  const [isDatePickerModal, setIsDatePickerModal] = useState(false);
+  const [date, setDate] = useState(new Date());
 
   const pickUpWithinData = [
     "1 Hour",
@@ -235,7 +239,10 @@ const DeliveryServices = ({ navigation }) => {
                     />
                     <TouchableOpacity
                       activeOpacity={0.6}
-                      onPress={() => setIsDateAndTime(true)}
+                      onPress={() => {
+                        setSelectedPicker(index);
+                        setIsDateAndTime(true);
+                      }}
                       style={styles.pickupDateContainer}
                     >
                       <NewText
@@ -260,7 +267,31 @@ const DeliveryServices = ({ navigation }) => {
                         height={29}
                         color={colors.gray100}
                         width={scale(140)}
-                        value={`Time: Ex ${item.time}`}
+                        keyboard={"numeric"}
+                        value={item.time}
+                        onChangeText={(text) => {
+                          // Remove any characters that are not digits or colon
+                          let filteredText = text.replace(/[^0-9:]/g, "");
+
+                          // Automatically insert colon after HH
+                          if (
+                            filteredText.length === 2 &&
+                            !filteredText.includes(":")
+                          ) {
+                            filteredText = `${filteredText}:`;
+                          }
+
+                          // Only allow input up to 5 characters (HH:MM)
+                          if (filteredText.length <= 5) {
+                            setPickupDateTimeData((prevData) =>
+                              prevData.map((item, ind) =>
+                                ind === index
+                                  ? { ...item, time: filteredText }
+                                  : item
+                              )
+                            );
+                          }
+                        }}
                         fontWeight={"600"}
                         rightImageWidth={15}
                         rightImageHeight={15}
@@ -273,16 +304,19 @@ const DeliveryServices = ({ navigation }) => {
                         width={scale(140)}
                         editable={false}
                         dropDown={true}
-
-                        onShowPassword={() => setIsTimeModal(true)}
-                        // onShowPassword={()=>setIsVehicleTypeModal(true)}
+                        onShowPassword={() =>
+                          {
+                            setSelectedPicker(index)
+                            setIsTimeModal(true)
+                          }
+                          
+                          }
                         rightImage={icon.down}
                         value={item.format}
                         fontWeight={"600"}
                         paddingHorizontal={10}
                         rightImageWidth={15}
                         rightImageHeight={15}
-                        // placeholder={"$/day"}
                         borderRadius={8}
                       />
                     </View>
@@ -294,12 +328,18 @@ const DeliveryServices = ({ navigation }) => {
                       color={colors.gray100}
                       editable={false}
                       dropDown={true}
-                      onShowPassword={() => setIsPickUpModel(true)}
+                      onShowPassword={() => 
+                        {
+                          setSelectedPicker(index)
+                          setIsPickUpModel(true)
+
+                        }
+                        }
                       heading={"Pick Up within"}
                       // onShowPassword={()=>setIsVehicleTypeModal(true)}
                       fontWeight={"600"}
                       rightImage={icon.down}
-                      value={"6 Hours"}
+                      value={item?.pichup}
                       paddingHorizontal={10}
                       rightImageWidth={15}
                       rightImageHeight={15}
@@ -918,24 +958,94 @@ const DeliveryServices = ({ navigation }) => {
         data={serviceDescriptionData}
       />
 
+<DatePickerModal
+        mainColor={colors.primary}
+        modalVisible={isDatePickerModal}
+        selectedObject={date}
+        title={"To Date"}
+        setSelectedObject={setDate}
+        setModalVisible={setIsDatePickerModal}
+      />
+
       <DropDownModal
         mainColor={colors.primary}
         modalVisible={isTimeModal}
-        selectedObject={time}
+        selectedObject={pickupDateTimeData[selectedPicker].format}
         title={"Time"}
         setSelectedObject={setTime}
         setModalVisible={setIsTimeModal}
         data={timeData}
+
+         onPress={(it)=>{
+          console.log("ckndkcnd",it)
+
+          const updates = [...pickupDateTimeData];
+
+          // Toggle the 'active' property of the item at the specified index
+          updates[selectedPicker] = {
+            ...updates[selectedPicker],
+            format: it,
+          };
+
+          // console.log("updates[index]", updates[index]);
+
+          setPickupDateTimeData(updates)
+          setIsTimeModal(false)
+
+
+        }}
       />
 
       <DropDownModal
         mainColor={colors.primary}
         modalVisible={isPickUpModel}
-        selectedObject={pickUpWithin}
+        selectedObject={pickupDateTimeData[selectedPicker].pichup}
         title={"Pick Up Within"}
+        onPress={(it)=>{
+          console.log("ckndkcnd",it)
+
+          const updates = [...pickupDateTimeData];
+
+          // Toggle the 'active' property of the item at the specified index
+          updates[selectedPicker] = {
+            ...updates[selectedPicker],
+            pichup: it,
+          };
+
+          // console.log("updates[index]", updates[index]);
+
+          setPickupDateTimeData(updates)
+          setIsPickUpModel(false)
+
+
+        }}
         setSelectedObject={setPickUpWithin}
         setModalVisible={setIsPickUpModel}
         data={pickUpWithinData}
+      />
+      <CustomCalendar
+        modalVisible={isDateAndTime}
+        date={pickupDateAndTime}
+        setDate={setPickupDateAndTime}
+        setModalVisible={setIsDateAndTime}
+        onPress={(it)=>{
+          console.log("ckndkcnd",it)
+
+          const updates = [...pickupDateTimeData];
+
+          // Toggle the 'active' property of the item at the specified index
+          updates[selectedPicker] = {
+            ...updates[selectedPicker],
+            dateTime: it,
+          };
+
+          // console.log("updates[index]", updates[index]);
+
+          setPickupDateTimeData(updates)
+          setIsDateAndTime(false)
+
+
+        }}
       />
 
       <DropDownModal
@@ -957,12 +1067,7 @@ const DeliveryServices = ({ navigation }) => {
         setModalVisible={setUnLaodingDataModal}
         data={unLaodingArray}
       />
-      <CustomCalendar
-        modalVisible={isDateAndTime}
-        date={pickupDateAndTime}
-        setDate={setPickupDateAndTime}
-        setModalVisible={setIsDateAndTime}
-      />
+    
     </>
   );
 };

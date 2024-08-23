@@ -13,6 +13,7 @@ import DriverHome from "../../screens/main/Driver/DriverHome";
 import { colors } from "../../utils/colors";
 import DriverNotification from "../../screens/main/Driver/DriverNotification";
 import CustomerDriverSetting from "../../screens/main/Driver/CustomerDriverSetting";
+import ServiceProfile from "../../screens/main/Driver/ServiceProfile";
 
 const Tab = createBottomTabNavigator();
 
@@ -69,7 +70,7 @@ function DriverHomeBottomTab({navigation}) {
       />
       <Tab.Screen
         name={"Watchlist"}
-        component={CustomerWatchlist}
+        component={ServiceProfile}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (

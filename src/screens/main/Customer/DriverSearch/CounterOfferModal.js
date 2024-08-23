@@ -34,6 +34,9 @@ import { Spacer } from "../../../../components/Spacer";
     setData,
     onSubmit,
     submitButtonColor,
+    setCounterOffer,
+    counterOffer,
+
   
     title,
   }) => {
@@ -90,8 +93,9 @@ import { Spacer } from "../../../../components/Spacer";
         }}
       >
         <TextInput
-                value={""}
+                value={counterOffer}
                 placeholder="$"
+                keyboardType="numeric"
                 placeholderTextColor={colors.gray}
                 style={{
                   color: colors.black,
@@ -100,6 +104,9 @@ import { Spacer } from "../../../../components/Spacer";
                   fontFamily: Inter.bold,
                   height: 45,
                   width:"80%",
+                }}
+                onChangeText={(txt)=>{
+                  setCounterOffer(txt)
                 }}
               />
   

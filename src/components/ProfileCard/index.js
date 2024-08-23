@@ -18,10 +18,11 @@ const ProfileCard = ({
   isRating,
   isActive,
   setIsActive,
+  onNext,
 }) => {
   return (
-    <TouchableOpacity
-      activeOpacity={0.6}
+    <View
+   
       // onPress={()=>navigation.navigate("CustomerDriverSetting")}
       style={{ ...styles.box, paddingVertical: verticalScale(10) }}
     >
@@ -67,7 +68,11 @@ const ProfileCard = ({
           </View>
         </View>
 
-        <View style={{ ...AppStyles.row, marginRight: scale(15) }}>
+        <TouchableOpacity
+           activeOpacity={0.6}
+           disabled={!isActive}
+           onPress={onNext}
+         style={{ ...AppStyles.row, marginRight: scale(15) }}>
           {isRating ? (
             <>
               <View style={AppStyles.row}>
@@ -93,7 +98,8 @@ const ProfileCard = ({
             </>
           ) : (
             <>
-              <Image
+            <TouchableOpacity>
+            <Image
                 style={{
                   width: 35,
                   height: 35,
@@ -102,6 +108,9 @@ const ProfileCard = ({
                 resizeMode={"contain"}
                 source={icon.passp}
               />
+
+            </TouchableOpacity>
+             
             </>
           )}
 
@@ -115,7 +124,7 @@ const ProfileCard = ({
             resizeMode={"contain"}
             source={icon.nexticon}
           />
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View style={{ marginVertical: verticalScale(7) }}>
@@ -196,7 +205,7 @@ const ProfileCard = ({
           />
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 

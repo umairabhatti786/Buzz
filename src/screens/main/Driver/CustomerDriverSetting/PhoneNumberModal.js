@@ -6,8 +6,12 @@ import CustomModal from "../../../../components/CustomModal";
 import { colors } from "../../../../utils/colors";
 import Button from "../../../../components/Button";
 import CustomInput from "../../../../components/CustomInput";
+import { useState } from "react";
+import { formatPhoneNumber } from "../../../../utils/Commons";
   
   const PhoneNumberModal = ({ modalVisible, setModalVisible,onSubmit }) => {
+
+    const [phoneNumber,setPhoneNumber]=useState("")
  
   
     return (
@@ -24,7 +28,15 @@ import CustomInput from "../../../../components/CustomInput";
             paddingHorizontal={10}
             borderWidth={2}
             placeholder={"(000)-000-0000"}
-            value={""}
+            value={phoneNumber}
+            keyboard={"numeric"}
+            maxLength={15}
+            onChangeText={(text) => {
+              const formattedText = formatPhoneNumber(text);
+
+              
+              setPhoneNumber(formattedText);
+            }}
           
 
             

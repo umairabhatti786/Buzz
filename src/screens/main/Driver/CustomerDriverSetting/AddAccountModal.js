@@ -15,7 +15,7 @@ import {
   setSelectedAccount,
 } from "../../../../redux/reducers/authReducer";
 
-const AddAccountModal = ({ modalVisible, setModalVisible, onSubmit }) => {
+const AddAccountModal = ({ modalVisible, setModalVisible, onSubmit,userProfile }) => {
   const navigation = useNavigation();
   const selectAccount = useSelector(getSelectedAccount);
 
@@ -48,29 +48,35 @@ const AddAccountModal = ({ modalVisible, setModalVisible, onSubmit }) => {
       title={"Add Account"}
     >
       <View style={{ gap: 30, marginVertical: 20 }}>
-        <View style={{ ...AppStyles.box, borderRadius: 15, marginTop: -10 }}>
-          <CardConTainer
-            onPress={() => {
-              if (selectAccount == "Driver") {
-                dispatch(setSelectedAccount("Customer"));
-              }
-              else if(selectAccount == "Customer"){
-                dispatch(setSelectedAccount("Driver"));
+        {
+          userProfile.length==1&&(
+            <View style={{ ...AppStyles.box, borderRadius: 15, marginTop: -10 }}>
+            <CardConTainer
+              onPress={() => {
+                if (selectAccount == "Driver") {
+                  dispatch(setSelectedAccount("Customer"));
+                }
+                else if(selectAccount == "Customer"){
+                  dispatch(setSelectedAccount("Driver"));
+  
+  
+                }
+  
+                setModalVisible(false);
+                setTimeout(() => {
+                  navigation.navigate(
+                    selectAccount == "Driver" ? "CustomerSignup" : "DriverSignup"
+                  );
+                }, 300);
+              }}
+              title={ selectAccount == "Driver"? "Customer Account (Primary)":"Driver Account (Primary)"}
+              img={image.creditCard}
+            />
+          </View>
 
-
-              }
-
-              setModalVisible(false);
-              setTimeout(() => {
-                navigation.navigate(
-                  selectAccount == "Driver" ? "CustomerSignup" : "DriverSignup"
-                );
-              }, 300);
-            }}
-            title={ selectAccount == "Driver"? "Customer Account (Primary)":"Driver Account (Primary)"}
-            img={image.creditCard}
-          />
-        </View>
+          )
+        }
+     
 
         <View style={{ ...AppStyles.box, borderRadius: 15, marginTop: -10 }}>
           <CardConTainer title={"Admin Account"} img={image.creditCard} />

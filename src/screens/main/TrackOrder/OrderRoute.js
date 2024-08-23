@@ -12,6 +12,7 @@ import DashedLine from "react-native-dashed-line";
 import Collapsible from "react-native-collapsible";
 import CustomButton from "../../../components/CustomButton";
 import { image } from "../../../assets/png/images";
+import MapView from "react-native-maps";
 
 const OrderRoute = () => {
   const [isCollapsible, setIsCollapsible] = useState(false);
@@ -60,23 +61,38 @@ const OrderRoute = () => {
         <View>
           <CustomLine />
           <View style={{ padding: scale(15) }}>
-            <View
-              style={{
-                width: "100%",
-                height: verticalScale(150),
-                borderRadius: scale(10),
-                overflow: "hidden",
-              }}>
-              <Image
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: scale(10),
-                }}
-                resizeMode={"contain"}
-                source={image.map}
-              />
-              <View
+
+          <View
+                    style={{
+                      width: "100%",
+                      height: verticalScale(170),
+                      alignSelf: "center",
+                      borderRadius: 20,
+                      overflow:"hidden"
+                    }}
+                  >
+                    <MapView.Animated
+                      zoomControlEnabled={false}
+                      // ref={mapRef}
+                      // mapType={mapType}
+                      showsBuildings={true}
+                      showsCompass={false}
+                      toolbarEnabled={false}
+                      // initialRegion={region}
+                      // region={region}
+                      // provider={PROVIDER_GOOGLE}
+                      style={{
+                        height: "100%",
+                        width: "100%",
+                        marginTop: 5,
+                        borderRadius: 20,
+                        overflow: "hidden",
+                      }}
+                    >
+                     
+                    </MapView.Animated>
+
+                    <View
                 style={{
                   width: scale(35),
                   height: scale(35),
@@ -90,7 +106,15 @@ const OrderRoute = () => {
                   source={image.zoom}
                 />
               </View>
-            </View>
+
+            
+                  
+
+                 
+                  </View>
+
+        
+           
           </View>
         </View>
       </Collapsible>

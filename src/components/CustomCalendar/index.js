@@ -30,6 +30,8 @@ import DashedLine from "react-native-dashed-line";
 import { AppStyles } from "../../utils/AppStyle";
 import Button from "../Button";
 import { Spacer } from "../Spacer";
+import moment from "moment";
+
 // Configure custom day names
 LocaleConfig.locales["en"] = {
   monthNames: [
@@ -82,11 +84,12 @@ const CustomCalendar = ({
   title,
   date,
   setDate,
-  mainColor
+  mainColor,
+  onPress,
 }) => {
-  const [selected, setSelected] = useState("2024-03-15");
+  const [selected, setSelected] = useState("");
   const [currentMonth, setCurrentMonth] = useState("");
-  const [newDate,setNewDate]=useState(new Date())
+  const [newDate, setNewDate] = useState(new Date());
   useEffect(() => {
     const today = new Date();
     const formattedDate = today.toISOString().split("T")[0]; // Format the date as YYYY-MM-DD
@@ -140,7 +143,7 @@ const CustomCalendar = ({
     <CustomModal
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
-      title={ title|| "From Date"}
+      title={title || "From Date"}
       width={"100%"}
     >
       <View style={{ height: 420 }}>
@@ -165,10 +168,10 @@ const CustomCalendar = ({
 
         <Calendar
           onDayPress={(day) => {
-            setDate(day.dateString);
+            setSelected(day.dateString);
           }}
           markedDates={{
-            [date]: {
+            [selected]: {
               selected: true,
               disableTouchEvent: true,
               selectedDotColor: "orange",
@@ -181,9 +184,9 @@ const CustomCalendar = ({
             calendarBackground: "#ffffff",
             textSectionTitleColor: "#000",
             textDayFontFamily: "700",
-            selectedDayBackgroundColor:mainColor|| "#12D1AF",
+            selectedDayBackgroundColor: mainColor || "#12D1AF",
             selectedDayTextColor: "#ffffff",
-            todayTextColor: mainColor||"#12D1AF",
+            todayTextColor: mainColor || "#12D1AF",
             textDayFontSize: 18,
             textMonthFontSize: 20,
             dayTextColor: "#000",
@@ -206,16 +209,15 @@ const CustomCalendar = ({
           dashColor={colors.gray}
         />
 
-        <View style={{...AppStyles.justifyRow,paddingTop:15,paddingBottom:10}}>
+        <View
+          style={{ ...AppStyles.justifyRow, paddingTop: 15, paddingBottom: 10 }}
+        >
           <Button
             text={"Cancel"}
             height={30}
             size={16}
-            onPress={()=>{
-
-
-              setModalVisible(false)
-
+            onPress={() => {
+              setModalVisible(false);
             }}
             paddingHorizontal={15}
             textColor={colors.gray}
@@ -224,32 +226,47 @@ const CustomCalendar = ({
             borderWidth={1}
           />
 
-          <View style={{...AppStyles.row,gap:10}}>
+          <View style={{ ...AppStyles.row, gap: 10 }}>
             <Button
               text={"Today"}
               height={30}
-              onPress={()=>{
+              onPress={() => {
+                if (onPress) {
+                  onPress(moment(new Date()).format("MM-DD-YY"));
 
+                  return;
+                }
+                // setDate(new Date)
+                setDate(moment(new Date()).format("MM-DD-YY"));
 
-                setModalVisible(false)
-
+                setModalVisible(false);
               }}
               bgColor={colors.white}
               borderColor={mainColor || colors.primary}
               borderWidth={1}
               size={16}
               paddingHorizontal={15}
-              textColor={mainColor ||colors.primary}
+              textColor={mainColor || colors.primary}
               // width={scale(110)}
             />
             <Button
               text={"Set"}
               height={30}
               size={16}
-              onPress={()=>setModalVisible(false)}
+              onPress={() => {
+                if (onPress) {
+                  onPress(moment(selected).format("MM-DD-YY"));
+
+                  return;
+                }
+
+                setDate(moment(selected).format("MM-DD-YY"));
+
+                setModalVisible(false);
+              }}
               paddingHorizontal={15}
-              bgColor={mainColor ||colors.primary}
-              borderColor={mainColor ||colors.primary}
+              bgColor={mainColor || colors.primary}
+              borderColor={mainColor || colors.primary}
               borderWidth={1}
             />
           </View>

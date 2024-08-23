@@ -161,6 +161,7 @@ import DriverNotificationSettingCard from "./DriverNotificationSettingCard";
 
       <DriverSettingOrderUpdateModal
       modalVisible={isUpdateModal}
+      bgColor={colors.secondary}
       title={selectNotificationUpdates?.title}
       selectNotificationUpdates={selectNotificationUpdates}
       setSelectNotificationUpdates={setSelectNotificationUpdates}

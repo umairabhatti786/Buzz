@@ -18,7 +18,7 @@ import Button from "../../../../components/Button";
 import { Spacer } from "../../../../components/Spacer";
 import { Inter } from "../../../../utils/Fonts";
 
-const EmailVerificationBottomSheet = ({ bottomSheetModalRef, onSubmit }) => {
+const EmailVerificationBottomSheet = ({ bottomSheetModalRef, onSubmit,color }) => {
   const navigation = useNavigation();
   const [value, setValue] = useState("");
   const ref = useBlurOnFulfill({ value, cellCount: 6 });
@@ -90,6 +90,7 @@ const EmailVerificationBottomSheet = ({ bottomSheetModalRef, onSubmit }) => {
           text={"Submit"}
           height={45}
           size={16}
+          bgColor={color||colors.primary}
           onPress={onSubmit}
           borderRadius={10}
         />
@@ -104,7 +105,7 @@ const EmailVerificationBottomSheet = ({ bottomSheetModalRef, onSubmit }) => {
         />
 
         <NewText
-          color={colors.primary}
+          color={ color || colors.primary}
           fontWeight={"600"}
           textDecorationLine={"underline"}
           fontFam={Inter.medium}

@@ -118,7 +118,7 @@ const DriverHome = ({ navigation }) => {
               <View style={{ marginRight: scale(5) }}>
                 <CustomButton
                   onPress={() => {
-                    if(item=="Scheduled"){
+                    if(item=="Scheduled" ||item=="Now" ){
 
                       setIsActionModal(true)
                       
@@ -214,7 +214,7 @@ const DriverHome = ({ navigation }) => {
 
         <TouchableOpacity
          onPress={() => {
-          navigation.navigate("DriverService");
+          navigation.navigate("ServiceProfile");
         }}
           style={{
             ...AppStyles.justifyRow,
@@ -235,7 +235,7 @@ const DriverHome = ({ navigation }) => {
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() => {
-                navigation.navigate("DriverService");
+                navigation.navigate("ServiceProfile");
               }}
             >
               <CustomText

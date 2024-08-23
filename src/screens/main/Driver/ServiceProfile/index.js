@@ -35,9 +35,12 @@ const ServiceProfile = ({ navigation, route }) => {
   const [isEditModal, setIsEditModal] = useState(false);
   const [isRenameModal, setIsRenameModal] = useState(false);
   const [isAttachModal, setIsAttachModal] = useState(false);
+  const [renameText, setRenameText] = useState("");
 
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [isSuccessModal, setIsSuccessModal] = useState(false);
+  const [selectedOffers, setSelectedOffers] = useState({});
+  const [isSelectedOffers, setIsSelectedOffers] = useState(false);
 
   const bottomSheetData = [
     {
@@ -74,11 +77,24 @@ const ServiceProfile = ({ navigation, route }) => {
         bottomSheetModalRef.current.dismiss();
 
         setTimeout(() => {
-            setIsDeleteModal(true);
+          setIsDeleteModal(true);
         }, 800);
       },
     },
   ];
+  console.log("selectedOffersckdnckd", selectedOffers);
+  const [offeredServiceData, setOfferServiceData] = useState([
+    { name: "Delivery (main)", isOfline: false, id: 0 },
+    { name: "Furniture Deliver", isOfline: false, id: 1 },
+    { name: "Installation/Dismantling", isOfline: false, id: 2 },
+    { name: "Piano Delivery", isOfline: true, removeLine: true, id: 3 },
+  ]);
+  const [saveSearchData, setSaveSearchData] = useState([
+    { name: "Ride", id: 4 },
+    { name: "Furniture Deliver", id: 5, removeLine: true },
+  ]);
+
+  console.log("offeredServiceData", saveSearchData);
 
   const ProfileContainer = () => {
     return (
@@ -96,9 +112,10 @@ const ServiceProfile = ({ navigation, route }) => {
           }}
         >
           <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={()=>setIsAttachModal(true)}
-           style={AppStyles.row}>
+            activeOpacity={0.5}
+            onPress={() => setIsAttachModal(true)}
+            style={AppStyles.row}
+          >
             <Image
               style={{
                 width: scale(55),
@@ -183,6 +200,7 @@ const ServiceProfile = ({ navigation, route }) => {
             width={"100%"}
             fontWeight={"600"}
             size={13}
+            onPress={() => navigation.navigate("DriverService")}
             fontFam={Inter.medium}
             textColor={colors.white}
             bgColor={colors.secondary}
@@ -268,7 +286,13 @@ const ServiceProfile = ({ navigation, route }) => {
         <CustomHeader label={"Service Profile"} navigation={navigation} />
 
         <ScrollView>
-          <View style={{ padding: scale(15) }}>
+          <View
+            style={{
+              paddingHorizontal: scale(15),
+              paddingTop: verticalScale(15),
+              paddingBottom: verticalScale(30),
+            }}
+          >
             <ProfileContainer />
 
             <View
@@ -341,51 +365,41 @@ const ServiceProfile = ({ navigation, route }) => {
                 />
               </TouchableOpacity>
               <Collapsible collapsed={isOfferedService}>
-                <View
-                  style={{
-                    ...AppStyles.box,
-                    paddingTop: 10,
-                    marginTop: 15,
-                  }}
-                >
-                  <DropContainer
-                    size={15}
-                    isInternet
-                    // onPress={() => setShowLocalDelivery(!showLocalDelivery)}
-                    txt={"Delivery (main)"}
-                    isSetting
-                  />
+                {offeredServiceData.length > 0 && (
+                  <View
+                    style={{
+                      ...AppStyles.box,
+                      paddingTop: 10,
+                      marginTop: 15,
+                    }}
+                  >
+                    {offeredServiceData.map((item, index) => {
+                      return (
+                        <DropContainer
+                          size={15}
+                          isInternet
+                          internet_image={
+                            item?.isOfline ? icon.no_internet : item.internet
+                          }
+                          removeLine={offeredServiceData.length - 1 == index}
+                          onPress={() => {
+                            setRenameText(item?.name);
 
-                  <DropContainer
-                    size={15}
-                    isInternet
-                    fontWeight={"500"}
-                    //   onPress={() => bottomSheetModalRef.current.present()}
-                    txt={"Furniture Deliver"}
-                    isSetting
-                  />
+                            setIsSelectedOffers(true);
+                            setSelectedOffers(item?.id);
+                            setTimeout(() => {
+                              bottomSheetModalRef.current.present();
+                            }, 500);
+                          }}
+                          txt={item.name}
+                          isSetting
+                        />
+                      );
+                    })}
 
-                  <DropContainer
-                    size={15}
-                    fontWeight={"500"}
-                    isInternet
-                    //   onPress={() => bottomSheetModalRef.current.present()}
-                    txt={"Installation/Dismantling"}
-                    isSetting
-                  />
-                  <DropContainer
-                    size={15}
-                    isInternet
-                    fontWeight={"500"}
-                    internet_image={icon.no_internet}
-                    removeLine={true}
-                    //   onPress={() => bottomSheetModalRef.current.present()}
-                    txt={"Piano Delivery"}
-                    isSetting
-                  />
-
-                  <View style={{ paddingBottom: 10 }} />
-                </View>
+                    <View style={{ paddingBottom: 10 }} />
+                  </View>
+                )}
               </Collapsible>
             </View>
 
@@ -413,32 +427,35 @@ const ServiceProfile = ({ navigation, route }) => {
                 />
               </TouchableOpacity>
               <Collapsible collapsed={isSavedSearch}>
-                <View
-                  style={{
-                    ...AppStyles.box,
-                    paddingTop: 10,
-                    marginTop: 15,
-                  }}
-                >
-                  <DropContainer
-                    size={15}
-                    onPress={() => bottomSheetModalRef.current.present()}
-                    // onPress={() => setShowLocalDelivery(!showLocalDelivery)}
-                    txt={"Ride"}
-                    isSetting
-                  />
+                {saveSearchData.length > 0 && (
+                  <View
+                    style={{
+                      ...AppStyles.box,
+                      paddingTop: 10,
+                      marginTop: 15,
+                    }}
+                  >
+                    {saveSearchData.map((item, index) => {
+                      return (
+                        <DropContainer
+                          size={15}
+                          removeLine={saveSearchData.length - 1 == index}
+                          onPress={() => {
+                            setSelectedOffers(item?.id);
+                            setRenameText(item?.name);
+                            setTimeout(() => {
+                              bottomSheetModalRef.current.present();
+                            }, 500);
+                          }}
+                          txt={item.name}
+                          isSetting
+                        />
+                      );
+                    })}
 
-                  <DropContainer
-                    size={15}
-                    removeLine
-                    fontWeight={"500"}
-                    onPress={() => bottomSheetModalRef.current.present()}
-                    txt={"Furniture Deliver"}
-                    isSetting
-                  />
-
-                  <View style={{ paddingBottom: 10 }} />
-                </View>
+                    <View style={{ paddingBottom: 10 }} />
+                  </View>
+                )}
               </Collapsible>
             </View>
           </View>
@@ -447,27 +464,160 @@ const ServiceProfile = ({ navigation, route }) => {
 
       <BottomSheet bottomSheetModalRef={bottomSheetModalRef}>
         <View style={{ paddingHorizontal: 15 }}>
-          {bottomSheetData.map((item, index) => {
-            return (
-              <TouchableOpacity onPress={item.onPress} activeOpacity={0.6}>
-                <NewText
-                  color={item.name == "Delete" ? colors.red : colors.gray200}
-                  style={{ textAlign: "center", marginTop: verticalScale(15) }}
-                  size={16}
-                  text={item?.name}
+          <TouchableOpacity
+            onPress={() => {
+              bottomSheetModalRef.current.dismiss();
+
+              setTimeout(() => {
+                if (!isSelectedOffers) {
+                  navigation.navigate("CustomerSearch");
+                } else {
+                  navigation.navigate("DriverService");
+                  setIsSelectedOffers(false)
+
+                }
+              }, 500);
+            }}
+            activeOpacity={0.6}
+          >
+            <NewText
+              color={colors.gray200}
+              style={{ textAlign: "center", marginTop: verticalScale(15) }}
+              size={16}
+              text={"Open"}
+            />
+            <View style={{ paddingTop: verticalScale(15) }}>
+              <DashedLine
+                style={{ width: "100%" }}
+                dashLength={3}
+                dashThickness={1}
+                dashGap={3}
+                dashColor={colors.gray}
+              />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              bottomSheetModalRef.current.dismiss();
+
+              setTimeout(() => {
+                if (!isSelectedOffers) {
+                  navigation.navigate("DriverFilter");
+                }
+                else  {
+                  navigation.navigate("DriverService");
+                  setIsSelectedOffers(false)
+
+                }
+              }, 500);
+            }}
+            activeOpacity={0.6}
+          >
+            <NewText
+              color={colors.gray200}
+              style={{ textAlign: "center", marginTop: verticalScale(15) }}
+              size={16}
+              text={"Edit"}
+            />
+            <View style={{ paddingTop: verticalScale(15) }}>
+              <DashedLine
+                style={{ width: "100%" }}
+                dashLength={3}
+                dashThickness={1}
+                dashGap={3}
+                dashColor={colors.gray}
+              />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              bottomSheetModalRef.current.dismiss();
+
+              setTimeout(() => {
+                setIsRenameModal(true);
+              }, 800);
+            }}
+            activeOpacity={0.6}
+          >
+            <NewText
+              color={colors.gray200}
+              style={{ textAlign: "center", marginTop: verticalScale(15) }}
+              size={16}
+              text={"Rename"}
+            />
+            <View style={{ paddingTop: verticalScale(15) }}>
+              <DashedLine
+                style={{ width: "100%" }}
+                dashLength={3}
+                dashThickness={1}
+                dashGap={3}
+                dashColor={colors.gray}
+              />
+            </View>
+          </TouchableOpacity>
+          {isSelectedOffers && (
+            <TouchableOpacity
+              onPress={() => {
+                const updates = [...offeredServiceData];
+                updates[selectedOffers] = {
+                  ...updates[selectedOffers],
+                  isOfline: updates[selectedOffers].isOfline ? false : true, // Set the new property
+                };
+                setOfferServiceData(updates);
+                setIsSelectedOffers(false);
+
+                bottomSheetModalRef.current.dismiss();
+              }}
+              activeOpacity={0.6}
+            >
+              <NewText
+                color={colors.gray200}
+                style={{ textAlign: "center", marginTop: verticalScale(15) }}
+                size={16}
+                text={
+                  offeredServiceData[selectedOffers]?.isOfline ? "Post" : "Hide"
+                }
+              />
+              <View style={{ paddingTop: verticalScale(15) }}>
+                <DashedLine
+                  style={{ width: "100%" }}
+                  dashLength={3}
+                  dashThickness={1}
+                  dashGap={3}
+                  dashColor={colors.gray}
                 />
-                <View style={{ paddingTop: verticalScale(15) }}>
-                  <DashedLine
-                    style={{ width: "100%" }}
-                    dashLength={3}
-                    dashThickness={1}
-                    dashGap={3}
-                    dashColor={colors.gray}
-                  />
-                </View>
-              </TouchableOpacity>
-            );
-          })}
+              </View>
+            </TouchableOpacity>
+          )}
+
+          <TouchableOpacity
+            onPress={() => {
+              bottomSheetModalRef.current.dismiss();
+
+              setTimeout(() => {
+                setIsDeleteModal(true);
+              }, 800);
+            }}
+            activeOpacity={0.6}
+          >
+            <NewText
+              color={colors.red}
+              style={{ textAlign: "center", marginTop: verticalScale(15) }}
+              size={16}
+              text={"Delete"}
+            />
+            <View style={{ paddingTop: verticalScale(15) }}>
+              <DashedLine
+                style={{ width: "100%" }}
+                dashLength={3}
+                dashThickness={1}
+                dashGap={3}
+                dashColor={colors.gray}
+              />
+            </View>
+          </TouchableOpacity>
 
           {/* <TouchableOpacity
             onPress={() => {
@@ -539,32 +689,86 @@ const ServiceProfile = ({ navigation, route }) => {
               size={16}
               text={"Delete"}
             />
-          </TouchableOpacity> */}
+          </TouchableOpacity>  */}
         </View>
       </BottomSheet>
 
       <RenameModal
         mainColor={colors.primary}
+        setRenameText={setRenameText}
+        renameText={renameText}
+        onChangeText={(txt) => {
+          setRenameText(txt);
+        }}
         setModalVisible={setIsRenameModal}
         modalVisible={isRenameModal}
         title={"Rename"}
         onSubmit={() => {
+          if (isSelectedOffers) {
+            const updates = [...offeredServiceData];
+            updates[selectedOffers] = {
+              ...updates[selectedOffers],
+              name: renameText, // Set the new property
+            };
+            setOfferServiceData(updates);
+            setRenameText("");
+            setIsSelectedOffers(false);
+          } else {
+            const updates = [...saveSearchData];
+
+            // Find the index of the item you want to update
+            const indexToUpdate = updates?.findIndex(
+              (item) => item?.id === selectedOffers
+            );
+
+            // If the item is found, update its name
+            if (indexToUpdate !== -1) {
+              updates[indexToUpdate] = {
+                ...updates[indexToUpdate],
+                name: renameText, // Set the new property
+              };
+            }
+
+            setSaveSearchData(updates);
+            setRenameText("");
+          }
+
           setIsRenameModal(false);
         }}
         navigation={navigation}
       />
 
-<DeleteModal
+      <DeleteModal
         modalVisible={isDeleteModal}
         setModalVisible={setIsDeleteModal}
         onYes={() => {
+          if (isSelectedOffers) {
+            // Assuming selectedOffers is the object with an id property
+            const filterUpdate = offeredServiceData.filter(
+              (item) => item?.id !== selectedOffers
+            );
+
+            // Update the state with the filtered array
+
+            setOfferServiceData(filterUpdate);
+            setIsSelectedOffers(false);
+          } else {
+            // Assuming selectedOffers is the object with an id property
+            const filterUpdate = saveSearchData.filter(
+              (item) => item?.id !== selectedOffers
+            );
+            console.log("filterUpdate", filterUpdate);
+            // Update the state with the filtered array
+            setSaveSearchData(filterUpdate);
+          }
           setIsDeleteModal(false);
-        //   setTimeout(() => {
-        //     setIsSuccessModal(true);
-        //   }, 500);
+
+          //   setTimeout(() => {
+          //     setIsSuccessModal(true);
+          //   }, 500);
         }}
       />
-       <AttachmentModal
+      <AttachmentModal
         modalVisible={isAttachModal}
         title={"Change Profile Picture"}
         subtitle_image={image.upload_photo}

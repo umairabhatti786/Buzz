@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import Modal from "react-native-modal";
-import { windowHeight } from "../../../../utils/Commons";
+import { formatPhoneNumber, windowHeight } from "../../../../utils/Commons";
 import { AppStyles } from "../../../../utils/AppStyle";
 import { colors } from "../../../../utils/colors";
 import NewText from "../../../../components/NewText";
@@ -33,6 +33,7 @@ const PickupDropInstructionModal = ({
   setModalVisible,
   setIsRateExperienceModal,
   onDonePress,
+  onLater,
 }) => {
   const [pickUpContactName, setPickUpContactName] = useState("");
   const [pickUpContactPhone, setPickUpContactPhone] = useState("");
@@ -150,8 +151,11 @@ const PickupDropInstructionModal = ({
                 placeholder={"(000)-000-0000"}
                 value={pickUpContactPhone}
                 keyboard={"numeric"}
+                maxLength={15}
                 onChangeText={(text) => {
-                  setPickUpContactPhone(text);
+                  const formattedText = formatPhoneNumber(text);
+
+                  setPickUpContactPhone(formattedText);
                 }}
               />
               <Spacer height={verticalScale(5)} />
@@ -279,9 +283,12 @@ const PickupDropInstructionModal = ({
                 height={35}
                 placeholder={"(000)-000-0000"}
                 keyboard={"numeric"}
+                maxLength={15}
                 value={dropOffContactPhone}
                 onChangeText={(text) => {
-                  setDropOffContactPhone(text);
+                  const formattedText = formatPhoneNumber(text);
+
+                  setDropOffContactPhone(formattedText);
                 }}
               />
               <Spacer height={verticalScale(5)} />
@@ -359,7 +366,7 @@ const PickupDropInstructionModal = ({
               <Button
                 text={"Later"}
                 height={28}
-                onPress={() => setModalVisible(false)}
+                onPress={onLater}
                 bgColor={"#EEEEEE"}
                 borderColor={"transparent"}
                 borderWidth={1}

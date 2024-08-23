@@ -48,7 +48,7 @@ const DriverSearch = ({ navigation, route }) => {
   const [viewObject, setViewObject] = useState("List View");
   const [vehicleObject, setVehicleObject] = useState("Vehicle Size");
   const [isVehicleVisible, setIsVehicleVisible] = useState(false);
-  const [deliveryType, setDelivertype] = useState("Dedicated");
+  const [deliveryType, setDelivertype] = useState("Scheduled");
   const [isSubmitModal, setIsSubmitModal] = useState(false);
   const [mapHeight, setMapHeight] = useState(400);
   // const [isPredictionList, setIsPredictionList] = useState(false);
@@ -63,6 +63,7 @@ const DriverSearch = ({ navigation, route }) => {
   const [isTravelVisible, setIsTravelVisible] = useState(false);
   const [isPaymentModal, setIsPaymentModal] = useState(false);
   const [isRateExperienceModal, setIsRateExperienceModal] = useState(false);
+  const [nearbyAddress,setNearbyAddress]=useState("Town Hall, New York")
   const [mapType, setMapType] = useState("standard");
   const [region, setRegion] = useState({
     latitude: 32.3363,
@@ -89,7 +90,7 @@ const DriverSearch = ({ navigation, route }) => {
   console.log("setSelectedDrivers", selectedDrivers);
   const [dropPoints, setdropPoints] = useState([
     {
-      dropFromAddress: nearby ? nearby : "Town Hall, New York",
+      dropFromAddress: nearby ? nearby :nearbyAddress,
       dropOffAddress: "",
       dropOffPlaceHolder: "Drop Off Address",
     },
@@ -191,10 +192,15 @@ const DriverSearch = ({ navigation, route }) => {
           <CustomerTicket
             setDelivertype={setDelivertype}
             onBook={() => {
-              if (deliveryType != "Dedicated") {
-                setIsPaymentModal(true);
+              console.log("deliveryType",deliveryType)
+              if (deliveryType == "Dedicated") {
+                   navigation.navigate("DedicatedService");
+
+                // setIsPaymentModal(true);
               } else {
-                navigation.navigate("DedicatedService");
+                setIsPaymentModal(true);
+
+                // navigation.navigate("DedicatedService");
               }
             }}
             // onBook={() => navigation.navigate("DedicatedService")}
@@ -207,7 +213,7 @@ const DriverSearch = ({ navigation, route }) => {
             setWatchListObject={setWatchListObject}
             watchListObject={watchListObject}
             onWatchList={() => {
-              setSaveText("Saved, you can see your saved Driver in Watchlist");
+              setSaveText("Removed, you can see in your  Watchlist");
               setIsWatchList(true);
               const findObject = watchListObject?.find((e) => e.id == item.id);
               if (findObject) {
@@ -263,10 +269,15 @@ const DriverSearch = ({ navigation, route }) => {
             setWatchListObject={setWatchListObject}
             watchListObject={watchListObject}
             onBook={() => {
-              if (deliveryType != "Dedicated") {
-                setIsPaymentModal(true);
+              console.log("deliveryType",deliveryType)
+              if (deliveryType == "Dedicated") {
+                   navigation.navigate("DedicatedService");
+
+                // setIsPaymentModal(true);
               } else {
-                navigation.navigate("DedicatedService");
+                setIsPaymentModal(true);
+
+                // navigation.navigate("DedicatedService");
               }
             }}
             // onWatchList={() => {
@@ -382,7 +393,11 @@ const DriverSearch = ({ navigation, route }) => {
               <View style={{ paddingTop: verticalScale(10) }}>
                 <CustomInput
                   leftImage={icon.location}
-                  value={nearby ? nearby : "Town Hall, New York"}
+                  value={nearby ? nearby : nearbyAddress}
+                  onChangeText={(text)=>{
+                    setNearbyAddress(text)
+
+                  }}
                 />
               </View>
               {dropPoints.map((item, index) => {
@@ -393,6 +408,16 @@ const DriverSearch = ({ navigation, route }) => {
                         leftImage={icon.location}
                         placeholder={item.dropOffPlaceHolder}
                         value={item.dropOffAddress}
+                        onChangeText={(txt)=>{
+
+                          const updates = [...dropPoints];
+                          updates[index] = {
+                            ...updates[index],
+                            dropOffAddress: txt, // Set the new property
+                          };
+                          setdropPoints(updates);
+
+                        }}
                       />
                     </View>
                   </>
@@ -977,7 +1002,7 @@ const DriverSearch = ({ navigation, route }) => {
         onPay={() => {
           steIsAddPaymentMethodVisible(false);
           setTimeout(() => {
-            setIsPickupDropInstructionModal(true);
+            setIsThankyouModal(true);
           }, 1000);
         }}
         modalVisible={isAddPaymentMethodVisible}
@@ -987,7 +1012,22 @@ const DriverSearch = ({ navigation, route }) => {
 <PickupDropInstructionModal
         mainColor={colors.primary}
         modalVisible={isPickupDropInstructionModal}
+      
         navigation={navigation}
+        onLater={()=>{
+
+          {
+            setIsPickupDropInstructionModal(false)
+
+
+            setTimeout(() => {
+              navigation.navigate("ManageOrders")
+
+              
+            }, 500);
+          }
+
+        }}
         onDonePress={()=>{
           setIsPickupDropInstructionModal(false);
           setTimeout(() => {
@@ -1026,12 +1066,14 @@ const DriverSearch = ({ navigation, route }) => {
 
           setIsCounterOfferVisible(true);
         }}
+
+      
         onBook={() => {
           driverDetailSheetRef.current.dismiss();
-          if (deliveryType != "Dedicated") {
-            setIsPaymentModal(true);
-          } else {
+          if (deliveryType == "Dedicated") {
             navigation.navigate("DedicatedService");
+          } else {
+            setIsPaymentModal(true);
           }
         }}
       />

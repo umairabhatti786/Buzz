@@ -31,11 +31,13 @@ import DashedLine from "react-native-dashed-line";
 import { CustomHeader } from "../../../components/CustomHeader";
 import { windowWidth } from "../../../utils/Commons";
 import RateExperienceModal from "../Customer/DriverSearch/RateExperienceModal";
+import PickupDropInstructionModal from "../Customer/DriverSearch/PickupDropInstructionModal";
 
 const TrackOrder = ({ navigation, route }) => {
   const orderData = route?.params.orderData;
   const [driverMessage, setDriverMessage] = useState("");
   const [isRateExperienceModal, setIsRateExperienceModal] = useState(false);
+  const [isPickupDropInstructionModal,setIsPickupDropInstructionModal]=useState(false)
 
   const data = [
     {
@@ -163,7 +165,10 @@ const TrackOrder = ({ navigation, route }) => {
           </View>
 
           <View style={{ padding: scale(15) }}>
-            <ActivitySummary />
+            <ActivitySummary
+            setIsPickupDropInstructionModal={setIsPickupDropInstructionModal}
+            isPickupDropInstructionModal={isPickupDropInstructionModal}
+             />
             <View
               style={{
                 ...styles.box,
@@ -363,6 +368,35 @@ const TrackOrder = ({ navigation, route }) => {
         modalVisible={isRateExperienceModal}
         navigation={navigation}
         setModalVisible={setIsRateExperienceModal}
+      />
+
+<PickupDropInstructionModal
+        mainColor={colors.primary}
+        modalVisible={isPickupDropInstructionModal}
+        setModalVisible={setIsPickupDropInstructionModal}
+        navigation={navigation}
+        onLater={()=>{
+
+          {
+            setIsPickupDropInstructionModal(false)
+
+
+            // setTimeout(() => {
+            //   navigation.navigate("ManageOrders")
+
+              
+            // }, 500);
+          }
+
+        }}
+        onDonePress={()=>{
+          setIsPickupDropInstructionModal(false);
+          // setTimeout(() => {
+          //   setIsThankyouModal(true);
+          // }, 1000);
+
+        }}
+        setIsRateExperienceModal={setIsRateExperienceModal}
       />
     </Screen>
   );

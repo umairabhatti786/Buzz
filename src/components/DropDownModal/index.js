@@ -31,6 +31,7 @@ const DropDownModal = ({
   setSelectedObject,
   title,
   mainColor,
+  onPress,
 }) => {
   const [isEnabled, setIsEnabled] = useState(true);
 
@@ -71,6 +72,11 @@ const DropDownModal = ({
                   style={styles.itemButton}
                   activeOpacity={0.6}
                   onPress={() => {
+                    if(onPress){
+                      onPress(item)
+
+                      return
+                    }
                     setSelectedObject(item);
                     setModalVisible(false);
                   }}

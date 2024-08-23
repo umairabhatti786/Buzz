@@ -29,9 +29,13 @@ import PaymentMethodModal from "../../Customer/DriverSearch/PaymentMethodModal";
 import AddPaymentMethodModal from "../../Customer/DriverSearch/AddPaymentMethodModal";
 import EmailVerificationBottomSheet from "./EmailVerificationBottomSheet";
 import NewPasswordBottomSheet from "./NewPasswordBottomSheet";
-import { useSelector } from "react-redux";
-import { getSelectedAccount } from "../../../../redux/reducers/authReducer";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getSelectedAccount,
+  setSelectedAccount,
+} from "../../../../redux/reducers/authReducer";
 import { useIsFocused } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 
 const CustomerDriverSetting = ({ navigation }) => {
   const [isPhoneNumberVisible, setIsPhoneNumberVisible] = useState(false);
@@ -45,50 +49,71 @@ const CustomerDriverSetting = ({ navigation }) => {
   const [isPaymentModal, setIsPaymentModal] = useState(false);
   const emailVerificattionSheet = useRef(false);
   const newPasswordSheet = useRef(false);
-  const focused=useIsFocused()
+  const focused = useIsFocused();
+  const dispatch = useDispatch();
 
-
-  const selectAccount=useSelector(getSelectedAccount)
-  console.log("selectAccount",selectAccount)
+  const selectAccount = useSelector(getSelectedAccount);
+  console.log("selectAccount", selectAccount);
 
   const [isAddAccountVisible, setIsAddAccountVisible] = useState(false);
 
   const [userProfile, setUserProfile] = useState([
-    { user: "Customer", img: image.defimg700, isActive: true, buttonWidth: 70 },
-    {
-      user: "Driver",
-      img: image.defimg600,
-      isActive: false,
-      isRating: true,
-      buttonWidth: 55,
-    },
+    { user: "Customer", img: image.defimg700, isActive: true, buttonWidth: 70,onNext:()=>  navigation.navigate('CustomerTab', {
+      screen: 'Home', // The nested screen within the Profile tab
+    }) },
   ]);
 
+  // {
+  //   user: "Driver",
+  //   img: image.defimg600,
+  //   isActive: false,
+  //   isRating: true,
+  //   buttonWidth: 55,
+  // },
+
+  console.log("UserProfileLofn", userProfile);
+
+  useEffect(() => {}, [setSelectedAccount]);
+
   useEffect(() => {
-    setUserProfile((prevProfile) => {
-      const updatedProfiles = prevProfile.map(profile => ({
-        ...profile,
-        isActive: profile.user === selectAccount
-      }));
+    if (selectAccount == "Driver") {
+      setUserProfile((prevProfile) => {
+        const updatedProfiles = prevProfile.map((profile) => ({
+          ...profile,
+          isActive: profile?.user === selectAccount,
+        }));
 
-      if (selectAccount === 'Customer') {
-        return [
-          updatedProfiles.find(profile => profile.user === 'Customer'),
-          updatedProfiles.find(profile => profile.user === 'Driver')
-        ];
-      } else if (selectAccount === 'Driver') {
-        return [
-          updatedProfiles.find(profile => profile.user === 'Driver'),
-          updatedProfiles.find(profile => profile.user === 'Customer')
-        ];
-      }
+        if (selectAccount === "Customer") {
+          return [
+            { user: "Customer", img: image.defimg700, isActive: true, buttonWidth: 70,
+            onNext:()=>  navigation.navigate('CustomerTab', {
+              screen: 'Home', // The nested screen within the Profile tab
+            })
+           },
 
-      return updatedProfiles;
-    });
-  }, [focused]);
- 
+            // updatedProfiles?.find(profile => profile?.user === 'Customer'),
+            // updatedProfiles?.find(profile => profile?.user === 'Driver')
+          ];
+        } else if (selectAccount === "Driver") {
+          return [
+            {
+              user: "Driver",
+              img: image.defimg600,
+              isActive: true,
+              isRating: true,
+              buttonWidth: 55,
+              onNext:()=>  navigation.navigate('DriverHomeBottomTab', {
+                screen: 'Home', // The nested screen within the Profile tab
+              })            },
+            updatedProfiles?.find((profile) => profile?.user === "Customer"),
+          ];
+        }
 
- 
+        return updatedProfiles;
+      });
+    }
+  }, [focused, selectAccount,dispatch]);
+
   const ManageOrdersData = [
     {
       title: "Upcoming",
@@ -231,16 +256,17 @@ const CustomerDriverSetting = ({ navigation }) => {
                   return (
                     <View>
                       <ProfileCard
-                        user={item.user}
-                        img={item.img}
-                        isRating={item.isRating}
-                        isActive={item.isActive}
-                        buttonWidth={item.buttonWidth}
+                      onNext={item.onNext}
+                        user={item?.user}
+                        img={item?.img}
+                        isRating={item?.isRating}
+                        isActive={item?.isActive}
+                        buttonWidth={item?.buttonWidth}
                         setIsActive={() => {
                           let profileArray = [];
                           let data = [...userProfile];
                           profileArray = data.map((i) => {
-                            if (i.user == item.user) {
+                            if (i.user == item?.user) {
                               i.isActive = true;
                             } else {
                               i.isActive = false;
@@ -260,27 +286,28 @@ const CustomerDriverSetting = ({ navigation }) => {
                     </View>
                   );
                 })}
-
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  onPress={() => {
-                    let reversedArray = [...userProfile].reverse();
-                    setUserProfile(reversedArray);
-                  }}
-                  style={{
-                    position: "absolute",
-                    top: "43%",
-                    width: scale(35),
-                    height: scale(35),
-                    right: "45%",
-                  }}
-                >
-                  <Image
-                    style={{ width: "100%", height: "100%" }}
-                    source={image.updown}
-                    resizeMode={"contain"}
-                  />
-                </TouchableOpacity>
+                {userProfile.length > 1 && (
+                  <TouchableOpacity
+                    activeOpacity={0.6}
+                    onPress={() => {
+                      let reversedArray = [...userProfile].reverse();
+                      setUserProfile(reversedArray);
+                    }}
+                    style={{
+                      position: "absolute",
+                      top: "43%",
+                      width: scale(35),
+                      height: scale(35),
+                      right: "45%",
+                    }}
+                  >
+                    <Image
+                      style={{ width: "100%", height: "100%" }}
+                      source={image.updown}
+                      resizeMode={"contain"}
+                    />
+                  </TouchableOpacity>
+                )}
               </View>
 
               <TouchableOpacity
@@ -521,7 +548,20 @@ const CustomerDriverSetting = ({ navigation }) => {
               </View>
 
               <TouchableOpacity
-                onPress={() => navigation.navigate("CustomerSignup")}
+                onPress={() => {
+                  if (selectAccount == "Driver") {
+                    dispatch(setSelectedAccount("Customer"));
+                    navigation.navigate("CustomerTab")
+                    navigation.dispatch(
+                      CommonActions.reset({
+                        index: 10,
+                        routes: [{name: 'CustomerTab'}],
+                      }),
+                    );
+                  } else {
+                    navigation.navigate("CustomerSignup");
+                  }
+                }}
                 style={{
                   ...AppStyles.row,
                   paddingHorizontal: scale(7),
@@ -582,6 +622,7 @@ const CustomerDriverSetting = ({ navigation }) => {
 
       <AddAccountModal
         modalVisible={isAddAccountVisible}
+        userProfile={userProfile}
         setModalVisible={setIsAddAccountVisible}
         onSubmit={() => {
           setIsPhoneNumberVisible(false);
@@ -609,7 +650,7 @@ const CustomerDriverSetting = ({ navigation }) => {
         setModalVisible={setIsPaymentModal}
       />
       <AddPaymentMethodModal
-      buttonTitle={"Submit"}
+        buttonTitle={"Submit"}
         onPay={() => {
           steIsAddPaymentMethodVisible(false);
           setTimeout(() => {

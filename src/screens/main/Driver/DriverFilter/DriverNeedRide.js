@@ -33,9 +33,9 @@ import CustomLine from "../../../../components/CustomLine/CustomLine";
     const [isPickUpModel, setIsPickUpModel] = useState(false);
     const [time, setTime] = useState("pm");
     const [isTimeModal, setIsTimeModal] = useState(false);
-    const [pickupDateAndTime,setPickupDateAndTime]=useState("")
+    const [pickupDateAndTime,setPickupDateAndTime]=useState("03-23-24")
     const [isDateAndTime,setIsDateAndTime]=useState("")
-    const [toPickupDateAndTime,setToPickupDateAndTime]=useState("")
+    const [toPickupDateAndTime,setToPickupDateAndTime]=useState("03-23-24")
     const [isToDateAndTime,setIsToDateAndTime]=useState("")
     const[signal,setSignal]=useState("Single Stop")
   
@@ -56,7 +56,7 @@ import CustomLine from "../../../../components/CustomLine/CustomLine";
       "8 Hours",
     ];
     const timeData = ["am", "pm"];
-  
+  console.log("toPickupDateAndTime",toPickupDateAndTime)
     const MIN_DEFAULT = 10;
     const MAX_DEFAULT = 100;
     const [minValue, setMinValue] = useState(MIN_DEFAULT);
@@ -159,7 +159,7 @@ import CustomLine from "../../../../components/CustomLine/CustomLine";
                           color={colors.black}
                           fontFam={Inter.bold}
                           size={15}
-                          text={"03-23-24"}
+                          text={pickupDateAndTime}
                         />
   
                         <Image
@@ -184,7 +184,7 @@ import CustomLine from "../../../../components/CustomLine/CustomLine";
                           color={colors.black}
                           fontFam={Inter.bold}
                           size={15}
-                          text={"03-23-24"}
+                          text={toPickupDateAndTime}
                         />
   
                         <Image
